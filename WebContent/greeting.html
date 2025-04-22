@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = 'UTF-8'>
+		<title>メインメニュー画面の演習</title>
+		<style>
+			* { margin: 0; padding: 0; }
+			#wrapper { height: 100%; width: 100%; }
+			#header {
+				height: 20%;
+				width: 100%;
+				background-color: lightsteelblue;
+				display: inline-block;
+			}
+			#title { padding: 1rem 3rem; font-size: xx-large; display: inline-block; }
+			#subInfo {
+				display: inline-block;
+				float : right;
+				width: 15%;
+				font-size: x-small;
+				background-color: lemonchiffon;
+				margin-right: .5rem;
+			}
+			#subleft { display: inline-block; }
+			#subright{ display: inline-block; float: right; }
+			#main { margin: 3rem; }
+		</style>
+	</head>
+	<body>
+	<div id = "wrapper">
+		<div id = "header">
+			<div id = "title">得点管理システム</div>
+			<div id = "subInfo">
+				<!-- ログイン?顧客名※(todo)JSPで出力制御 -->
+				<div id = "subleft">ログイン</div>
+				<!-- ログアウト?非表示※(todo)JSPで出力制御 -->
+				<div id = "subright">ログアウト</div>
+			</div>
+		</div>
+		<div id = "main">
+			<div><a href = "menu"></a>メニュー</h3>
+			<div><a href = "todo">学生管理</a></div>
+			<div><a href = "todo">成績登録</a></div>
+			<div><a href = "todo">成績参照</a></div>
+			<div><a href = "todo">科目管理</a></div>
+		</div>
+	</div>
+	</body>
+</html>

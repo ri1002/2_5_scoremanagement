@@ -1,0 +1,142 @@
+package main;
+
+import java.util.List;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import bean.Student;
+import dao.StudentDao;
+@WebServlet( urlPatterns ={"/main/student_list"} )
+
+public class StudentListAction extends HttpServlet {
+
+/*	@Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException {
+        try {
+            execute(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(500); // エラー処理
+        }
+    }
+
+	private List<ClassNum> getClassNumList() throws Exception {
+	    List<ClassNum> classNumList = new ArrayList<>();
+	    String sql = "SELECT class_num FROM class_num";
+	    try (Connection con = new StudentDao().getConnection();
+	         PreparedStatement stmt = con.prepareStatement(sql);
+	         ResultSet rs = stmt.executeQuery()) {
+
+	        while (rs.next()) {
+	            ClassNum classnum = new ClassNum();
+	            classnum.setClass_num(rs.getString("class_num"));
+	            classNumList.add(classnum);
+	        }
+	    }
+	    return classNumList;
+	}
+
+	private List<Integer> getYearList() {
+	    int currentYear = LocalDate.now().getYear();
+	    List<Integer> yearList = new ArrayList<>();
+	    for (int i = currentYear; i >= currentYear - 10; i--) {
+	        yearList.add(i);
+	    }
+	    return yearList;
+	}
+
+	//学生一覧をデータベースから受け取りリストにしてstudent_list.jspに送っている
+	public void doPost
+		( HttpServletRequest request, HttpServletResponse response
+		) throws java.io.IOException {
+
+
+		List<Student> studentList1 = new ArrayList<>();
+
+	    String sql1 = "SELECT s.no, s.name, s.ent_year, s.class_num, s.is_attend, "
+	               + " sc.cd AS school_cd, sc.name AS school_name "
+	               + " FROM student as s "
+	               + " JOIN school as sc ON s.school_cd = sc.cd";
+
+	    try (Connection con1 = new StudentDao().getConnection();  // DAOの接続だけ使う
+	         PreparedStatement stmt1 = con1.prepareStatement(sql1);
+	         ResultSet rSet1 = stmt1.executeQuery()) {
+
+
+	        while (rSet1.next()) {
+	            School school = new School();
+	            school.setCd(rSet1.getString("school_cd"));
+	            school.setName(rSet1.getString("school_name"));
+
+	            Student student = new Student();
+	            student.setNo(rSet1.getString("no"));
+	            student.setName(rSet1.getString("name"));
+	            student.setEntYear(rSet1.getInt("ent_year"));
+	            student.setClassNum(rSet1.getString("class_num"));
+	            student.setIsAttend(rSet1.getBoolean("is_attend"));
+	            student.setSchool(school);
+
+	            studentList1.add(student);
+	        }
+	    }
+		request.setAttribute("studentList1", studentList1);
+
+		request.setAttribute("studentList2", getClassNumList());
+
+		request.setAttribute("YearList", getYearList());
+
+
+		request.getRequestDispatcher("/main/student_list.jsp").forward(request, response);
+
+	}*/
+
+
+
+
+	public void execute
+		( HttpServletRequest request, HttpServletResponse response
+		) throws Exception{
+	try {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
+		// パラメータ取得
+		String f1 = request.getParameter("f1");  		// 入学年度
+		String f2 = request.getParameter("f2");       // クラス
+		String f3 = request.getParameter("f3");       // チェックボックス（在学中）
+		Boolean isAttend = (f3 != null) ? true : false;
+
+		Integer entYear = null;
+		if (f1 != null && !f1.isEmpty()) {
+		    entYear = Integer.parseInt(f1);
+		}
+
+		String classNum = null;
+		if (f2 != null && !f2.isEmpty()) {
+			classNum = f2;
+		}
+
+
+		// 絞り込み実行
+		List<Student> filterList = new StudentDao().filter(entYear, classNum, isAttend);
+
+
+		request.setAttribute("studentList2", getClassNumList());
+		request.setAttribute("YearList", getYearList());
+
+		// JSPに渡す
+		request.setAttribute("filterList", filterList);
+
+
+		request.getRequestDispatcher("/main/student_list.jsp").forward(request, response);
+
+	} catch (Exception e) {
+        e.printStackTrace();
+        response.sendError(500);  // エラー処理
+    }
+	}
+}
+
