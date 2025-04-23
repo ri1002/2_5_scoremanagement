@@ -3,6 +3,8 @@
 <jsp:include page="../tool/header.html" />
 <jsp:include page="../tool/sidebar.html" />
 <%@ page import="java.time.LocalDate"%>
+<%@page import="bean.Student" %>
+<%@page import="java.util.List" %>
 
 <style>
 
@@ -37,6 +39,7 @@
 <h2>成績管理</h2>
 
 <div id = "sheader">
+<form action="StudentList.action" method="post">
 
 	<label>入学年度</label>
 	<label>クラス</label>
@@ -67,13 +70,20 @@
 
 	<select name="f4">
 		<option value="">--------</option>
-			<c:forEach var="c" items="${studentClassList}">
-			<option value="${c.class_num}">${c.class_num}</option>
-			</c:forEach>
+  			<option value="1">1</option>
+  			<option value="2">2</option>
+  			<option value="3">3</option>
+  			<option value="4">4</option>
+  			<option value="5">5</option>
+  			<option value="6">6</option>
+  			<option value="7">7</option>
+  			<option value="8">8</option>
+  			<option value="9">9</option>
+  			<option value="10">10</option>
 	</select>
 
 	<button type="submit">検索</button>
-
+</form>
 </div>
 
 <jsp:include page="../tool/footer.html" />
