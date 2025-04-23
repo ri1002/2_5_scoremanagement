@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ClassNum;
-import dao.ClassNumDao;
+import dao.ClassNumDao_0;
 @WebServlet( urlPatterns ={"/main/student_create"} )
 
 public class StudentCreateAction extends HttpServlet {
@@ -20,7 +20,7 @@ public class StudentCreateAction extends HttpServlet {
 
 	try {
 		 // クラス情報一覧取得
-        ClassNumDao classNumDao = new ClassNumDao();
+        ClassNumDao_0 classNumDao = new ClassNumDao_0();
         List<ClassNum> studentClassList = classNumDao.filter();
 
 
@@ -40,7 +40,7 @@ public class StudentCreateAction extends HttpServlet {
 	        throws java.io.IOException {
 
         try {
-            ClassNumDao classNumDao = new ClassNumDao();
+            ClassNumDao_0 classNumDao = new ClassNumDao_0();
             List<ClassNum> studentClassList = classNumDao.filter();
 
             request.setAttribute("studentClassList", studentClassList);
