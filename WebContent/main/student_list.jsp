@@ -2,7 +2,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@page import="bean.Student" %>
 <%@page import="java.util.List" %>
-<%@page import="java.time.LocalDate" %>
 <jsp:include page="../tool/header.html" />
 <jsp:include page="../tool/sidebar.html" />
 
@@ -87,8 +86,6 @@
 
 </style>
 
-<% LocalDate today = LocalDate.now(); %>
-<% int currentYear = today.getYear(); %>
 
 <h2>学生管理</h2>
 
@@ -101,12 +98,9 @@
 			<label>入学年度</label><br>
 			<select name="f1">
 				<option value="0">--------</option>
-				<%
-				for (int i = currentYear; i >= currentYear - 10; i--){
-					String selected = (String.valueOf(i).equals(request.getParameter("f1"))) ? "selected" : "";
-				%>
-        			<option value="<%=i %>" <%=selected%>><%=i %></option>
-    			<% }%>
+				<c:forEach  var="year" items="${YearList}">
+        			<option value="${year}" <c:if test="${year == f1 }">selected</c:if>>${year}</option>
+    			</c:forEach>
 			</select>
 		</div>
 		<div id = "class_filter">
@@ -143,7 +137,6 @@
             <th>氏名</th>
             <th>クラス</th>
             <th>在学中</th>
-            <th>　</th>
         </tr>
         <c:forEach var="student" items="${students }">
             <tr>
@@ -153,11 +146,10 @@
                 <td>${student.classNum}</td>
                 <td>
                 	<c:choose>
-                    	<c:when test="${student.isAttend() }">〇</c:when>
+                    	<c:when test="${studentst.isAttend() }">〇</c:when>
                     	<c:otherwise>×</c:otherwise>
                 </c:choose>
                </td>
-               <td><a href="todo">変更</a></td>
             </tr>
         </c:forEach>
     </table>
