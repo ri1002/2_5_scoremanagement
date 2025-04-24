@@ -57,8 +57,18 @@ public class ClassNumDao extends Dao {
 	/*public boolean save(ClassNum classNum) throws Exception {
 
 	}
+<<<<<<< master
+//
+//	public boolean save(ClassNum classNum) throws Exception {
+//	}
+//
+//	public boolean save(ClassNum classNum,String newClassNum) throws Exception {
+//	}
+}
+=======
 
 	public boolean save(ClassNum classNum, String newClassNum) throws Exception {
 */
 	}
 }
+>>>>>>> b52bd92 login画面とerror画面を作り、学生一覧のjava,jspと、フロントコントローラー、Actionを修正

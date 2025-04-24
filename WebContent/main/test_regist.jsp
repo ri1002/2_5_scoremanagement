@@ -69,10 +69,11 @@
 	</select>
 
 	<select name="f4">
+
 		<option value="">--------</option>
-  			<%for(int i=1; i <= 10; i++) {%>
-  				<option value="<%= i%>"><%= i%></option>
-  			<%} %>
+  		<%for(int i=1; i <= 10; i++) {%>
+  			<option value="<%= i%>"><%= i%></option>
+  		<%} %>
 	</select>
 
 	<button type="submit">検索</button>
