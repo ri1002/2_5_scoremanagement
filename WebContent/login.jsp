@@ -48,6 +48,7 @@
     	text-align: center;
     }
 
+
 </style>
 
 <div id= "login">
