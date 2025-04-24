@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FrontController extends HttpServlet {
 
 	@Override
-	protected void doPost (HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet (HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String path = request.getServletPath().substring(1);
 			String name = path.replace(".action", "Action").replace("/", ".");
@@ -30,7 +30,7 @@ public class FrontController extends HttpServlet {
 	}
 
 
-	protected void doGet(
+	protected void doPost(
 		HttpServletRequest request,HttpServletResponse response
 	) throws ServletException, IOException {
 		doGet(request,response);
