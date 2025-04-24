@@ -15,7 +15,7 @@ public class FrontController extends HttpServlet {
 	protected void doPost (HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String path = request.getServletPath().substring(1);
-			String name = path.replace(".a", ".A").replace("/", ".");
+			String name = path.replace(".action", "Action").replace("/", ".");
 
 			System.out.println("★ servlet path -> " + request.getServletPath());
 			System.out.println("★ class name -> " + name);
