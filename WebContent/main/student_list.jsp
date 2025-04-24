@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Student" %>
 <%@page import="java.util.List" %>
 <jsp:include page="../tool/header.html" />
@@ -146,7 +146,7 @@
                 <td>${student.classNum}</td>
                 <td>
                 	<c:choose>
-                    	<c:when test="${studentst.isAttend() }">〇</c:when>
+                    	<c:when test="${student.isAttend() }">〇</c:when>
                     	<c:otherwise>×</c:otherwise>
                 </c:choose>
                </td>

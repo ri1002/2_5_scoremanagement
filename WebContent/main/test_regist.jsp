@@ -39,7 +39,7 @@
 <h2>成績管理</h2>
 
 <div id = "sheader">
-<form action="StudentList.action" method="post">
+<form action="StudentTest.action" method="post">
 
 	<label>入学年度</label>
 	<label>クラス</label>
