@@ -14,8 +14,8 @@ import bean.Teacher;
 import dao.ClassNumDao;;
 
 //クラス
-@WebServlet(urlPatterns={"/main/test"})
-public class Test extends HttpServlet{
+@WebServlet(urlPatterns={"/main/testregistaction"})
+public class TestRegistAction extends HttpServlet{
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException{

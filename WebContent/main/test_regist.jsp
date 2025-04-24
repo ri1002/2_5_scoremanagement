@@ -63,11 +63,10 @@
 
 	<select name="f3">
 		<option value="">--------</option>
-			<c:forEach var="c" items="${studentSubjectList}">
-			<option value="${c.class_num}">${c.class_num}</option>
+			<c:forEach var="c" items="${SubjectList}">
+			<option value="${c.name}">${c.name}</option>
 			</c:forEach>
 	</select>
-
 
 	<select name="f4">
 
