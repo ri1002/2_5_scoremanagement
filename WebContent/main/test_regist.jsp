@@ -3,7 +3,7 @@
 <jsp:include page="../tool/header.html" />
 <jsp:include page="../tool/sidebar.html" />
 <%@ page import="java.time.LocalDate"%>
-<%@page import="bean.Student" %>
+<%@page import="bean.ClassNum, java.util.*" %>
 <%@page import="java.util.List" %>
 
 <style>
@@ -56,9 +56,9 @@
 
 	<select name="f2">
 		<option value="">--------</option>
-			<c:forEach var="c" items="${studentClassList}">
-			<option value="${c.class_num}">${c.class_num}</option>
-			</c:forEach>
+			<c:forEach var="c" items="${cList}">
+    <option value="${c.getClass_num() }">${ c.getClass_num() }</option>
+	</c:forEach>
 	</select>
 
 	<select name="f3">
