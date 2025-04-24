@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.School;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -22,8 +23,28 @@ public class StudentListAction extends Action{
 	public void execute
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception{
+
+
 		HttpSession session = request.getSession();
-		Teacher teacher = (Teacher)session.getAttribute("user");
+
+		//一時的にコメントアウト↓
+		//Teacher teacher = (Teacher)session.getAttribute("user");
+
+			// 仮のTeacherオブジェクトを作成
+			Teacher teacher = new Teacher();
+			teacher.setId("admin1");
+			teacher.setPassword("password");
+			teacher.setName("管理者1");
+			// 仮に学校情報を設定（Schoolオブジェクトがある場合）
+			School school = new School();
+			school.setName("テスト校");
+			school.setCd("tes");
+			teacher.setSchool(school);
+
+
+			// セッションにTeacherオブジェクトを保存
+			session.setAttribute("user", teacher);
+
 
 		String entYearStr="";//入力された入学年度
 		String classNum=""; //入力されたクラス番号
@@ -48,7 +69,7 @@ public class StudentListAction extends Action{
 
 		//ビジネスロジック
 
-		if (entYearStr != null){
+		if (entYearStr != null && !entYearStr.isEmpty()){
 			//数値に変換
 			entYear = Integer.parseInt(entYearStr);
 		}
@@ -61,7 +82,7 @@ public class StudentListAction extends Action{
 		//ログインユーザーの学校コードをもとにクラス番号の一覧を取得
 		List<String> list = cNumDao.filter(teacher.getSchool());
 
-		if (entYear != 0 && !classNum.equals("0")) {
+		if (entYear!= 0 && !classNum.equals("0")) {
 			// 入学年度とクラス番号を指定
 			students = sDao.filter(teacher.getSchool(), entYear, classNum, isAttend);
 		} else if (entYear != 0 && classNum.equals("0")) {
