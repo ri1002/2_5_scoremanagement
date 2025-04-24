@@ -40,7 +40,7 @@
 
 	<div id="main_menu_grades">
 		成績管理<br>
-		<a href="todo">成績登録</a><br>
+		<a href="http://localhost:8080/scoremanagement/main/test_regist.jsp">成績登録</a><br>
 		<a href="todo">成績参照</a>
 	</div>
 	<div id="main_menu_subject">

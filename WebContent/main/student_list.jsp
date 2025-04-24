@@ -97,25 +97,25 @@
 		<div id = "year_filter">
 			<label>入学年度</label><br>
 			<select name="f1">
-				<option value="">--------</option>
+				<option value="0">--------</option>
 				<c:forEach  var="year" items="${YearList}">
-        			<option value="${year}" <c:if test="${param.f1 == year }">selected</c:if>>${year}</option>
+        			<option value="${year}" <c:if test="${year == f1 }">selected</c:if>>${year}</option>
     			</c:forEach>
 			</select>
 		</div>
 		<div id = "class_filter">
 			<label>クラス</label><br>
 			<select name="f2">
-				<option value="">--------</option>
-				<c:forEach var="s2" items="${studentList2}">
-					<option value="${s2.class_num}" <c:if test="${param.f2 == s2.class_num }">selected</c:if>>${s2.class_num}</option>
+				<option value="0">--------</option>
+				<c:forEach var="num" items="${class_num_set}">
+					<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
 				</c:forEach>
 			</select>
 		</div>
 
 		<div id = "currently_enrolled_filter">
 			<label>
-				<input type="checkbox" name="f3" value="t"<c:if test="${param.f3 != null}">checked</c:if>>在学中
+				<input type="checkbox" name="f3" value="t"<c:if test="${!empty f3}">checked</c:if>>在学中
 			</label>
 		</div>
 
@@ -126,9 +126,9 @@
 </form>
 
 <c:choose>
-	<c:when test="${not empty filterList}">
+	<c:when test="${students.size()>0 }">
 
-	<p>検索結果:${filterList.size()}件</p>
+	<p>検索結果:${students.size()}件</p>
 
 	<table border="1">
         <tr>
@@ -138,15 +138,15 @@
             <th>クラス</th>
             <th>在学中</th>
         </tr>
-        <c:forEach var="filterlist" items="${filterList}">
+        <c:forEach var="student" items="${students }">
             <tr>
-                <td>${filterlist.entYear}</td>
-                <td>${filterlist.no}</td>
-                <td>${filterlist.name}</td>
-                <td>${filterlist.classNum}</td>
+                <td>${student.entYear}</td>
+                <td>${student.no}</td>
+                <td>${student.name}</td>
+                <td>${student.classNum}</td>
                 <td>
                 	<c:choose>
-                    	<c:when test="${filterlist.isAttend == true}">〇</c:when>
+                    	<c:when test="${studentst.isAttend() }">〇</c:when>
                     	<c:otherwise>×</c:otherwise>
                 </c:choose>
                </td>
@@ -154,33 +154,6 @@
         </c:forEach>
     </table>
 </c:when>
-<c:when test="${not empty studentList1}">
-
-	<p>検索結果:${studentList1.size()}件</p>
-
-	<table border="1">
-        <tr>
-            <th>入学年度</th>
-            <th>学生番号</th>
-            <th>氏名</th>
-            <th>クラス</th>
-            <th>在学中</th>
-        </tr>
-        <c:forEach var="s1" items="${studentList1}">
-            <tr>
-                <td>${s1.entYear}</td>
-                <td>${s1.no}</td>
-                <td>${s1.name}</td>
-                <td>${s1.classNum}</td>
-                <td><c:choose>
-                    <c:when test="${s1.isAttend}">〇</c:when>
-                    <c:otherwise>×</c:otherwise>
-                </c:choose></td>
-            </tr>
-        </c:forEach>
-    </table>
-</c:when>
-
 <c:otherwise>
     <p>学生データが存在しません。</p>
 </c:otherwise>
