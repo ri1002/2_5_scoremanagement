@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,65 +11,84 @@ import bean.ClassNum;
 import bean.School;
 
 public class ClassNumDao extends Dao {
-	public ClassNum get(String class_num, School school)throws Exception {
-		 String sql = "SELECT school_cd, class_num"
-	               + " FROM CLASS_NUM "
-	               + " WHERE class_num = ? AND school_cd = ?";
+	public ClassNum get(String class_num,School school) throws Exception {
+		ClassNum classNum = new ClassNum();
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
+		try {
+			statement = connection.prepareStatement("select * from class_num where class_num = ? and school_cd = ?");
+			statement.setString(1, class_num);
+			statement.setString(2, school.getCd());
+			ResultSet rSet = statement.executeQuery();
+			SchoolDao sDao = new SchoolDao();
+			if (rSet.next()) {
+				classNum.setClass_num(rSet.getString("class_num"));
+				classNum.setSchool(sDao.get(rSet.getString("school_cd")));
+			} else {
+				classNum = null;
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
 
-	    try (Connection con = getConnection();
-	    		PreparedStatement stmt = con.prepareStatement(sql)) {
-	        	stmt.setString(1, class_num);
-	        	stmt.setString(2, school.getCd());
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
 
-	        try (ResultSet rSet = stmt.executeQuery()) {
-	            if (rSet.next()) {
-
-	             // クラス情報セット
-	                ClassNum classNum = new ClassNum();
-	                classNum.setClass_num(rSet.getString("class_num"));
-	             // 学校コードだけセットする場合
-	                School s = new School();
-	                s.setCd(rSet.getString("school_cd"));
-	                classNum.setSchool(s);
-
-	                return classNum;// 取得成功時
-	            }
-	        }
-
-	        return null;
-	    }
+		return classNum;
 	}
 
-	public List<ClassNum> filter() throws Exception {
-	    List<ClassNum> classNumList = new ArrayList<>();
-	    String sql = "SELECT class_num FROM class_num";
+	public List<String> filter(School school) throws Exception {
+		List<String> list = new ArrayList<>();
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
 
-	    try (Connection con = new StudentDao().getConnection();
-	         PreparedStatement stmt = con.prepareStatement(sql);
-	         ResultSet rSet = stmt.executeQuery()) {
+		try {
+			statement = connection.prepareStatement("select class_num from class_num where school_cd=? order by class_num");
+			statement.setString(1, school.getCd());
+			ResultSet rSet = statement.executeQuery();
 
-	        while (rSet.next()) {
-	            ClassNum classnum = new ClassNum();
-	            classnum.setClass_num(rSet.getString("class_num"));
-	            classNumList.add(classnum);
-	        }
-	    }
-	    return classNumList;
-	/*public boolean save(ClassNum classNum) throws Exception {
+			while (rSet.next()) {
+				list.add(rSet.getString("class_num"));
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
 
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
+
+		return list;
 	}
-<<<<<<< master
-//
+
 //	public boolean save(ClassNum classNum) throws Exception {
 //	}
-//
+
 //	public boolean save(ClassNum classNum,String newClassNum) throws Exception {
 //	}
 }
-=======
-
-	public boolean save(ClassNum classNum, String newClassNum) throws Exception {
-*/
-	}
-}
->>>>>>> b52bd92 login画面とerror画面を作り、学生一覧のjava,jspと、フロントコントローラー、Actionを修正
