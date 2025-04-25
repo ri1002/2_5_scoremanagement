@@ -35,7 +35,7 @@
 <h2>メニュー</h2>
 <div id="main_menu">
 	<div id="main_menu_student">
-		<a href="http://localhost:8080/scoremanagement/main/student_list">学生管理</a>
+		<a href="http://localhost:8080/scoremanagement/main/StudentList.action">学生管理</a>
 	</div>
 
 	<div id="main_menu_grades">

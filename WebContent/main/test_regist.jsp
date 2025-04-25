@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html; charset=UTF-8" %>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <jsp:include page="../tool/header.html" />
 <jsp:include page="../tool/sidebar.html" />
 <%@ page import="java.time.LocalDate"%>
@@ -35,11 +35,10 @@
 
 </style>
 
-
 <h2>成績管理</h2>
 
 <div id = "sheader">
-<form action="StudentList.action" method="post">
+<form action="TestRegist.action" method="post">
 
 	<label>入学年度</label>
 	<label>クラス</label>
@@ -47,25 +46,28 @@
 	<label>回数</label><br>
 
 	<select name="f1">
-		<option value="">--------</option>
-			<%int currentYear = LocalDate.now().getYear(); %>
-			<% for (int i = currentYear - 10; i <= currentYear + 10; i++) {%>
-       			<option value="<%= i %>" ><%= i %></option>
-   			<% } %>
-	</select>
+				<option value="0">--------</option>
+				<%int currentYear = LocalDate.now().getYear();%>
+				<%
+					for (int i = currentYear; i >= currentYear - 10; i--) {
+						String selected = (String.valueOf(i).equals(request.getParameter("f1"))) ? "selected" : "";
+				%>
+       				<option value="<%= i %>"  <%= selected %>><%= i %></option>
+   				<% } %>
+			</select>
 
-	<select name="f2">
-		<option value="">--------</option>
-			<c:forEach var="c" items="${cList}">
-    <option value="${c.getClass_num() }">${ c.getClass_num() }</option>
-	</c:forEach>
-	</select>
+			<select name="f2">
+				<option value="0">--------</option>
+				<c:forEach var="num" items="${class_num_set}">
+					<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
+				</c:forEach>
+			</select>
 
 	<select name="f3">
-		<option value="">--------</option>
-			<c:forEach var="c" items="${SubjectList}">
-			<option value="${c.name}">${c.name}</option>
-			</c:forEach>
+		<option value="0">--------</option>
+			<c:forEach var="subject" items="${subjects}">
+    <option value="${subject.cd}">${subject.name}</option>
+  </c:forEach>
 	</select>
 
 	<select name="f4">

@@ -2,8 +2,6 @@
 <jsp:include page="/tool/header.html" />
 <jsp:include page="/tool/sidebar.html" />
 
-
 <p>エラーが発生しました。</p>
-
 
 <jsp:include page="/tool/footer.html" />
