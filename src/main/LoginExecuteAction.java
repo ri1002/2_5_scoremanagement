@@ -23,10 +23,10 @@ public class LoginExecuteAction extends Action {
 
 		if (teacher!=null) {
 			session.setAttribute("teacher", teacher);
-			request.getRequestDispatcher("menu.action").forward(request,response);
+			request.getRequestDispatcher("menu.jsp").forward(request,response);
 		}else{
 			 request.setAttribute("error", "IDまたはパスワードが違います");
-		     request.getRequestDispatcher("login.jsp").forward(request, response);		}
+		     request.getRequestDispatcher("../login.jsp").forward(request, response);		}
 
 	}
 }

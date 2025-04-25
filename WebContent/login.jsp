@@ -1,6 +1,7 @@
 <%-- ログイン --%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<jsp:include page="/tool/header.html" />
+<jsp:include page="tool/header.html" />
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 <%-- ログイン --%>
@@ -48,7 +49,18 @@
     	margin-right:auto;
     	text-align: center;
     }
-
+	#login_button{
+				border-radius: 5px;
+			    display: block;
+			    width: 200px;
+			    padding: 15px;
+			    box-sizing: border-box;
+			    background: #6fa1ff;
+			    color: #FFF;
+			    text-decoration: none;
+			    text-align: center;
+			    margin: 10px auto;	
+			    }	
 
 </style>
 
@@ -56,16 +68,30 @@
 	<div id = "login_border">
 		<div id = "login_text">
 			<h2>ログイン</h2>
+		    <form action="main/LoginExecute.action" method="post">
+		    	<c:if test="${not empty error}">
+    				<p style="color:red">${error}</p>
+				</c:if>
 
-			<input type="text" placeholder="ID"><br>
-			<input type="password" placeholder="パスワード"><br>
-			<label>
-				<input type="checkbox"value="ID">パスワードを表示
-			</label>
-		<br>
-			<button>ログイン</button>
+				<input type="text" placeholder="ID" name="id" required id="id"><br>
+				<input type="password" placeholder="パスワード" name="password" required id="password"><br>
+				
+				
+				
+				<input type="checkbox" id="showPassword" onclick="togglePassword()">
+        		<label for="showPassword">パスワードを表示する</label><br><br>
+        		
+			<br>
+	      	<input id="login_button" type="submit" value="ログイン">
+	      	</form>
 		</div>
 	</div>
 </div>
-<jsp:include page="/tool/footer.html" />
+<script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
+        }
+    </script>
+<jsp:include page="tool/footer.html" />
 
