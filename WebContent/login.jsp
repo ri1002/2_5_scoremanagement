@@ -2,9 +2,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <jsp:include page="/tool/header.html" />
 
-
-<%-- ログイン --%>
-
 <style>
   	#login{
     	width: 50%;
