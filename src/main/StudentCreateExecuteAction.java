@@ -1,25 +1,22 @@
-/*package main;
+package main;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.School;
 import bean.Student;
+import bean.Teacher;
+import dao.ClassNumDao;
 import dao.StudentDao;
+import tool.Action;
 @WebServlet( urlPatterns ={"/main/student"} )
 
-public class StudentCreateExecuteAction extends HttpServlet {
+public class StudentCreateExecuteAction extends Action {
 
-	@Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException {
         try {
             execute(request, response);
         } catch (Exception e) {
@@ -33,42 +30,90 @@ public class StudentCreateExecuteAction extends HttpServlet {
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception {
 
-		List<Student> studentList1 = new ArrayList<>();
-		List<Student> studentList2 = new ArrayList<>();
+		Integer ent_year = Integer.parseInt(request.getParameter("ent_year"));
+        String no = request.getParameter("no");
+        String name = request.getParameter("name");
+        String class_num = request.getParameter("class_num");
+        boolean hasError = false;
 
-	    String sql1 = "SELECT s.no, s.name, s.ent_year, s.class_num, s.is_attend, "
-	               + " sc.cd AS school_cd, sc.name AS school_name "
-	               + " FROM student as s "
-	               + " JOIN school as sc ON s.school_cd = sc.cd";
-
-	    String sql2 = "select distinct ent_year"
-	               + " FROM student";
-
-	    try (Connection con = new StudentDao().getConnection();  // DAOの接続だけ使う
-	         PreparedStatement stmt = con.prepareStatement(sql1);
-	         ResultSet rSet = stmt.executeQuery()) {
-
-	        while (rSet.next()) {
-	            School school = new School();
-	            school.setCd(rSet.getString("school_cd"));
-	            school.setName(rSet.getString("school_name"));
-
-	            Student student = new Student();
-	            student.setNo(rSet.getString("no"));
-	            student.setName(rSet.getString("name"));
-	            student.setEntYear(rSet.getInt("ent_year"));
-	            student.setClassNum(rSet.getString("class_num"));
-	            student.setIsAttend(rSet.getBoolean("is_attend"));
-	            student.setSchool(school);
-
-	            studentList1.add(student);
-	        }
-	    }
-		request.setAttribute("studentList1", studentList1);
-		request.getRequestDispatcher("/main/student.jsp").forward(request, response);
+        String student_ent_year = null;
+	    String student_number = null;
+	    String student_name = null;
 
 
+		if (ent_year == 0) {
+			student_ent_year = "入学年度を入力してください。";
+			hasError = true;
+		}
+
+		if (no == null || no.trim().isEmpty()) {
+			student_number = "学生番号を入力してください。";
+			hasError = true;
+		}
+
+		if (name == null || name.trim().isEmpty()) {
+			student_name = "名前を入力してください。";
+			hasError = true;
+		}
+
+        // エラーがあった場合は再入力画面へ戻す
+        if (hasError) {
+        	request.setAttribute("student_ent_year", student_ent_year);
+            request.setAttribute("student_number", student_number);
+            request.setAttribute("student_name", student_name);
+
+            // `StudentCreateAction` から渡されたクラス情報を再度セット
+            ClassNumDao cNumDao = new ClassNumDao();
+            Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+            List<String> classNumList = cNumDao.filter(teacher.getSchool());
+            request.setAttribute("class_num_set", classNumList);
+
+            request.getRequestDispatcher("/main/student_create.jsp").forward(request, response);
+            return;
+        }
+
+        StudentDao studentdao = new StudentDao();
+        Student existingStudent = studentdao.get(no);
+
+
+		if ( existingStudent != null) {
+			String student_duplication = "学生番号が重複しています";
+			hasError = true;
+
+			// エラー表示の準備
+			request.setAttribute("student_duplication", student_duplication);
+
+			// クラス情報の再取得とセット
+			ClassNumDao cNumDao = new ClassNumDao();
+			Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+			List<String> classNumList = cNumDao.filter(teacher.getSchool());
+			request.setAttribute("class_num_set", classNumList);
+
+			// フォワード
+			request.getRequestDispatcher("/main/student_create.jsp").forward(request, response);
+			return;
+		}
+
+			Student student = new Student();
+			student.setNo(no);              // 学生番号
+			student.setName(name);       	// 名前
+			student.setEntYear(ent_year);          // 入学年度
+			student.setClassNum(class_num);         // クラス番号
+			student.setAttend(true);           // 在学中フラグ
+
+			School school = new School();      // 学校情報（省略してたらここ必要！）
+			school.setCd("tes");
+			student.setSchool(school);         // 学校コードをセット
+
+			StudentDao dao = new StudentDao();
+			boolean result = dao.save(student);  // ← 登録・更新の実行
+
+
+
+        //登録完了後にリダイレクト(仮の成功画面)
+		request.getRequestDispatcher("/main/student_create_done.jsp").forward(request, response);
 	}
 
+}
 
-}*/
+
