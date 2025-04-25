@@ -22,18 +22,7 @@
 <h2>科目情報登録</h2>
 
 <form action="subject_create" method="post">
-    <div id = "filtering">
-        <div id = "year_filter">
-            <label>年度</label><br>
-            <select name="year">
-                <option value="">--------</option>
-                <% int currentYear = LocalDate.now().getYear(); %>
-                <% for (int i = currentYear - 10; i <= currentYear + 10; i++) { %>
-                    <option value="<%= i %>" ><%= i %></option>
-                <% } %>
-            </select>
-        </div>
-        <br>
+
 
         <label>科目コード</label><br>
         <input type="text" placeholder="科目コードを入力してください" name="code"><br>
