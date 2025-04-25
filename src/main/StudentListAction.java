@@ -13,7 +13,7 @@ import dao.StudentDao;
 
 public class StudentListAction extends HttpServlet {
 
-/*	@Override
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException {
         try {
             execute(request, response);
