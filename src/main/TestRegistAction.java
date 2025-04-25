@@ -11,10 +11,12 @@ import javax.servlet.http.HttpSession;
 
 import bean.School;
 import bean.Student;
+import bean.Subject;
 import bean.Teacher;
 import dao.ClassNumDao;
 import dao.StudentDao;
-import tool.Action;;
+import dao.SubjectDao;
+import tool.Action;
 
 public class TestRegistAction extends Action{
 
@@ -69,6 +71,10 @@ public class TestRegistAction extends Action{
 				//全学生情報を取得
 				students = sDao.filter(teacher.getSchool(), isAttend);
 			}
+
+			SubjectDao subjectDao = new SubjectDao();
+			List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
+			request.setAttribute("subjects", subjectList);
 
 		//レスポンス値をセット
 		//リクエストに入学年度をセット

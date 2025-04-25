@@ -65,10 +65,10 @@
 			</select>
 
 	<select name="f3">
-		<option value="">--------</option>
-			<c:forEach var="c" items="${SubjectList}">
-			<option value="${c.name}">${c.name}</option>
-			</c:forEach>
+		<option value="0">--------</option>
+			<c:forEach var="subject" items="${subjects}">
+    <option value="${subject.cd}">${subject.name}</option>
+  </c:forEach>
 	</select>
 
 	<select name="f4">
