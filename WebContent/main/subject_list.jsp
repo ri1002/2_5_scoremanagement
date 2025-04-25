@@ -34,7 +34,7 @@
         </table>
     </c:when>
     <c:otherwise>
-        <p>科目データが存在しません。</p>
+        <p>科目データが存在しません!</p>
     </c:otherwise>
 </c:choose>
 
