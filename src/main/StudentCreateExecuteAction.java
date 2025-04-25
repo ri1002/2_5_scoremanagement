@@ -42,17 +42,17 @@ public class StudentCreateExecuteAction extends Action {
 
 
 		if (ent_year == 0) {
-			student_ent_year = "入学年度を入力してください。";
+			student_ent_year = "入学年度を選択してください。";
 			hasError = true;
 		}
 
 		if (no == null || no.trim().isEmpty()) {
-			student_number = "学生番号を入力してください。";
+			student_number = "このフィールドを入力してください。";
 			hasError = true;
 		}
 
 		if (name == null || name.trim().isEmpty()) {
-			student_name = "名前を入力してください。";
+			student_name = "このフィールドを入力してください。";
 			hasError = true;
 		}
 
@@ -111,7 +111,8 @@ public class StudentCreateExecuteAction extends Action {
 
 
         //登録完了後にリダイレクト(仮の成功画面)
-		request.getRequestDispatcher("/main/student_create_done.jsp").forward(request, response);
+		response.sendRedirect("../main/student_create_done.jsp");
+		return;
 	}
 
 }
