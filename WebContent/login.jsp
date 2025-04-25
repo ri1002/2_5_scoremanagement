@@ -3,9 +3,6 @@
 <jsp:include page="tool/header.html" />
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<%-- ログイン --%>
-
 <style>
   	#login{
     	width: 50%;
@@ -59,8 +56,8 @@
 			    color: #FFF;
 			    text-decoration: none;
 			    text-align: center;
-			    margin: 10px auto;	
-			    }	
+			    margin: 10px auto;
+			    }
 
 </style>
 
@@ -79,12 +76,12 @@
 
 				<input type="text" placeholder="ID" name="id" required id="id"><br>
 				<input type="password" placeholder="パスワード" name="password" required id="password"><br>
-				
-				
-				
+
+
+
 				<input type="checkbox" id="showPassword" onclick="togglePassword()">
         		<label for="showPassword">パスワードを表示する</label><br><br>
-        		
+
 			<br>
 	      	<input id="login_button" type="submit" value="ログイン">
 	      	</form>
