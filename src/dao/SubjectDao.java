@@ -9,6 +9,7 @@ import java.util.List;
 import bean.School;
 import bean.Subject;
 
+
 public class SubjectDao extends Dao {
     public List<Subject> filter(School school) throws Exception {
         List<Subject> list = new ArrayList<>();

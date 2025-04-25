@@ -35,7 +35,6 @@
 
 </style>
 
-
 <h2>成績管理</h2>
 
 <div id = "sheader">
