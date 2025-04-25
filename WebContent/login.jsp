@@ -1,6 +1,7 @@
 <%-- ログイン --%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<jsp:include page="/tool/header.html" />
+<jsp:include page="tool/header.html" />
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
   	#login {
@@ -65,12 +66,27 @@
     	margin-right: auto;
     	text-align: center;
     }
+<<<<<<< HEAD
 
     label {
     	display: flex; /* フレックスボックスで配置 */
     	align-items: center; /* 垂直方向に中央寄せ */
     	gap: 5px; /* チェックボックスと文字の間隔を設定 */
     }
+=======
+	#login_button{
+				border-radius: 5px;
+			    display: block;
+			    width: 200px;
+			    padding: 15px;
+			    box-sizing: border-box;
+			    background: #6fa1ff;
+			    color: #FFF;
+			    text-decoration: none;
+			    text-align: center;
+			    margin: 10px auto;
+			    }
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 
     label span {
         margin-left: 150px; /* 「パスワードを表示」の文字を少し左に移動 */
@@ -81,6 +97,7 @@
 	<div id="login_border">
 		<div id="login_text">
 			<h2>ログイン</h2>
+
 			<input type="text" placeholder="ID"><br>
 			<input type="password" id="password" placeholder="パスワード"><br>
 			<label style="display: flex; align-items: center;">
@@ -89,9 +106,41 @@
 </label>
 			<br>
 			<button>ログイン</button>
+=======
+		    <form action="main/LoginExecute.action" method="post">
+		    	 <b>
+		   			 <small>
+		    			<c:if test="${not empty error}">
+    						<p style="color:black">${error}</p>
+						</c:if>
+					</small>
+				</b>
+
+				<input type="text" placeholder="ID" name="id" required id="id"><br>
+				<input type="password" placeholder="パスワード" name="password" required id="password"><br>
+
+
+
+				<input type="checkbox" id="showPassword" onclick="togglePassword()">
+        		<label for="showPassword">パスワードを表示する</label><br><br>
+
+			<br>
+	      	<input id="login_button" type="submit" value="ログイン">
+	      	</form>
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 		</div>
 	</div>
 </div>
+
+=======
+<script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
+        }
+    </script>
+<jsp:include page="tool/footer.html" />
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 
 <script>
 	// チェックボックスの状態に基づいてパスワードの表示を切り替える
