@@ -21,7 +21,7 @@
 
 <h2>学生情報登録</h2>
 
-<form action="student_create" method="post">
+<form action="StudentCreate.action" method="post">
 	<div id = "filtering">
 		<div id = "year_filter">
 			<label>入学年度</label><br>
@@ -47,8 +47,8 @@
 		<div id = "class_filter">
 			<label>クラス</label><br>
 			<select name="class_num">
-				<c:forEach var="c" items="${studentClassList}">
-					<option value="${c.class_num}">${c.class_num}</option>
+				<c:forEach var="c" items="${class_num_set}">
+					<option value="${c}">${c}</option>
 				</c:forEach>
 			</select>
 		</div>
