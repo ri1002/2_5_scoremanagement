@@ -69,9 +69,13 @@
 		<div id = "login_text">
 			<h2>ログイン</h2>
 		    <form action="main/LoginExecute.action" method="post">
-		    	<c:if test="${not empty error}">
-    				<p style="color:red">${error}</p>
-				</c:if>
+		    	 <b>
+		   			 <small>
+		    			<c:if test="${not empty error}">
+    						<p style="color:black">${error}</p>
+						</c:if>
+					</small>
+				</b>
 
 				<input type="text" placeholder="ID" name="id" required id="id"><br>
 				<input type="password" placeholder="パスワード" name="password" required id="password"><br>
