@@ -35,7 +35,7 @@
 <br>
 在学中
 <br>
-<button type="submit" name="end">登録して終了</button>
+<button type="submit" name="login">変更</button>
 <br>
 
 </form>
