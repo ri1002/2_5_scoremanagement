@@ -7,11 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.School;
+import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
+import dao.StudentDao;
 import tool.Action;
 
-public class StudentCreateAction extends Action {
+public class StudentUpdateAction extends Action {
 
 
 	public void execute
@@ -34,8 +36,15 @@ public class StudentCreateAction extends Action {
 			// セッションにTeacherオブジェクトを保存
 			session.setAttribute("user", teacher);
 
-		ClassNumDao cNumDao = new ClassNumDao();//クラス番号Daoを初期化
+		// リクエストパラメータから学生番号を取得
+	    String studentNo = request.getParameter("no");
 
+	    // そのIDに対応する学生情報をDBから取得する
+	    StudentDao studentdao = new StudentDao();
+	    Student student = studentdao.get(studentNo);
+
+
+	    ClassNumDao cNumDao = new ClassNumDao();//クラス番号Daoのインスタンスを作成
 
 		//ビジネスロジック
 
@@ -43,12 +52,15 @@ public class StudentCreateAction extends Action {
 		//ログインユーザーの学校コードをもとにクラス番号の一覧を取得
 		List<String> list = cNumDao.filter(teacher.getSchool());
 
+		//リクエストに変更したい学生情報をセット
+		request.setAttribute("student", student);
 
 		//リクエストにクラス番号をセット
 		request.setAttribute("class_num_set", list);
 
+
 		//JSPへフォワード
-		request.getRequestDispatcher("student_create.jsp").forward(request, response);
+		request.getRequestDispatcher("student_update.jsp").forward(request, response);
 
 	}
 }

@@ -13,6 +13,7 @@ import bean.Student;
 public class StudentDao extends Dao {
 	private String baseSql = "select * from student where school_cd=?";
 
+	//学生情報の取得
 	public Student get(String no) throws Exception {
 		Student student = new Student();
 		Connection connection = getConnection();
@@ -116,6 +117,7 @@ public class StudentDao extends Dao {
 		return list;
 	}
 
+
 	public List<Student> filter(School school,int entYear,boolean isAttend) throws Exception {
 		List<Student> list = new ArrayList<>();
 		Connection connection = getConnection();
@@ -212,14 +214,14 @@ public class StudentDao extends Dao {
 				statement.setString(2, student.getName());
 				statement.setInt(3, student.getEntYear());
 				statement.setString(4, student.getClassNum());
-				statement.setBoolean(5, student.isAttend());
+				statement.setBoolean(5, student.getIsAttend());
 				statement.setString(6, student.getSchool().getCd());
 			} else {
 				statement = connection.prepareStatement("update student set name=?, ent_year=?, class_num=?, is_attend=? where no=?");
 				statement.setString(1, student.getName());
 				statement.setInt(2, student.getEntYear());
 				statement.setString(3, student.getClassNum());
-				statement.setBoolean(4, student.isAttend());
+				statement.setBoolean(4, student.getIsAttend());
 				statement.setString(5, student.getNo());
 			}
 
