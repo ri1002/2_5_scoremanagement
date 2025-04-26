@@ -158,7 +158,7 @@
                     	<c:otherwise>×</c:otherwise>
                 </c:choose>
                 </td>
-                <td><a href="todo">変更</a></td>
+                <td><a href="http://localhost:8080/scoremanagement/main/StudentUpdate.action?id=${student.no}">変更</a></td>
             </tr>
         </c:forEach>
     </table>
