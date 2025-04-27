@@ -1,14 +1,16 @@
 package main;
 
-import javax.servlet.annotation.WebServlet;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.School;
 import bean.Student;
+import bean.Teacher;
+import dao.ClassNumDao;
 import dao.StudentDao;
 import tool.Action;
-@WebServlet( urlPatterns ={"/main/student"} )
 
 public class StudentUpdateExecuteAction extends Action {
 
@@ -33,6 +35,16 @@ public class StudentUpdateExecuteAction extends Action {
         Boolean is_attend = Boolean.parseBoolean(request.getParameter("is_attend"));
         boolean hasError = false;
 
+		Teacher teacher = new Teacher();
+		teacher.setId("admin1");
+			teacher.setPassword("password");
+			teacher.setName("管理者1");
+			// 仮に学校情報を設定（Schoolオブジェクトがある場合）
+			School school = new School();
+			school.setName("テスト校");
+			school.setCd("tes");
+			teacher.setSchool(school);
+
 	    String student_name = null;
 
 		if (name == null || name.trim().isEmpty()) {
@@ -42,6 +54,29 @@ public class StudentUpdateExecuteAction extends Action {
 
         // エラーがあった場合は再入力画面へ戻す
         if (hasError) {
+
+    		// リクエストパラメータから学生番号を取得
+    	    String studentNo = request.getParameter("no");
+
+
+    	    // そのIDに対応する学生情報をDBから取得する
+    	    StudentDao studentdao = new StudentDao();
+    	    Student student = studentdao.get(studentNo);
+
+    	    //ClassNumDaoのインスタンスを作成
+    	    ClassNumDao cNumDao = new ClassNumDao();
+
+    		//ビジネスロジック
+
+    		//DBからデータ取得
+    		//ログインユーザーの学校コードをもとにクラス番号の一覧を取得
+    		List<String> list = cNumDao.filter(teacher.getSchool());
+
+    		//リクエストに変更したい学生情報をセット
+    		request.setAttribute("student", student);
+
+    		//リクエストにクラス番号をセット
+    		request.setAttribute("class_num_set", list);
             request.setAttribute("student_name", student_name);
 
             request.getRequestDispatcher("/main/student_update.jsp").forward(request, response);
@@ -54,8 +89,7 @@ public class StudentUpdateExecuteAction extends Action {
 			student.setEntYear(ent_year);          // 入学年度
 			student.setClassNum(class_num);         // クラス番号
 			student.setAttend(is_attend);           // 在学中フラグ
-
-			School school = new School();      // 学校情報（省略してたらここ必要！）
+      // 学校情報（省略してたらここ必要！）
 			school.setCd("tes");
 			student.setSchool(school);         // 学校コードをセット
 
@@ -65,7 +99,7 @@ public class StudentUpdateExecuteAction extends Action {
 
 
         //登録完了後にリダイレクト(仮の成功画面)
-		response.sendRedirect("../main/student_update_done");
+		response.sendRedirect("../main/student_update_done.jsp");
 		return;
 	}
 

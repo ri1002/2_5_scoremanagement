@@ -18,6 +18,7 @@ public class StudentCreateAction extends Action {
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception{
 		HttpSession session = request.getSession();
+		//一時的にコメントアウトしているteacherインスタンス
 		//Teacher teacher = (Teacher)session.getAttribute("user");
 
 		Teacher teacher = new Teacher();
@@ -34,10 +35,9 @@ public class StudentCreateAction extends Action {
 			// セッションにTeacherオブジェクトを保存
 			session.setAttribute("user", teacher);
 
-		ClassNumDao cNumDao = new ClassNumDao();//クラス番号Daoを初期化
+		//ClassNumDaoのインスタンス作成
+		ClassNumDao cNumDao = new ClassNumDao();
 
-
-		//ビジネスロジック
 
 		//DBからデータ取得
 		//ログインユーザーの学校コードをもとにクラス番号の一覧を取得

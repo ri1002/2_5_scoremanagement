@@ -20,6 +20,7 @@ public class StudentUpdateAction extends Action {
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception{
 		HttpSession session = request.getSession();
+		//一時的にコメントアウトしているteacherインスタンス
 		//Teacher teacher = (Teacher)session.getAttribute("user");
 
 		Teacher teacher = new Teacher();
@@ -35,16 +36,18 @@ public class StudentUpdateAction extends Action {
 
 			// セッションにTeacherオブジェクトを保存
 			session.setAttribute("user", teacher);
+			
 
 		// リクエストパラメータから学生番号を取得
 	    String studentNo = request.getParameter("no");
+	    
 
 	    // そのIDに対応する学生情報をDBから取得する
 	    StudentDao studentdao = new StudentDao();
 	    Student student = studentdao.get(studentNo);
 
-
-	    ClassNumDao cNumDao = new ClassNumDao();//クラス番号Daoのインスタンスを作成
+	    //ClassNumDaoのインスタンスを作成
+	    ClassNumDao cNumDao = new ClassNumDao();
 
 		//ビジネスロジック
 

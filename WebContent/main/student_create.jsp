@@ -41,7 +41,7 @@
         					<c:if test="${param.ent_year == i}" >selected</c:if>><%= i %></option>
     				<% } %>
 			</select>
-			<c:if test="${not empty student_ent_year}">
+		<c:if test="${not empty student_ent_year}">
     		<p style="color:#FFCC33">${student_ent_year}</p>
 		</c:if>
 		</div>

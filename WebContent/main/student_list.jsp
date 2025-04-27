@@ -67,7 +67,7 @@
 		background: none;
   		cursor: pointer;
 	}
-	    #filter_filter button {
+	#filter_filter button {
   		color: #FFFFFF;
   		background: #808080;
  	 	display: inline-block;
@@ -154,7 +154,7 @@
                 <td>${student.classNum}</td>
                 <td>
                 	<c:choose>
-                    	<c:when test="${student.getIsAttend() }">〇</c:when>
+                    	<c:when test="${student.getAttend() }">〇</c:when>
                     	<c:otherwise>×</c:otherwise>
                 </c:choose>
                 </td>
