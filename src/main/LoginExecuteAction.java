@@ -20,13 +20,18 @@ public class LoginExecuteAction extends Action {
 
 		TeacherDao dao=new TeacherDao();
 		Teacher teacher=dao.login(id, password);
+		
+		System.out.println("ログイン試行 - 入力ID: " + id);
+		System.out.println("ログイン試行 - 入力Password: " + password);
+		System.out.println("Teacher オブジェクト: " + (teacher != null ? "存在する" : "null"));
 
 		if (teacher!=null) {
 			session.setAttribute("teacher", teacher);
-			request.getRequestDispatcher("menu.jsp").forward(request,response);
+			request.getRequestDispatcher("/main/menu.jsp").forward(request,response);
 		}else{
-			 request.setAttribute("error", "IDまたはパスワードが違います");
-		     request.getRequestDispatcher("../login.jsp").forward(request, response);		}
+			 session.setAttribute("error", "IDまたはパスワードが違います");
+			 response.sendRedirect("../login.jsp");
 
 	}
+}
 }

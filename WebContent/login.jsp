@@ -68,9 +68,14 @@
 		    <form action="main/LoginExecute.action" method="post">
 		    	 <b>
 		   			 <small>
-		    			<c:if test="${not empty error}">
-    						<p style="color:black">${error}</p>
-						</c:if>
+		    			<%-- エラーメッセージの表示 --%>
+						<%
+						    String errorMessage = (String) session.getAttribute("error");
+						    if (errorMessage != null) {
+						        out.println("<p style='color:red;'>" + errorMessage + "</p>");
+						        session.removeAttribute("error"); // メッセージを表示後にセッションから削除
+						    }
+						%>
 					</small>
 				</b>
 
