@@ -2,7 +2,6 @@ package main;
 
 import java.util.List;
 
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,7 +11,7 @@ import bean.Teacher;
 import dao.ClassNumDao;
 import dao.StudentDao;
 import tool.Action;
-@WebServlet( urlPatterns ={"/main/student"} )
+
 
 public class StudentCreateExecuteAction extends Action {
 

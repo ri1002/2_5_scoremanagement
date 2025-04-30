@@ -23,7 +23,7 @@ public class Student implements Serializable {
 	public String getClassNum(){
 		return this.classNum;
 	}
-	public boolean isAttend(){
+	public boolean getAttend(){
 		return this.isAttend;
 	}
 	public School getSchool(){
