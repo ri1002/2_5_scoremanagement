@@ -95,4 +95,3 @@
         }
     </script>
 <jsp:include page="tool/footer.html" />
-
