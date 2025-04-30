@@ -27,7 +27,7 @@ public class LoginExecuteAction extends Action {
 
 		if (teacher!=null) {
 			session.setAttribute("teacher", teacher);
-			request.getRequestDispatcher("/main/menu.jsp").forward(request,response);
+			request.getRequestDispatcher("/main/Menu.action").forward(request,response);
 		}else{
 			 session.setAttribute("error", "IDまたはパスワードが違います");
 			 response.sendRedirect("../login.jsp");
