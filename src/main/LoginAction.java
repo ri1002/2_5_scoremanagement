@@ -13,6 +13,6 @@ public class LoginAction extends Action {
 		String set = "とりあえずなんかセット";
 
 		request.setAttribute("set", set);
-		request.getRequestDispatcher("login.jsp").forward(request, response);
+		request.getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 }
