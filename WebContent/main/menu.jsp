@@ -41,7 +41,7 @@
 	<div id="main_menu_grades">
 		成績管理<br>
 		<a href="http://localhost:8080/scoremanagement/main/TestRegist.action">成績登録</a><br>
-		<a href="todo">成績参照</a>
+		<a href="http://localhost:8080/scoremanagement/main/test_list.jsp">成績参照</a>
 	</div>
 	<div id="main_menu_subject">
 		<a href="todo">科目管理</a>
