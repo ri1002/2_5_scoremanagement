@@ -58,7 +58,11 @@
 			    text-align: center;
 			    margin: 10px auto;
 			    }
+	
+			    
 
+	
+	
 </style>
 
 <div id= "login">
@@ -84,7 +88,7 @@
 
 
 
-				<input type="checkbox" id="showPassword" onclick="togglePassword()">
+				<input type="checkbox" id="showPassword" onclick="togglePassword()" >
         		<label for="showPassword">パスワードを表示する</label><br><br>
 
 			<br>
