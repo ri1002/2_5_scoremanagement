@@ -4,8 +4,6 @@
 <%@page import="bean.ClassNum, java.util.*" %>
 <%@page import="java.util.List" %>
 
-<div id = "sheader">
-<form action="TestRegist.action" method="post">
 
 	<label>入学年度</label>
 	<label>クラス</label>
@@ -45,6 +43,4 @@
   		<%} %>
 	</select>
 
-	<button type="submit">検索</button>
-</form>
-</div>
+

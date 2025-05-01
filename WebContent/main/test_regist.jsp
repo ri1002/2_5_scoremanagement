@@ -36,7 +36,10 @@
 </style>
 
 <h2>成績管理</h2>
-
-<jsp:include page="/common/test_header.jsp" />
-
+<div id = "sheader">
+<form action="TestRegist.action" method="post">
+	<jsp:include page="/common/test_header.jsp" />
+	<button type="submit">検索</button>
+</form>
+</div>
 <jsp:include page="../tool/footer.html" />
