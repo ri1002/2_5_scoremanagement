@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.School;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -21,26 +20,15 @@ public class StudentUpdateAction extends Action {
 		) throws Exception{
 		HttpSession session = request.getSession();
 		//一時的にコメントアウトしているteacherインスタンス
-		//Teacher teacher = (Teacher)session.getAttribute("user");
-
-		Teacher teacher = new Teacher();
-		teacher.setId("admin1");
-			teacher.setPassword("password");
-			teacher.setName("管理者1");
-			// 仮に学校情報を設定（Schoolオブジェクトがある場合）
-			School school = new School();
-			school.setName("テスト校");
-			school.setCd("tes");
-			teacher.setSchool(school);
-
+		Teacher teacher = (Teacher)session.getAttribute("teacher");
 
 			// セッションにTeacherオブジェクトを保存
 			session.setAttribute("user", teacher);
-			
+
 
 		// リクエストパラメータから学生番号を取得
 	    String studentNo = request.getParameter("no");
-	    
+
 
 	    // そのIDに対応する学生情報をDBから取得する
 	    StudentDao studentdao = new StudentDao();

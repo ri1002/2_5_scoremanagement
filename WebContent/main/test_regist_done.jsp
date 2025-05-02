@@ -6,5 +6,5 @@
 
 <p>登録が完了しました</p>
 <a href="http://localhost:8080/scoremanagement/main/TestRegist.action">戻る</a>
-<a href="http://localhost:8080/scoremanagement/main/test_list.jsp">成績参照</a>
+<a href="http://localhost:8080/scoremanagement/main/TestList.action">成績参照</a>
 <jsp:include page="../tool/footer.html" />

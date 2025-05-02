@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.School;
 import bean.Teacher;
 import dao.ClassNumDao;
 import tool.Action;
@@ -19,21 +18,8 @@ public class StudentCreateAction extends Action {
 		) throws Exception{
 		HttpSession session = request.getSession();
 		//一時的にコメントアウトしているteacherインスタンス
-		//Teacher teacher = (Teacher)session.getAttribute("user");
+		Teacher teacher = (Teacher)session.getAttribute("teacher");
 
-		Teacher teacher = new Teacher();
-		teacher.setId("admin1");
-			teacher.setPassword("password");
-			teacher.setName("管理者1");
-			// 仮に学校情報を設定（Schoolオブジェクトがある場合）
-			School school = new School();
-			school.setName("テスト校");
-			school.setCd("tes");
-			teacher.setSchool(school);
-
-
-			// セッションにTeacherオブジェクトを保存
-			session.setAttribute("user", teacher);
 
 		//ClassNumDaoのインスタンス作成
 		ClassNumDao cNumDao = new ClassNumDao();

@@ -10,7 +10,6 @@
 	#search-header {
 		padding: 1em;
 		margin: 2em 0;
-		font-weight: bold;
 		border: solid 1px #ccc;
 		border-radius: 5px;
 		background-color: #f9f9f9;
@@ -30,6 +29,10 @@
 		border-radius: 3px;
 	}
 
+	#text {
+		color: #00bfff;
+	}
+
 	.student-info {
 		margin-top: 20px;
 		padding: 1em;
@@ -42,7 +45,6 @@
 		display: inline-block;
 		width: 100px;
 		margin-right: 10px;
-		font-weight: bold;
 	}
 
 	.student-info input[type="text"] {
@@ -96,50 +98,22 @@
 <h2>成績参照</h2>
 
 <div id="search-header">
-<h3>科目情報</h3>
-	<form action="SearchGrade.action" method="get">
-		<label for="admissionYear">入学年度</label>
-		<select id="admissionYear" name="admissionYear">
-			<option value="">--------</option>
-			<% int currentYear = LocalDate.now().getYear(); %>
-			<% for (int i = currentYear; i >= currentYear - 10; i--) { %>
-				<option value="<%= i %>" <%= (request.getParameter("admissionYear") != null && request.getParameter("admissionYear").equals(String.valueOf(i))) ? "selected" : "" %>>
-					<%= i %>
-				</option>
-			<% } %>
-		</select>
-
-		<label for="class">クラス</label>
-		<select id="class" name="class">
-				<option value="0">--------</option>
-				<c:forEach var="num" items="${class_num_set}">
-					<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
-				</c:forEach>
-			</select>
-
-		<label for="subject">科目</label>
-		<select id="subject" name="subject">
-			<option value="">--------</option>
-			<c:forEach var="subject" items="${subjects}">
-				<option value="${subject.cd}">${subject.name}</option>
-			</c:forEach>
-		</select>
-
-		<button type="submit">検索</button>
+	<jsp:include page="/common/test_list_subject_header.jsp" />
+	<form action="TestList.action" method="post">
+	<button type="submit">検索</button>
 	</form>
 </div>
 
 <div class="student-info">
-	<h3>学生情報</h3>
-	<form action="SearchStudentGrade.action" method="get">
-		<label for="studentId">学生番号</label>
-		<input type="text" id="studentId" name="studentId" value="${param.studentId}" placeholder="学生番号を入力してください">
-		<button type="submit">検索</button>
+	<jsp:include page="/common/test_list_student_header.jsp" />
+	<form action="TestList.action" method="post">
+	<button type="submit">検索</button>
 		<p class="error-message">${errorMessage}</p>
 	</form>
 </div>
 
-
-<p>※学生番号または学生氏名を入力して検索ボタンをクリックしてください。</p>
+<div id="text">
+<p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください。</p>
+</div>
 
 <jsp:include page="../tool/footer.html" />
