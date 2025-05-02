@@ -10,7 +10,7 @@
         padding: 10px;
         height: 12%;
     }
-    #filtering select{
+    #filtering select{a
         width: 100%;
     }
     #filtering input {
