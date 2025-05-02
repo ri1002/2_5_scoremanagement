@@ -14,7 +14,7 @@
         width: 100%;
     }
     #filtering input {
-        width: 100%;aa
+        width: 100%;
     }
 
 </style>
