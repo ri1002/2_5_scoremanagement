@@ -6,7 +6,6 @@
 <jsp:include page="../tool/sidebar.html" />
 
 <h2>科目一覧</h2>
-
 <div id="new_registration">
     <a href="http://localhost:8080/scoremanagement/main/subject_create.jsp">新規登録</a>
 </div>
