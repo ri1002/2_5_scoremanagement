@@ -97,7 +97,7 @@
 
 <div id="search-header">
 <h3>科目情報</h3>
-	<form action="SearchGrade.action" method="get">
+	<form action="TestList.action" method="post">
 		<label for="admissionYear">入学年度</label>
 		<select id="admissionYear" name="admissionYear">
 			<option value="">--------</option>
@@ -131,7 +131,7 @@
 
 <div class="student-info">
 	<h3>学生情報</h3>
-	<form action="SearchStudentGrade.action" method="get">
+	<form action="TestList.action" method="post">
 		<label for="studentId">学生番号</label>
 		<input type="text" id="studentId" name="studentId" value="${param.studentId}" placeholder="学生番号を入力してください">
 		<button type="submit">検索</button>
