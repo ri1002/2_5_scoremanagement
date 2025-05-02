@@ -23,7 +23,7 @@ public class StudentListAction extends Action{
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception{
 		HttpSession session = request.getSession();
-		Teacher teacher = (Teacher)session.getAttribute("user");
+		Teacher teacher = (Teacher)session.getAttribute("teacher");
 
 		String entYearStr="";//入力された入学年度
 		String classNum=""; //入力されたクラス番号

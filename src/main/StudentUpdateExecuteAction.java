@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import bean.School;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -27,6 +27,7 @@ public class StudentUpdateExecuteAction extends Action {
 	public void execute
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception {
+		HttpSession session = request.getSession();
 
 		Integer ent_year = Integer.parseInt(request.getParameter("ent_year"));
         String no = request.getParameter("no");
@@ -35,15 +36,8 @@ public class StudentUpdateExecuteAction extends Action {
         Boolean is_attend = Boolean.parseBoolean(request.getParameter("is_attend"));
         boolean hasError = false;
 
-		Teacher teacher = new Teacher();
-		teacher.setId("admin1");
-			teacher.setPassword("password");
-			teacher.setName("管理者1");
-			// 仮に学校情報を設定（Schoolオブジェクトがある場合）
-			School school = new School();
-			school.setName("テスト校");
-			school.setCd("tes");
-			teacher.setSchool(school);
+
+        Teacher teacher = (Teacher)session.getAttribute("teacher");
 
 	    String student_name = null;
 
@@ -89,9 +83,6 @@ public class StudentUpdateExecuteAction extends Action {
 			student.setEntYear(ent_year);          // 入学年度
 			student.setClassNum(class_num);         // クラス番号
 			student.setAttend(is_attend);           // 在学中フラグ
-      // 学校情報（省略してたらここ必要！）
-			school.setCd("tes");
-			student.setSchool(school);         // 学校コードをセット
 
 			StudentDao dao = new StudentDao();
 			boolean result = dao.save(student);  // ← 登録・更新の実行
