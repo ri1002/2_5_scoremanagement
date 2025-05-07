@@ -58,18 +58,18 @@
 			    text-align: center;
 			    margin: 10px auto;
 			    }
-	
-			    
 
-	
-	
+
+
+
+
 </style>
 
 <div id= "login">
 	<div id = "login_border">
 		<div id = "login_text">
 			<h2>ログイン</h2>
-		    <form action="main/LoginExecute.action" method="post">
+		    <form action="LoginExecute.action" method="post">
 		    	 <b>
 		   			 <small>
 		    			<%-- エラーメッセージの表示 --%>

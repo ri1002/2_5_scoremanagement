@@ -40,4 +40,5 @@ public class Teacher extends Test implements Serializable {
 	public void setSchool(School school){
 		this.school=school;
 	}
+
 }

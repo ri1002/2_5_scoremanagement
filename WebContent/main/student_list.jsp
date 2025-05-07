@@ -3,7 +3,7 @@
 <%@page import="bean.Student" %>
 <%@page import="java.util.List" %>
 <%@page import="java.time.LocalDate" %>
-<jsp:include page="../tool/header.html" />
+<jsp:include page="../common/header.jsp" />
 <jsp:include page="../tool/sidebar.html" />
 
 <%-- 学生一覧 --%>

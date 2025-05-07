@@ -1,10 +1,12 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
 			<meta charset = 'UTF-8'>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<title>score manager</title>
-			<style>
+		<style>
         * {
             margin: 0;
             padding: 0;
@@ -83,7 +85,6 @@
             text-align: center;
             padding: 1rem;
         }
-        }
     </style>
 	</head>
 <body>
@@ -93,9 +94,15 @@
 			<div id = "subInfo">
 				<!-- ログイン?顧客名※(todo)JSPで出力制御 -->
 				<div id = "subleft">
-				<a href="../login.jsp"><p>ログイン</p></a></div>
-				<!-- ログアウト?非表示※(todo)JSPで出力制御 -->
-				<div id = "subright">
-				<a href="../main/logout.jsp"><p>ログアウト</p></a></div>
+						<c:if test="${not empty sessionScope.teacher}">
+    						<p>${sessionScope.teacher.name} さん</p>
+						</c:if>
+						<c:if test="${empty sessionScope.teacher}">
+						    <p>ログインしていません</p>
+						</c:if>
+				</div>
+					<!-- ログアウト?非表示※(todo)JSPで出力制御 -->
+					<div id = "subright">
+						<a href="../main/logout.jsp"><p>ログアウト</p></a></div>
 			</div>
 		</div>
