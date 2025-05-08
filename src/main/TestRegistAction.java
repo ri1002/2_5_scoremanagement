@@ -72,9 +72,9 @@ public class TestRegistAction extends Action{
 			}
 
 			// エラーメッセージ
-			if (subject != null && !subject.equals("0")) {
+			/*if (subject != null && !subject.equals("0")) {
 				System.out.println("subject");
-			}
+			}*/
 
 
 			List<String> list = cNumDao.filter(teacher.getSchool());
@@ -89,10 +89,13 @@ public class TestRegistAction extends Action{
 				    System.out.println("Tests list size: " + tests.size());
 				}
 			} else {
-			    // フィールドが無効な場合
-			    if (entYear == 0 || classNum.equals("0") || subject == null || subject.equals("0") || num == 0) {
+				// エラーメッセージ
+				if (subject != null && !subject.equals("0")) {
+					System.out.println("subject");
+				}
+				else {
 			        errors.put("errors", "入学年度とクラスと科目と回数を選択してください");
-			    }
+				}
 			}
 
 				SubjectDao subjectDao = new SubjectDao();

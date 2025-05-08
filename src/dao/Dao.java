@@ -9,13 +9,12 @@ import javax.sql.DataSource;
 public class Dao {
 	static DataSource ds;
 
-    static {
+	static {
         try {
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            ds = (DataSource) envCtx.lookup("jdbc/managementScore");
+            Context ctx = new InitialContext();
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/managementScore");
         } catch (Exception e) {
-            e.printStackTrace(); // デバッグ用にログ出力（後でLoggerに変更もOK）
+            e.printStackTrace();
         }
     }
 
