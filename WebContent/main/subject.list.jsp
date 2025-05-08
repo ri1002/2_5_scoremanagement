@@ -1,40 +1,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <jsp:include page="../tool/header.html" />
 <jsp:include page="../tool/sidebar.html" />
-<%@ page import="java.time.LocalDate"%>
 
-<%-- 科目登録フォーム --%>
-<style>
-    #filtering {
-        padding: 10px;
-        height: 12%;
-    }
-    #filtering select{
-        width: 100%;
-    }
-    #filtering input {
-        width: 100%;
-    }
-
-</style>
-
-<h2>科目情報登録</h2>
-
-<form action="subject_create" method="post">
-
-
-        <label>科目コード</label><br>
-        <input type="text" placeholder="科目コードを入力してください" name="code"><br>
-
-        <label>科目名</label><br>
-        <input type="text" placeholder="科目名を入力してください" name="name"><br>
-
-        <div id="create_end">
-            <button type="submit" name="end">登録して終了</button>
-        </div>
-    </div>
-</form>
+<h2>科目一覧</h2>
+aaa
+<table border="1" cellpadding="8" cellspacing="0" style="width: 60%; margin-top: 20px;">
+    <thead>
+        <tr style="background-color: #f0f0f0;">
+            <th>科目コード</th>
+            <th>科目名</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="subject" items="${subjectList}">
+            <tr>
+                <td>${subject.code}</td>
+                <td>${subject.name}</td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
 
 <jsp:include page="../tool/footer.html" />
-
