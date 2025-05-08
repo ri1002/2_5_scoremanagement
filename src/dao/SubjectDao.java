@@ -9,8 +9,7 @@ import java.util.List;
 import bean.School;
 import bean.Subject;
 
-<<<<<<< HEAD
-=======
+
 public class SubjectDao extends Dao {
 
     public List<Subject> getAll() throws Exception {
@@ -94,7 +93,6 @@ public class SubjectDao extends Dao {
     }
 
 
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 public class SubjectDao extends Dao {
 
     public List<Subject> getAll() throws Exception {
@@ -200,7 +198,5 @@ public class SubjectDao extends Dao {
 
         return list;
     }
-<<<<<<< HEAD
+
 }
-=======
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git

@@ -91,7 +91,7 @@ public class StudentListAction extends HttpServlet {
 
 		request.getRequestDispatcher("/main/student_list.jsp").forward(request, response);
 
-	}*/
+	}
 
 
 
@@ -99,7 +99,7 @@ public class StudentListAction extends HttpServlet {
 	public void execute
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception{
-<<<<<<< HEAD
+
 		HttpSession session = request.getSession();
 		Teacher teacher = (Teacher)session.getAttribute("teacher");
 
@@ -122,7 +122,7 @@ public class StudentListAction extends HttpServlet {
 
 		if (isAttendStr != null) {
 			isAttend = true;
-=======
+
 	try {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
@@ -136,7 +136,7 @@ public class StudentListAction extends HttpServlet {
 		Integer entYear = null;
 		if (f1 != null && !f1.isEmpty()) {
 		    entYear = Integer.parseInt(f1);
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
+
 		}
 
 		String classNum = null;

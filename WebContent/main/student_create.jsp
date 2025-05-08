@@ -117,11 +117,9 @@
 
 <h2>学生情報登録</h2>
 
-<<<<<<< HEAD
 <form action="StudentCreateExecute.action" method="post">
-=======
+
 <form action="student_create" method="post">
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 	<div id = "filtering">
 		<div class="filtering_margin">
 			<div id = "year_filter">
@@ -136,11 +134,11 @@
 	    				<% } %>
 				</select>
 		</div>
-<<<<<<< HEAD
+
 		<c:if test="${not empty student_ent_year}">
     		<p style="color:#FFCC33">${student_ent_year}</p>
 		</c:if>
-=======
+
 		<br>
 
 		<label>学生番号</label>
@@ -159,7 +157,7 @@
 					<option value="${c.class_num}">${c.class_num}</option>
 				</c:forEach>
 			</select>
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
+
 		</div>
 
 		<div class="filtering_margin">

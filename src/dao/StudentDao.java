@@ -19,15 +19,15 @@ public class StudentDao extends Dao{
 	// 共通SQL用に定義（未使用）将来まとめるときに使う予定
 	private String baseSql = "select * from student where school_cd=?";
 
-<<<<<<< HEAD
+
 	//学生情報の取得
-=======
+
 	 /**
      * 学生番号を指定して、学生情報を取得する。
      * @param no 学生番号
      * @return Studentオブジェクト / データが無ければnull
      */
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
+
 	public Student get(String no) throws Exception {
 		 String sql = "SELECT s.no, s.name, s.ent_year, s.class_num, s.is_attend, "
 	               + " sc.cd AS school_cd, sc.name AS school_name "
@@ -142,7 +142,7 @@ public class StudentDao extends Dao{
 	    return resultList;
 	}
 
-<<<<<<< HEAD
+
 
 	public List<Student> filter(School school,int entYear,boolean isAttend) throws Exception {
 		List<Student> list = new ArrayList<>();
@@ -151,8 +151,6 @@ public class StudentDao extends Dao{
 		ResultSet rSet = null;
 		String condition = "and ent_year=? ";
 		String order = " order by no asc";
-=======
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 
 
 
@@ -213,7 +211,7 @@ public class StudentDao extends Dao{
 	               + " ON DUPLICATE KEY UPDATE "
 	               + " name = ?, ent_year = ?, class_num = ?, is_attend = ?, school_cd = ?";
 
-<<<<<<< HEAD
+
 		try {
 			Student old = get(student.getNo());
 			if (old == null) {
@@ -232,10 +230,10 @@ public class StudentDao extends Dao{
 				statement.setBoolean(4, student.getAttend());
 				statement.setString(5, student.getNo());
 			}
-=======
+
 	    try (Connection con = getConnection();
 	    	PreparedStatement stmt = con.prepareStatement(sql)) {
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
+
 
 	    	 // INSERT用パラメータ
 	        stmt.setString(1, student.getNo());
