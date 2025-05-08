@@ -23,11 +23,8 @@ public class Student implements Serializable {
 	public String getClassNum(){
 		return this.classNum;
 	}
-<<<<<<< HEAD
+
 	public boolean getAttend(){
-=======
-	public boolean getIsAttend(){
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 		return this.isAttend;
 	}
 	public School getSchool(){

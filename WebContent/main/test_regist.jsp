@@ -76,7 +76,7 @@
 		<jsp:include page="/common/test_header.jsp" />
 		<button type="submit">検索</button>
 		<!-- エラーメッセージの表示 -->
-		
+
 		<c:if test="${not empty errors['errors']}">
 		    <p style="color:red;">${errors['errors']}</p>
 		</c:if>
@@ -113,5 +113,3 @@
 
 
 <jsp:include page="../tool/footer.html" />
-=======
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git

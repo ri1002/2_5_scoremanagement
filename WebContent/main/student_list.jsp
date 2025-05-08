@@ -1,19 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<<<<<<< HEAD
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Student" %>
 <%@page import="java.util.List" %>
 <%@page import="java.time.LocalDate" %>
 <jsp:include page="../common/header.jsp" />
-=======
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<jsp:include page="../tool/header.html" />
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 <jsp:include page="../tool/sidebar.html" />
 
-<h2>科目管理</h2>
+<%-- 学生一覧 --%>
 
-<<<<<<< HEAD
 <style>
     table {
         border-collapse: collapse;
@@ -136,25 +130,24 @@
 			<button type="submit">絞込み</button>
 		</div>
 	</div>
-=======
-<!-- ここにフォームを追加 -->
-<form action="${pageContext.request.contextPath}/main/subject_list" method="post">
-    <button type="submit">科目一覧を表示</button>
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 </form>
 
-<!-- 新規登録ボタン -->
-<div id="new_registration">
-    <a href="subject_create.jsp">新規登録</a>
-</div>
-
-<!-- JSTLを使った科目一覧の表示部分（すでにある内容） -->
 <c:choose>
-    <c:when test="${not empty subjectList}">
-        <p>検索結果：${subjectList.size()}件</p>
-        <table>
+	<c:when test="${students.size()>0 }">
+
+	<p>検索結果:${students.size()}件</p>
+
+	<table border="1">
+        <tr>
+            <th>入学年度</th>
+            <th>学生番号</th>
+            <th>氏名</th>
+            <th>クラス</th>
+            <th>在学中</th>
+            <th>　</th>
+        </tr>
+        <c:forEach var="student" items="${students }">
             <tr>
-<<<<<<< HEAD
                 <td>${student.entYear}</td>
                 <td>${student.no}</td>
                 <td>${student.name}</td>
@@ -166,25 +159,12 @@
                 </c:choose>
                 </td>
                 <td><a href="http://localhost:8080/scoremanagement/main/StudentUpdate.action?no=${student.no}">変更</a></td>
-=======
-                <th>科目コード</th>
-                <th>科目名</th>
-                <th>学校名</th>
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
             </tr>
-            <c:forEach var="subject" items="${subjectList}">
-                <tr>
-                    <td>${subject.cd}</td>
-                    <td>${subject.name}</td>
-                    <td>${subject.school.name}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </c:when>
-
-    <c:otherwise>
-        <p>科目データが存在しません。</p>
-    </c:otherwise>
+        </c:forEach>
+    </table>
+</c:when>
+<c:otherwise>
+    <p>学生データが存在しません。</p>
+</c:otherwise>
 </c:choose>
-
 <jsp:include page="../tool/footer.html" />
