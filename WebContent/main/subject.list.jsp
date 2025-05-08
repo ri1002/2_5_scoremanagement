@@ -4,7 +4,7 @@
 <jsp:include page="../tool/sidebar.html" />
 
 <h2>科目一覧</h2>
-aaa
+
 <table border="1" cellpadding="8" cellspacing="0" style="width: 60%; margin-top: 20px;">
     <thead>
         <tr style="background-color: #f0f0f0;">
@@ -23,3 +23,4 @@ aaa
 </table>
 
 <jsp:include page="../tool/footer.html" />
+
