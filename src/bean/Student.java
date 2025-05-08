@@ -23,11 +23,7 @@ public class Student implements Serializable {
 	public String getClassNum(){
 		return this.classNum;
 	}
-
 	public boolean getAttend(){
-
-	public boolean getIsAttend(){
-
 		return this.isAttend;
 	}
 	public School getSchool(){
@@ -47,7 +43,7 @@ public class Student implements Serializable {
 	public void setClassNum(String classNum){
 		this.classNum = classNum;
 	}
-	public void setIsAttend(boolean isAttend){
+	public void setAttend(boolean isAttend){
 		this.isAttend = isAttend;
 	}
 	public void setSchool(School school){

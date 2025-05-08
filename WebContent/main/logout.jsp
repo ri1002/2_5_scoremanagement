@@ -13,4 +13,3 @@
 <br>
 <p><a href="../main/Login.action" style="font-size: 12px; font-weight: 600; margin-left: 50px;">ログイン</a></p>
 <jsp:include page="../tool/footer.html" />
-<%-- ログアウト --%>
