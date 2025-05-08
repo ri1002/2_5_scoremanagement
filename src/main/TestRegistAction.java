@@ -27,7 +27,7 @@ public class TestRegistAction extends Action{
 		Teacher teacher = (Teacher)session.getAttribute("teacher");
 
 		if (teacher == null) {
-		    response.sendRedirect("login.jsp"); // 例：ログインページに飛ばすなどの処理
+		    response.sendRedirect("login.jsp"); // ログインページに飛ばすなどの処理
 		    return;
 		}
 			// セッションにTeacherオブジェクトを保存
@@ -52,7 +52,7 @@ public class TestRegistAction extends Action{
 			subject = request.getParameter("f3");
 			numStr = request.getParameter("f4");
 
-			// 入学年度とテスト回数をintに変換
+			// 入学年度をintに変換
 			int num = 0;
 			if (entYearStr != null && !entYearStr.isEmpty() && !entYearStr.equals("0")) {
 			    try {
@@ -60,27 +60,21 @@ public class TestRegistAction extends Action{
 			    } catch (NumberFormatException e) {
 			        errors.put("errors", "入学年度の形式が正しくありません");
 			    }
-			} else {
-			    errors.put("errors", "入学年度が未入力です");
 			}
 
-			if (numStr != null && !numStr.isEmpty()) {
+			// テスト回数をintに変換
+			if (numStr != null && !numStr.isEmpty() && !numStr.equals("0")) {
 			    try {
 			        num = Integer.parseInt(numStr);
 			    } catch (NumberFormatException e) {
 			        errors.put("errors", "テスト回数の形式が正しくありません");
 			    }
-			} else {
-			    errors.put("errors", "テスト回数が未入力です");
 			}
-<<<<<<< HEAD
 
 			// エラーメッセージ
 			if (subject != null && !subject.equals("0")) {
 				System.out.println("subject");
 			}
-=======
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 
 
 			List<String> list = cNumDao.filter(teacher.getSchool());
@@ -89,44 +83,41 @@ public class TestRegistAction extends Action{
 			sub.setCd(subject);
 
 			if (entYear != 0 && !classNum.equals("0")) {
+				//testsに検索した内容を入れる
 				tests = tDao.filter(entYear, classNum, sub, num, teacher.getSchool());
 				if (tests != null) {
 				    System.out.println("Tests list size: " + tests.size());
 				}
 			} else {
-<<<<<<< HEAD
 			    // フィールドが無効な場合
 			    if (entYear == 0 || classNum.equals("0") || subject == null || subject.equals("0") || num == 0) {
 			        errors.put("errors", "入学年度とクラスと科目と回数を選択してください");
 			    }
-=======
-			    errors.put("errors", "検索条件が正しくありません");
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 			}
 
-
-			SubjectDao subjectDao = new SubjectDao();
-			List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
-			request.setAttribute("subjects", subjectList);
-
+				SubjectDao subjectDao = new SubjectDao();
+				List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
+				request.setAttribute("subjects", subjectList);
 
 
-		//レスポンス値をセット
-		//リクエストに入学年度をセット
-		request.setAttribute("f1", entYear);
-		//リクエストにクラス番号をセット
-		request.setAttribute("f2", classNum);
-		//リクエストに科目をセット
-		request.setAttribute("f3", subject);
-		//リクエストにテスト回数をセット
-		request.setAttribute("f4", num);
 
-		//リクエストにテストリストをセット
-		request.setAttribute("tests", tests);
-		request.setAttribute("class_num_set", list);
+				//レスポンス値をセット
+				//リクエストに入学年度をセット
+				request.setAttribute("f1", entYear);
+				//リクエストにクラス番号をセット
+				request.setAttribute("f2", classNum);
+				//リクエストに科目をセット
+				request.setAttribute("f3", subject);
+				//リクエストにテスト回数をセット
+				request.setAttribute("f4", num);
 
-		//JSPへフォワード
-		request.getRequestDispatcher("test_regist.jsp").forward(request, response);
+				//リクエストにテストリストをセット
+				request.setAttribute("tests", tests);
+				request.setAttribute("class_num_set", list);
+
+				request.setAttribute("errors", errors);
+				//JSPへフォワード
+				request.getRequestDispatcher("test_regist.jsp").forward(request, response);
 
 	}
 }

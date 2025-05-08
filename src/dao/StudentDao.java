@@ -13,21 +13,7 @@ import bean.Student;
 public class StudentDao extends Dao {
 	private String baseSql = "select * from student where school_cd=?";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 	//学生情報の取得
-<<<<<<< HEAD
-=======
-
-	 /**
-     * 学生番号を指定して、学生情報を取得する。
-     * @param no 学生番号
-     * @return Studentオブジェクト / データが無ければnull
-     */
-
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 	public Student get(String no) throws Exception {
 		Student student = new Student();
 		Connection connection = getConnection();
@@ -131,10 +117,6 @@ public class StudentDao extends Dao {
 		return list;
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 
 	public List<Student> filter(School school,int entYear,boolean isAttend) throws Exception {
 		List<Student> list = new ArrayList<>();
@@ -224,10 +206,6 @@ public class StudentDao extends Dao {
 		PreparedStatement statement = null;
 		int count = 0;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 		try {
 			Student old = get(student.getNo());
 			if (old == null) {
@@ -246,13 +224,6 @@ public class StudentDao extends Dao {
 				statement.setBoolean(4, student.getAttend());
 				statement.setString(5, student.getNo());
 			}
-<<<<<<< HEAD
-=======
-
-	    try (Connection con = getConnection();
-	    	PreparedStatement stmt = con.prepareStatement(sql)) {
-
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 
 			count = statement.executeUpdate();
 		} catch (Exception e) {

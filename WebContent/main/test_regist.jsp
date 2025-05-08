@@ -74,14 +74,11 @@
 	<form action="TestRegist.action" method="post">
 		<jsp:include page="/common/test_header.jsp" />
 		<button type="submit">検索</button>
-<<<<<<< HEAD
 		<!-- エラーメッセージの表示 -->
-
+		
 		<c:if test="${not empty errors['errors']}">
 		    <p style="color:red;">${errors['errors']}</p>
 		</c:if>
-=======
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 	</form>
 </div>
 <c:choose>
@@ -101,7 +98,9 @@
 	            <td>${test.student.entYear}</td>
     	        <td>${test.student.classNum}</td>
         	    <td>${test.student.name}</td>
-            	<td>${test.point}</td>
+            	<td>
+            		<input type="text" name="point_${test.student.no}" value="${test.point}">
+            	</td>
            	</tr>
         </c:forEach>
     </table>
@@ -112,8 +111,4 @@
 </c:choose>
 
 
-<<<<<<< HEAD
 <jsp:include page="../tool/footer.html" />
-=======
-<jsp:include page="../tool/footer.html" />
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
