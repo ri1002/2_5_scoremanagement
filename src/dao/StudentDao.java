@@ -10,113 +10,139 @@ import java.util.List;
 import bean.School;
 import bean.Student;
 
-public class StudentDao extends Dao {
+/**
+ * Studentテーブルを操作するためのDAOクラス
+ * 学生情報の取得・検索・保存を担当。
+ */
+public class StudentDao extends Dao{
+
+	// 共通SQL用に定義（未使用）将来まとめるときに使う予定
 	private String baseSql = "select * from student where school_cd=?";
 
+<<<<<<< HEAD
 	//学生情報の取得
+=======
+	 /**
+     * 学生番号を指定して、学生情報を取得する。
+     * @param no 学生番号
+     * @return Studentオブジェクト / データが無ければnull
+     */
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 	public Student get(String no) throws Exception {
-		Student student = new Student();
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
+		 String sql = "SELECT s.no, s.name, s.ent_year, s.class_num, s.is_attend, "
+	               + " sc.cd AS school_cd, sc.name AS school_name "
+	               + " FROM student as s "
+	               + " JOIN school as sc ON s.school_cd = sc.cd "
+	               + " WHERE s.no = ?";
 
-		try {
-			statement = connection.prepareStatement("select * from student where no=?");
-			statement.setString(1, no);
-			ResultSet rSet = statement.executeQuery();
+	    try (Connection con = getConnection();
+	    		PreparedStatement stmt = con.prepareStatement(sql)) {
 
-			SchoolDao schoolDao = new SchoolDao();
+	        stmt.setString(1, no);// 学生番号セット
+	        try (ResultSet rSet = stmt.executeQuery()) {
+	            if (rSet.next()) {
+	            	// 学校情報セット
+	                School school = new School();
+	                school.setCd(rSet.getString("school_cd"));
+	                school.setName(rSet.getString("school_name"));
 
-			if (rSet.next()) {
-				student.setNo(rSet.getString("no"));
-				student.setName(rSet.getString("name"));
-				student.setEntYear(rSet.getInt("ent_year"));
-				student.setClassNum(rSet.getString("class_num"));
-				student.setAttend(rSet.getBoolean("is_attend"));
-				student.setSchool(schoolDao.get(rSet.getString("school_cd")));
-			} else {
-				student = null;
-			}
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
+	             // 学生情報セット
+	                Student student = new Student();
+	                student.setNo(rSet.getString("no"));
+	                student.setName(rSet.getString("name"));
+	                student.setEntYear(rSet.getInt("ent_year"));
+	                student.setClassNum(rSet.getString("class_num"));
+	                student.setIsAttend(rSet.getBoolean("is_attend"));
+	                student.setSchool(school);
 
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
-
-		return student;
+	                return student;// 取得成功時
+	            }
+	        }
+	    }
+	    return null;// データなし
 	}
 
-	//一覧表示
-	private List<Student> postFilter(ResultSet rSet,School school) throws Exception {
-		List<Student> list = new ArrayList<>();
-		try {
-			while (rSet.next()) {
-				Student student = new Student();
-				student.setNo(rSet.getString("no"));
-				student.setName(rSet.getString("name"));
-				student.setEntYear(rSet.getInt("ent_year"));
-				student.setClassNum(rSet.getString("class_num"));
-				student.setAttend(rSet.getBoolean("is_attend"));
-				student.setSchool(school);
+    /**
+     * 結果セットからStudentオブジェクトのリストを作成する。
+     * 学校情報が事前に指定されている場合はセットし、指定されていない場合は結果セットから取得する。
+     */
+	private List<Student> postFilter(ResultSet rSet, School school) throws Exception {
+	    List<Student> list = new ArrayList<>();
+	try{
+	    while (rSet.next()) {
+	        Student student = new Student();
+	        student.setNo(rSet.getString("no"));
+	        student.setName(rSet.getString("name"));
+	        student.setEntYear(rSet.getInt("ent_year"));
+	        student.setClassNum(rSet.getString("class_num"));
+	        student.setIsAttend(rSet.getBoolean("is_attend"));
+	        student.setSchool(school);
 
-				list.add(student);
-			}
-		} catch (SQLException | NullPointerException e) {
-			e.printStackTrace();
-		}
-
-		return list;
+	        list.add(student);
+	    }
+	}catch(SQLException | NullPointerException e) {
+		e.printStackTrace();
+	}
+	return list;
 	}
 
-	public List<Student> filter(School school,int entYear,String classNum,boolean isAttend) throws Exception {
-		List<Student> list = new ArrayList<>();
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
-		ResultSet rSet = null;
-		String condition = "and ent_year=? and class_num=?";
-		String order = " order by no asc";
+    /**
+     * 学校・入学年・クラス・在籍状態で学生を検索する。
+     */
+	public List<Student> filter(Integer entYear, String classNum, Boolean isAttend) throws Exception {
 
-		String conditionIsAttend = "";
-		if (isAttend) {
-			conditionIsAttend = "and is_attend=true";
-		}
+	    List<Student> resultList = new ArrayList<>();
 
-		try {
-			statement = connection.prepareStatement(baseSql + condition + conditionIsAttend + order);
-			statement.setString(1, school.getCd());
-			statement.setInt(2, entYear);
-			statement.setString(3, classNum);
-			rSet = statement.executeQuery();
+	    StringBuilder sql = new StringBuilder(
+	        "SELECT s.no, s.name, s.ent_year, s.class_num, s.is_attend, " +
+	        "sc.cd AS school_cd, sc.name AS school_name " +
+	        "FROM student AS s JOIN school AS sc ON s.school_cd = sc.cd WHERE 1=1"
+	    );
 
-			list = postFilter(rSet, school);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
+	    if (entYear != null) {
+	        sql.append(" AND s.ent_year = ?");
+	    }
+	    if (classNum != null && !classNum.isEmpty()) {
+	        sql.append(" AND s.class_num = ?");
+	    }
+	    if (isAttend != null) {
+	        sql.append(" AND s.is_attend = ?");
+	    }
 
-		return list;
+	    try (Connection con = getConnection();
+	         PreparedStatement stmt = con.prepareStatement(sql.toString())) {
+
+	        int index = 1;
+
+	        if (entYear != null) {
+	            stmt.setInt(index++, entYear);
+	        }
+	        if (classNum != null && !classNum.isEmpty()) {
+	            stmt.setString(index++, classNum);
+	        }
+	        if (isAttend != null) {
+	            stmt.setBoolean(index++, isAttend);
+	        }
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+
+	            Student student = new Student();
+	            student.setNo(rs.getString("no"));
+	            student.setName(rs.getString("name"));
+	            student.setEntYear(rs.getInt("ent_year"));
+	            student.setClassNum(rs.getString("class_num"));
+	            student.setIsAttend(rs.getBoolean("is_attend"));
+
+	            resultList.add(student);
+	        }
+	    }
+
+	    return resultList;
 	}
 
+<<<<<<< HEAD
 
 	public List<Student> filter(School school,int entYear,boolean isAttend) throws Exception {
 		List<Student> list = new ArrayList<>();
@@ -125,87 +151,69 @@ public class StudentDao extends Dao {
 		ResultSet rSet = null;
 		String condition = "and ent_year=? ";
 		String order = " order by no asc";
+=======
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 
-		String conditionIsAttend = "";
 
-		if (isAttend) {
-			conditionIsAttend = "and is_attend=true";
-		}
 
-		try {
-			statement = connection.prepareStatement(baseSql + condition + conditionIsAttend + order);
-			statement.setString(1, school.getCd());
-			statement.setInt(2, entYear);
-			rSet = statement.executeQuery();
+    /**
+     * 学校・入学年・在籍状態で学生を検索する。（クラス指定なし）
+     */
+	public List<Student> filter(School school,int entYear, boolean isAttend) throws Exception {
+	    String sql = "SELECT s.no, s.name, s.ent_year, s.class_num, s.is_attend, "
+	               + " sc.cd AS school_cd, sc.name AS school_name "
+	               + " FROM student s "
+	               + " JOIN school sc ON s.school_cd = sc.cd "
+	               + " WHERE s.school_cd = ? AND s.ent_year = ? AND s.is_attend = ?";
 
-			list = postFilter(rSet, school);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
+	    try (Connection con = getConnection();
+	    		PreparedStatement stmt = con.prepareStatement(sql)) {
 
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
+	        stmt.setString(1, school.getCd());
+	        stmt.setInt(2, entYear);
+	        stmt.setBoolean(3, isAttend);
 
-		return list;
+	        try (ResultSet rSet = stmt.executeQuery()) {
+	            return postFilter(rSet, school);
+	        }
+	    }
 	}
 
+    /**
+     * 学校・在籍状態で学生を検索する。（入学年・クラス指定なし）
+     */
 	public List<Student> filter(School school,boolean isAttend) throws Exception {
-		List<Student> list = new ArrayList<>();
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
-		ResultSet rSet = null;
-		String order = " order by no asc";
-		String conditionIsAttend = "";
-		if (isAttend) {
-			conditionIsAttend = "and is_attend=true";
-		}
+	    String sql = "SELECT s.no, s.name, s.ent_year, s.class_num, s.is_attend, "
+	               + " sc.cd AS school_cd, sc.name AS school_name "
+	               + " FROM student s "
+	               + " JOIN school sc ON s.school_cd = sc.cd "
+	               + " WHERE s.school_cd = ? AND s.is_attend = ?";
 
-		try {
-			statement = connection.prepareStatement(baseSql + conditionIsAttend + order);
-			statement.setString(1, school.getCd());
-			rSet = statement.executeQuery();
-			list = postFilter(rSet, school);
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
+	    try (Connection con = getConnection();
+	    		PreparedStatement stmt = con.prepareStatement(sql)) {
 
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
+	        stmt.setString(1, school.getCd());
+	        stmt.setBoolean(2, isAttend);
 
-		return list;
+	        try (ResultSet rSet = stmt.executeQuery()) {
+	            return postFilter(rSet, school);
+	        }
+	    }
 	}
 
+    /**
+     * 学生情報を登録 or 更新する。
+     * 主キー重複時はUPDATE、それ以外はINSERTされる。
+     * @param student 保存する学生オブジェクト
+     * @return 成功：true / 失敗：false
+     */
 	public boolean save(Student student) throws Exception {
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
-		int count = 0;
+	    String sql = "INSERT INTO student(no, name, ent_year, class_num, is_attend, school_cd) "
+	               + " VALUES (?, ?, ?, ?, ?, ?) "
+	               + " ON DUPLICATE KEY UPDATE "
+	               + " name = ?, ent_year = ?, class_num = ?, is_attend = ?, school_cd = ?";
 
+<<<<<<< HEAD
 		try {
 			Student old = get(student.getNo());
 			if (old == null) {
@@ -224,32 +232,29 @@ public class StudentDao extends Dao {
 				statement.setBoolean(4, student.getAttend());
 				statement.setString(5, student.getNo());
 			}
+=======
+	    try (Connection con = getConnection();
+	    	PreparedStatement stmt = con.prepareStatement(sql)) {
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 
-			count = statement.executeUpdate();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
+	    	 // INSERT用パラメータ
+	        stmt.setString(1, student.getNo());
+	        stmt.setString(2, student.getName());
+	        stmt.setInt(3, student.getEntYear());
+	        stmt.setString(4, student.getClassNum());
+	        stmt.setBoolean(5, student.getIsAttend());
+	        stmt.setString(6, student.getSchool().getCd());
 
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
+	        // UPDATE用パラメータ
+	        stmt.setString(7, student.getName());
+	        stmt.setInt(8, student.getEntYear());
+	        stmt.setString(9, student.getClassNum());
+	        stmt.setBoolean(10, student.getIsAttend());
+	        stmt.setString(11, student.getSchool().getCd());
 
-		if (count > 0) {
-			return true;
-		} else {
-			return false;
-		}
+	        return stmt.executeUpdate() > 0;// 成功判定
+	    }
 	}
+
+
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%-- ログアウト --%>
 
 <%@ page  pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
@@ -13,3 +14,6 @@
 <br>
 <p><a href="../main/Login.action" style="font-size: 12px; font-weight: 600; margin-left: 50px;">ログイン</a></p>
 <jsp:include page="../tool/footer.html" />
+=======
+<%-- ログアウト --%>
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<!-- 上記はEclipseの警告を消すための記述です。 -->
+
 <Context reloadable="true">
     <Resource name="jdbc/managementScore"
               auth="Container"
