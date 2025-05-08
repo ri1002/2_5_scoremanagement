@@ -9,14 +9,8 @@ import java.util.List;
 import bean.School;
 import bean.Subject;
 
-/**
- * Subject（科目）テーブルを操作するDAOクラス
- */
 public class SubjectDao extends Dao {
 
-    /**
-     * 全ての科目を取得する
-     */
     public List<Subject> getAll() throws Exception {
         List<Subject> subjectList = new ArrayList<>();
 
@@ -46,9 +40,6 @@ public class SubjectDao extends Dao {
         return subjectList;
     }
 
-    /**
-     * 科目コードで科目を1件取得
-     */
     public Subject get(String cd) throws Exception {
         String sql = "SELECT s.cd, s.name, sc.cd AS school_cd, sc.name AS school_name "
                    + "FROM subject s "
@@ -79,11 +70,7 @@ public class SubjectDao extends Dao {
         return null; // 見つからなかった
     }
 
-    /**
-     * 科目情報を保存（新規登録または更新）
-     * @param subject 保存する科目オブジェクト
-     * @return 成功：true / 失敗：false
-     */
+
     public boolean save(Subject subject) throws Exception {
         String sql = "INSERT INTO subject(cd, name, school_cd) "
                    + "VALUES (?, ?, ?) "
@@ -104,4 +91,28 @@ public class SubjectDao extends Dao {
         }
     }
 
-}
+
+public class SubjectDao extends Dao {
+    public List<Subject> filter(School school) throws Exception {
+        List<Subject> list = new ArrayList<>();
+
+        Connection con = getConnection();
+        PreparedStatement st = con.prepareStatement(
+            "SELECT * FROM subject WHERE school_cd = ? ORDER BY cd"
+        );
+        st.setString(1, school.getCd());
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            Subject subject = new Subject();
+            subject.setSchoolCd(rs.getString("school_cd"));
+            subject.setCd(rs.getString("cd"));
+            subject.setName(rs.getString("name"));
+            list.add(subject);
+        }
+
+        st.close();
+        con.close();
+
+        return list;
+    }
