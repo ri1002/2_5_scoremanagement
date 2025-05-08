@@ -1,4 +1,4 @@
-package main;
+/*package main;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -64,4 +64,4 @@ public class SubjectListAction extends HttpServlet {
 
         return subjectList;
     }
-}
+}*/
