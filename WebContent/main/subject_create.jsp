@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-this is Test
-=======
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html; charset=UTF-8" %>
 <jsp:include page="../tool/header.html" />
@@ -40,4 +37,3 @@ this is Test
 </form>
 
 <jsp:include page="../tool/footer.html" />
->>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git

@@ -4,6 +4,12 @@
 <%@page import="java.util.List" %>
 <%@page import="java.time.LocalDate" %>
 <jsp:include page="../common/header.jsp" />
+<<<<<<< HEAD
+=======
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<jsp:include page="../tool/header.html" />
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 <jsp:include page="../tool/sidebar.html" />
 
 <%-- 学生一覧 --%>
@@ -130,6 +136,14 @@
 			<button type="submit">絞込み</button>
 		</div>
 	</div>
+<<<<<<< HEAD
+=======
+
+<!-- ここにフォームを追加 -->
+<form action="${pageContext.request.contextPath}/main/subject_list" method="post">
+    <button type="submit">科目一覧を表示</button>
+
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 </form>
 
 <c:choose>
@@ -148,6 +162,10 @@
         </tr>
         <c:forEach var="student" items="${students }">
             <tr>
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
                 <td>${student.entYear}</td>
                 <td>${student.no}</td>
                 <td>${student.name}</td>
@@ -159,6 +177,14 @@
                 </c:choose>
                 </td>
                 <td><a href="http://localhost:8080/scoremanagement/main/StudentUpdate.action?no=${student.no}">変更</a></td>
+<<<<<<< HEAD
+=======
+
+                <th>科目コード</th>
+                <th>科目名</th>
+                <th>学校名</th>
+
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
             </tr>
         </c:forEach>
     </table>

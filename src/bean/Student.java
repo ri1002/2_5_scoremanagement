@@ -24,8 +24,9 @@ public class Student implements Serializable {
 		return this.classNum;
 	}
 	public boolean getAttend(){
-		return this.isAttend;
+		return this.isAttend();
 	}
+
 	public School getSchool(){
 		return this.school;
 	}

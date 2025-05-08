@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 <%-- ログイン --%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <jsp:include page="tool/header.html" />
@@ -104,3 +108,7 @@
         }
     </script>
 <jsp:include page="tool/footer.html" />
+<<<<<<< HEAD
+=======
+<%-- ログイン --%>
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
