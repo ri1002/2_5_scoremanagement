@@ -1,31 +1,24 @@
-/*package main;
+package main;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.School;
 import bean.Subject;
 import dao.SubjectDao;
+import tool.Action;
 
 
-@WebServlet(urlPatterns = {"/main/subject_list"})
-public class SubjectListAction extends HttpServlet {
+public class SubjectListAction extends Action  {
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception  {
         try {
-            request.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html;charset=UTF-8");
-
             List<Subject> subjectList = getSubjectList();
 
             request.setAttribute("subjectList", subjectList);
@@ -64,4 +57,4 @@ public class SubjectListAction extends HttpServlet {
 
         return subjectList;
     }
-}*/
+}

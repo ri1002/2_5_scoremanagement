@@ -2,7 +2,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@page import="bean.Subject" %>
 <%@page import="java.util.List" %>
-<jsp:include page="../tool/header.html" />
+<jsp:include page="../common/header.jsp" />
 <jsp:include page="../tool/sidebar.html" />
 
 <h2>科目一覧</h2>
@@ -22,11 +22,11 @@
             </tr>
             <c:forEach var="subj" items="${subjectList}">
                 <tr>
-                    <td>${subj.code}</td>
+                    <td>${subj.cd}</td>
                     <td>${subj.name}</td>
                     <td>
-                        <a href="subject_update.jsp?code=${subj.code}">変更</a> |
-                        <a href="subject_delete.jsp?code=${subj.code}" onclick="return confirm('本当に削除しますか？');">削除</a>
+                        <a href="SubjectUpdate.action?code=${subj.cd}">変更</a> |
+                        <a href="subject_delete.jsp?code=${subj.cd}" onclick="return confirm('本当に削除しますか？');">削除</a>
                     </td>
                 </tr>
             </c:forEach>
