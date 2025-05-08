@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.School;
 import bean.Student;
 import bean.Subject;
 import bean.Teacher;
+import bean.Test;
 import dao.ClassNumDao;
 import dao.StudentDao;
 import dao.SubjectDao;
@@ -25,24 +25,20 @@ public class TestListAction extends Action{
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception{
 		HttpSession session = request.getSession();
-		//Teacher teacher = (Teacher)session.getAttribute("user");
+		Teacher teacher = (Teacher)session.getAttribute("teacher");
 
-		Teacher teacher = new Teacher();
-		teacher.setId("admin1");
-			teacher.setPassword("password");
-			teacher.setName("管理者1");
-			// 仮に学校情報を設定（Schoolオブジェクトがある場合）
-			School school = new School();
-			school.setName("テスト校");
-			school.setCd("tes");
-			teacher.setSchool(school);
-
+		if (teacher == null) {
+		    response.sendRedirect("login.jsp"); // 例：ログインページに飛ばすなどの処理
+		    return;
+		}
 			// セッションにTeacherオブジェクトを保存
 			session.setAttribute("user", teacher);
 
 			String entYearStr="";//入力された入学年度
 			String classNum=""; //入力されたクラス番号
 			int entYear = 0;//入学年度
+			String subject;
+			List<Test> tests = null;//学生リスト
 			boolean isAttend = false;//在学フラグ
 			List<Student> students = null;//学生リスト
 			LocalDate todaysDate = LocalDate.now();//LocalDateインスタンスを取得
@@ -55,6 +51,7 @@ public class TestListAction extends Action{
 			//リクエストパラメーターの取得
 			entYearStr = request.getParameter("f1");
 			classNum = request.getParameter("f2");
+			subject = request.getParameter("f3");
 
 
 			List<String> list = cNumDao.filter(teacher.getSchool());
@@ -78,9 +75,11 @@ public class TestListAction extends Action{
 		request.setAttribute("f1", entYear);
 		//リクエストにクラス番号をセット
 		request.setAttribute("f2", classNum);
+		//リクエストに科目をセット
+		request.setAttribute("f3", subject);
 
-		//リクエストに学生リストをセット
-		request.setAttribute("students", students);
+		//リクエストにテストリストをセット
+		request.setAttribute("tests", tests);
 		request.setAttribute("class_num_set", list);
 
 		//JSPへフォワード

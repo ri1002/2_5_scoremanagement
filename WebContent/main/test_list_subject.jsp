@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<jsp:include page="../tool/header.html" />
+<jsp:include page="../common/header.jsp" />
 <jsp:include page="../tool/sidebar.html" />
 <%@ page import="java.time.LocalDate"%>
 <%@page import="bean.ClassNum, java.util.*" %>
@@ -112,8 +112,37 @@
 	</form>
 </div>
 
-<div id="text">
-<p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください。</p>
-</div>
+<c:choose>
+	<c:when test="${tests.size() > 0 }">
+
+	<p>科目:${tests.size()}件</p>
+
+	<table border="1">
+			<tr>
+            	<th><label>入学年度</label></th>
+            	<th><label>クラス</label></th>
+            	<th><label>学生番号</label></th>
+         	   	<th><label>氏名</label></th>
+            	<th><label>1回</label></th>
+            	<th><label>2回</label></th>
+        	</tr>
+        <c:forEach var="test" items="${tests}">
+        	<tr>
+	            <td>${test.student.entYear}</td>
+    	        <td>${test.student.classNum}</td>
+    	        <td>${test.student.no}</td>
+        	    <td>${test.student.name}</td>
+            	<td>${test.point}</td>
+            	<td>${test.point}</td>
+           	</tr>
+        </c:forEach>
+    </table>
+	</c:when>
+<c:otherwise>
+    <div id="text">
+		<p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください。</p>
+	</div>
+</c:otherwise>
+</c:choose>
 
 <jsp:include page="../tool/footer.html" />
