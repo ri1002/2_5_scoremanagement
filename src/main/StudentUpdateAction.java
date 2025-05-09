@@ -19,7 +19,7 @@ public class StudentUpdateAction extends Action {
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception{
 		HttpSession session = request.getSession();
-		//一時的にコメントアウトしているteacherインスタンス
+
 		Teacher teacher = (Teacher)session.getAttribute("teacher");
 
 			// セッションにTeacherオブジェクトを保存
