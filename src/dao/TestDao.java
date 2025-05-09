@@ -15,50 +15,8 @@ import bean.Test;
 public class TestDao extends Dao {
 	private String baseSql = "select * from student where school_cd=?";
 
-/*	//学生情報の取得
-	public Test get(Student student, Subject subject, Integer no) throws Exception {
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
-
-		try {
-			statement = connection.prepareStatement("select * from student where no=?");
-			statement.setString(1, no);
-			ResultSet rSet = statement.executeQuery();
-
-			SchoolDao schoolDao = new SchoolDao();
-
-			if (rSet.next()) {
-				student.setNo(rSet.getString("no"));
-				student.setName(rSet.getString("name"));
-				student.setEntYear(rSet.getInt("ent_year"));
-				student.setClassNum(rSet.getString("class_num"));
-				student.setAttend(rSet.getBoolean("is_attend"));
-				student.setSchool(schoolDao.get(rSet.getString("school_cd")));
-			} else {
-				student = null;
-			}
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
-
-		return test;
-	}*/
+	
+	public get(Student)
 
 	//一覧表示
 	private List<Test> postFilter(ResultSet rSet, School school) throws Exception {
@@ -134,55 +92,13 @@ public class TestDao extends Dao {
 	}
 
 
-	public boolean save(Student student) throws Exception {
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
-		int count = 0;
+	public boolean save(List<Test> list) throws Exception {
+		boolean b = false;
+		return b;
+	}
 
-		try {
-			Student old = get(student.getNo());
-			if (old == null) {
-				statement = connection.prepareStatement("insert into student(no, name, ent_year, class_num, is_attend, school_cd) values(?, ?, ?, ?, ?, ?)");
-				statement.setString(1, student.getNo());
-				statement.setString(2, student.getName());
-				statement.setInt(3, student.getEntYear());
-				statement.setString(4, student.getClassNum());
-				statement.setBoolean(5, student.getAttend());
-				statement.setString(6, student.getSchool().getCd());
-			} else {
-				statement = connection.prepareStatement("update student set name=?, ent_year=?, class_num=?, is_attend=? where no=?");
-				statement.setString(1, student.getName());
-				statement.setInt(2, student.getEntYear());
-				statement.setString(3, student.getClassNum());
-				statement.setBoolean(4, student.getAttend());
-				statement.setString(5, student.getNo());
-			}
-
-			count = statement.executeUpdate();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
-
-		if (count > 0) {
-			return true;
-		} else {
-			return false;
-		}
+	public boolean save(Test test, Connection connection) throws Exception {
+		boolean b = false;
+		return b;
 	}
 }

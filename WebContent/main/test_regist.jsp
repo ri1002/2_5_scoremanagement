@@ -88,7 +88,7 @@
 	<p>検索結果:${tests.size()}件</p>
 
 	<%-- TestRegistDone.actionに入学年度、クラス、氏名、点数を送信 --%>
-	<form action="TestRegistDone.action" method="post">
+	<form action="TestRegistExecute.action" method="post">
 		<table border="1">
 			<tr>
             	<th><label>入学年度</label></th>
@@ -113,8 +113,12 @@
             		<td>
             			<input type="hidden" name="regist" value="${test.student.no}">
             		</td>
-            		<input type="hidden" name="count" value="${f4}">
-            		<input type="hidden" name="subject" value="${f3}">
+            		<td>
+            			<input type="hidden" name="count" value="${f4}">
+            		</td>
+            		<td>
+            			<input type="hidden" name="subject" value="${f3}">
+           			</td>
            		</tr>
         	</c:forEach>
     	</table>
