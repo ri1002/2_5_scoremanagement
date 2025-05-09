@@ -44,7 +44,7 @@
 		<a href="http://localhost:8080/scoremanagement/main/TestList.action">成績参照</a>
 	</div>
 	<div id="main_menu_subject">
-		<a href="todo">科目管理</a>
+		<a href="http://localhost:8080/scoremanagement/main/SubjectList.action">科目管理</a>
 	</div>
 	<hr>
 </div>
