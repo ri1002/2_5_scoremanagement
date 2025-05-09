@@ -1,6 +1,6 @@
 <%-- ログイン --%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<jsp:include page="tool/header.html" />
+<jsp:include page="tool/login-header.html" />
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
