@@ -110,7 +110,9 @@
         	    		<%-- 得点をサーブレットに送信 --%>
             			<input type="text" name="point_${test.point}" value="${test.point}">
             		</td>
-            		<input type="hidden" name="regist" value="${test.student.no}">
+            		<td>
+            			<input type="hidden" name="regist" value="${test.student.no}">
+            		</td>
             		<input type="hidden" name="count" value="${f4}">
             		<input type="hidden" name="subject" value="${f3}">
            		</tr>

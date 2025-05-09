@@ -134,7 +134,7 @@ public class TestDao extends Dao {
 	}
 
 
-/*	public boolean save(Student student) throws Exception {
+	public boolean save(Student student) throws Exception {
 		Connection connection = getConnection();
 		PreparedStatement statement = null;
 		int count = 0;
@@ -184,5 +184,5 @@ public class TestDao extends Dao {
 		} else {
 			return false;
 		}
-	}*/
+	}
 }
