@@ -108,7 +108,7 @@
     	    	    <td>${test.student.name}</td>
         	    	<td>
         	    		<%-- 得点をサーブレットに送信 --%>
-            			<input type="text" name="point_${test.point}" value="${test.point}">
+            			<input type="text" name="point" value="${test.point}">
             		</td>
             		<td>
             			<input type="hidden" name="regist" value="${test.student.no}">

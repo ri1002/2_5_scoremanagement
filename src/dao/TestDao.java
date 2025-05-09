@@ -15,8 +15,11 @@ import bean.Test;
 public class TestDao extends Dao {
 	private String baseSql = "select * from student where school_cd=?";
 
-	
-	public get(Student)
+
+	public Test get(Student student, Subject subject, School school, int no){
+		Test test = new Test();
+		return test;
+	}
 
 	//一覧表示
 	private List<Test> postFilter(ResultSet rSet, School school) throws Exception {
@@ -93,12 +96,69 @@ public class TestDao extends Dao {
 
 
 	public boolean save(List<Test> list) throws Exception {
-		boolean b = false;
-		return b;
+	    boolean success = true;
+	    Connection connection = null;
+
+	    try {
+	        connection = getConnection();
+	        connection.setAutoCommit(false);  // トランザクション開始
+
+	        for (Test test : list) {
+	            save(test, connection);  // 個別に保存（次のメソッドを呼び出す）
+	        }
+
+	        connection.commit();  // 全件成功でコミット
+	    } catch (Exception e) {
+	        success = false;
+	        if (connection != null) {
+	            connection.rollback();  // エラー時にロールバック
+	        }
+	        throw e;
+	    } finally {
+	        if (connection != null) connection.close();
+	    }
+
+	    return success;
 	}
 
 	public boolean save(Test test, Connection connection) throws Exception {
-		boolean b = false;
-		return b;
+		boolean result = false;
+
+		 // 既存のデータがあるかチェック
+	    String checkSql = "SELECT COUNT(*) FROM test WHERE student_no = ? AND subject_cd = ? AND no = ?";
+	    String insertSql = "INSERT INTO test (student_no, subject_cd, no, point) VALUES (?, ?, ?, ?)";
+	    String updateSql = "UPDATE test SET point = ? WHERE student_no = ? AND subject_cd = ? AND no = ?";
+
+	    try (
+	        PreparedStatement checkStmt = connection.prepareStatement(checkSql);
+	        PreparedStatement insertStmt = connection.prepareStatement(insertSql);
+	        PreparedStatement updateStmt = connection.prepareStatement(updateSql)
+	    ) {
+	        checkStmt.setString(1, test.getStudent().getNo());
+	        checkStmt.setString(2, test.getSubject().getCd());
+	        checkStmt.setInt(3, test.getNo());
+
+	        ResultSet rs = checkStmt.executeQuery();
+	        rs.next();
+	        int count = rs.getInt(1);
+
+	        if (count > 0) {
+	            // UPDATE
+	            updateStmt.setInt(1, test.getPoint());
+	            updateStmt.setString(2, test.getStudent().getNo());
+	            updateStmt.setString(3, test.getSubject().getCd());
+	            updateStmt.setInt(4, test.getNo());
+	            result = updateStmt.executeUpdate() == 1;
+	        } else {
+	            // INSERT
+	            insertStmt.setString(1, test.getStudent().getNo());
+	            insertStmt.setString(2, test.getSubject().getCd());
+	            insertStmt.setInt(3, test.getNo());
+	            insertStmt.setInt(4, test.getPoint());
+	            result = insertStmt.executeUpdate() == 1;
+	        }
+	    }
+
+	    return result;
 	}
 }
