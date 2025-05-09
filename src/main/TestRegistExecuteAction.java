@@ -65,7 +65,6 @@ public class TestRegistExecuteAction extends Action {
             }
 
                 String regist = regists[i];
-                int point = Integer.parseInt(points[i]);
                 int count = Integer.parseInt(counts[i]);
                 String subjectCd = subjects[i];
 
