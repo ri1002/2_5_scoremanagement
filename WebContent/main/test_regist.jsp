@@ -75,7 +75,7 @@
 		<jsp:include page="/common/test_header.jsp" />
 		<button type="submit">検索</button>
 		<!-- エラーメッセージの表示 -->
-		
+
 		<c:if test="${not empty errors['errors']}">
 		    <p style="color:red;">${errors['errors']}</p>
 		</c:if>
@@ -84,26 +84,40 @@
 <c:choose>
 	<c:when test="${tests.size() > 0 }">
 
+	<%-- 検索結果件数の表示 --%>
 	<p>検索結果:${tests.size()}件</p>
 
-	<table border="1">
+	<%-- TestRegistDone.actionに入学年度、クラス、氏名、点数を送信 --%>
+	<form action="TestRegistDone.action" method="post">
+		<table border="1">
 			<tr>
             	<th><label>入学年度</label></th>
             	<th><label>クラス</label></th>
+            	<th><label>学生番号</label></th>
          	   	<th><label>氏名</label></th>
             	<th><label>点数</label></th>
         	</tr>
-        <c:forEach var="test" items="${tests}">
-        	<tr>
-	            <td>${test.student.entYear}</td>
-    	        <td>${test.student.classNum}</td>
-        	    <td>${test.student.name}</td>
-            	<td>
-            		<input type="text" name="point_${test.student.no}" value="${test.point}">
-            	</td>
-           	</tr>
-        </c:forEach>
-    </table>
+        	<%-- 検索結果の生徒を表示 --%>
+        	<c:forEach var="test" items="${tests}">
+        		<tr>
+	            	<td>${test.student.entYear}</td>
+	    	        <td>${test.student.classNum}</td>
+	    	       	<%--学生番号をサーブレットに送信 --%>
+	    	        <td>${test.student.no}</td>
+
+    	    	    <td>${test.student.name}</td>
+        	    	<td>
+        	    		<%-- 得点をサーブレットに送信 --%>
+            			<input type="text" name="point_${test.point}" value="${test.point}">
+            		</td>
+            		<input type="hidden" name="regist" value="${test.student.no}">
+            		<input type="hidden" name="count" value="${f4}">
+            		<input type="hidden" name="subject" value="${f3}">
+           		</tr>
+        	</c:forEach>
+    	</table>
+    <button>登録して終了</button>
+    </form>
 	</c:when>
 <c:otherwise>
     <p>学生データが存在しません。</p>

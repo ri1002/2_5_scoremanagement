@@ -29,7 +29,7 @@
 			</select>
 
 	<select name="f3">
-		<option value="0">--------</option>
+		<option value="">--------</option>
 			<c:forEach var="subject" items="${subjects}">
     <option value="${subject.cd}">${subject.name}</option>
   </c:forEach>
@@ -37,7 +37,7 @@
 
 	<select name="f4">
 
-		<option value="">--------</option>
+		<option value="0">--------</option>
   		<%for(int i=1; i <= 10; i++) {%>
   			<option value="<%= i%>"><%= i%></option>
   		<%} %>

@@ -44,13 +44,17 @@ public class TestRegistAction extends Action{
 			TestDao tDao = new TestDao();//学生Dao
 			ClassNumDao cNumDao = new ClassNumDao();//クラス番号Daoを初期化
 			Map<String, String> errors = new HashMap<>();//エラーメッセージ
-
+			boolean hasError = false;
 
 			//リクエストパラメーターの取得
 			entYearStr = request.getParameter("f1");
 			classNum = request.getParameter("f2");
 			subject = request.getParameter("f3");
 			numStr = request.getParameter("f4");
+
+
+
+
 
 			// 入学年度をintに変換
 			int num = 0;
@@ -77,7 +81,50 @@ public class TestRegistAction extends Action{
 			}
 
 
+
 			List<String> list = cNumDao.filter(teacher.getSchool());
+
+			SubjectDao subjectDao = new SubjectDao();
+			List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
+
+
+			if (entYear == 0) {
+				String error = "入学年度を選択してください。";
+				hasError = true;
+			}
+
+			if (classNum == "0") {
+				String error = "入学年度を選択してください。";
+				hasError = true;
+			}
+
+			if (subject == null) {
+				String error = "入学年度を選択してください。";
+				hasError = true;
+			}
+
+			if (num == 0) {
+				String error = "入学年度を選択してください。";
+				hasError = true;
+			}
+
+	        // エラーがあった場合は再入力画面へ戻す
+	        if (hasError) {
+	        	request.setAttribute("entYear", entYear);
+	            request.setAttribute("classNum", classNum);
+	            request.setAttribute("subject", subject);
+	            request.setAttribute("num", num);
+
+	            // `StudentCreateAction` から渡されたクラス情報を再度セット
+	            List<String> classNumList = cNumDao.filter(teacher.getSchool());
+
+	            request.setAttribute("class_num_set", classNumList);
+	            request.setAttribute("subjects", subjectList);
+
+	            request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
+	            return;
+	        }
+
 
 			Subject sub = new Subject();
 			sub.setCd(subject);
@@ -88,18 +135,11 @@ public class TestRegistAction extends Action{
 				if (tests != null) {
 				    System.out.println("Tests list size: " + tests.size());
 				}
-			} else {
-			    // フィールドが無効な場合
-			    if (entYear == 0 || classNum.equals("0") || subject == null || subject.equals("0") || num == 0) {
-			        errors.put("errors", "入学年度とクラスと科目と回数を選択してください");
-			    }
 			}
 
-				SubjectDao subjectDao = new SubjectDao();
-				List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
+
+
 				request.setAttribute("subjects", subjectList);
-
-
 
 				//レスポンス値をセット
 				//リクエストに入学年度をセット
