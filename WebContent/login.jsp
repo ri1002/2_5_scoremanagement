@@ -1,6 +1,6 @@
 <%-- ログイン --%>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<jsp:include page="tool/header.html" />
+<jsp:include page="tool/login-header.html" />
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
@@ -69,7 +69,7 @@
 	<div id = "login_border">
 		<div id = "login_text">
 			<h2>ログイン</h2>
-		    <form action="LoginExecute.action" method="post">
+		    <form action="main/LoginExecute.action" method="post">
 		    	 <b>
 		   			 <small>
 		    			<%-- エラーメッセージの表示 --%>
@@ -83,8 +83,8 @@
 					</small>
 				</b>
 
-				<input type="text" placeholder="ID" name="id" required id="id"><br>
-				<input type="password" placeholder="パスワード" name="password" required id="password"><br>
+				<input type="text" placeholder="ID" name="id" required id="id" maxlength="10"><br>
+				<input type="password" placeholder="パスワード" name="password" required id="password" maxlength="30"><br>
 
 
 
