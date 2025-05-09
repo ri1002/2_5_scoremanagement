@@ -103,6 +103,6 @@
 				</div>
 					<!-- ログアウト?非表示※(todo)JSPで出力制御 -->
 					<div id = "subright">
-						<a href="../login.jsp"><p>ログ</p></a></div>
+						<a href="../login.jsp"><p>ログイン</p></a></div>
 			</div>
 		</div>
