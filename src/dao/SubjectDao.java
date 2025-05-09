@@ -31,7 +31,7 @@ public class SubjectDao extends Dao {
 
                 subject.setCd(rs.getString("cd"));
                 subject.setName(rs.getString("name"));
-                subject.setSchoolCd(rs.getString("school_cd"));
+                subject.setSchool(school);
 
                 subjectList.add(subject);
             }
@@ -60,7 +60,7 @@ public class SubjectDao extends Dao {
 
                     subject.setCd(rs.getString("cd"));
                     subject.setName(rs.getString("name"));
-                    subject.setSchoolCd(rs.getString("school_cd"));
+                    subject.setSchool(school);
 
                     return subject;
                 }
@@ -81,11 +81,11 @@ public class SubjectDao extends Dao {
 
             stmt.setString(1, subject.getCd());
             stmt.setString(2, subject.getName());
-            stmt.setString(3, subject.getSchoolCd());
+            stmt.setString(3, subject.getSchool().getCd());
 
             // ON DUPLICATE KEY UPDATE
             stmt.setString(4, subject.getName());
-            stmt.setString(5, subject.getSchoolCd());
+            stmt.setString(5, subject.getSchool().getCd());
 
             return stmt.executeUpdate() > 0;
         }
@@ -103,7 +103,7 @@ public class SubjectDao extends Dao {
 
         while (rs.next()) {
             Subject subject = new Subject();
-            subject.setSchoolCd(rs.getString("school_cd"));
+            subject.setSchool(school);
             subject.setCd(rs.getString("cd"));
             subject.setName(rs.getString("name"));
             list.add(subject);

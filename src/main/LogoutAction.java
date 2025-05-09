@@ -17,6 +17,6 @@ public class LogoutAction extends Action {
 			session.removeAttribute("teacher");
 		}
 		response.sendRedirect("logout.jsp");
-		
+
 	}
 }
