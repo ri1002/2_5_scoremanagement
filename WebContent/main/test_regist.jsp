@@ -119,6 +119,7 @@
             		<td>
             			<input type="hidden" name="subject" value="${f3}">
            			</td>
+           			<td>${error }</td>
            		</tr>
         	</c:forEach>
     	</table>
