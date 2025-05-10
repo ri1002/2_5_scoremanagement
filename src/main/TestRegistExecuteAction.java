@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.Student;
 import bean.Subject;
@@ -39,6 +40,9 @@ public class TestRegistExecuteAction extends Action {
             String[] counts = request.getParameterValues("count");
             String[] subjects = request.getParameterValues("subject");
 
+            HttpSession session = request.getSession();
+            List<Test> tests = (List<Test>) session.getAttribute("tests");
+
             //リスト
             List<Test> list = new ArrayList<>();
 
@@ -60,7 +64,9 @@ public class TestRegistExecuteAction extends Action {
 
 	            request.setAttribute("class_num_set", classNumList);
 	            request.setAttribute("subjects", subjectList);
-                request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
+	            request.setAttribute("tests", tests);
+	            
+	            request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
                 return;
             }
 

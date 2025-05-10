@@ -29,7 +29,7 @@
 			</select>
 
 	<select name="f3">
-		<option value="">--------</option>
+		<option value="0">--------</option>
 			<c:forEach var="subject" items="${subjects}">
     <option value="${subject.cd}">${subject.name}</option>
   </c:forEach>

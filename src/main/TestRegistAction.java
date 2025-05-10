@@ -1,9 +1,7 @@
 package main;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +41,6 @@ public class TestRegistAction extends Action{
 			int year = todaysDate.getYear();//現在の年を取得
 			TestDao tDao = new TestDao();//学生Dao
 			ClassNumDao cNumDao = new ClassNumDao();//クラス番号Daoを初期化
-			Map<String, String> errors = new HashMap<>();//エラーメッセージ
 			boolean hasError = false;
 
 			//リクエストパラメーターの取得
@@ -59,20 +56,12 @@ public class TestRegistAction extends Action{
 			// 入学年度をintに変換
 			int num = 0;
 			if (entYearStr != null && !entYearStr.isEmpty() && !entYearStr.equals("0")) {
-			    try {
-			        entYear = Integer.parseInt(entYearStr);
-			    } catch (NumberFormatException e) {
-			        errors.put("errors", "入学年度の形式が正しくありません");
-			    }
+			    entYear = Integer.parseInt(entYearStr);
 			}
 
 			// テスト回数をintに変換
 			if (numStr != null && !numStr.isEmpty() && !numStr.equals("0")) {
-			    try {
-			        num = Integer.parseInt(numStr);
-			    } catch (NumberFormatException e) {
-			        errors.put("errors", "テスト回数の形式が正しくありません");
-			    }
+			    num = Integer.parseInt(numStr);
 			}
 
 			// エラーメッセージ
@@ -88,23 +77,10 @@ public class TestRegistAction extends Action{
 			List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
 
 
-			if (entYear == 0) {
-				String error = "入学年度を選択してください。";
-				hasError = true;
-			}
 
-			if (classNum == "0") {
-				String error = "入学年度を選択してください。";
-				hasError = true;
-			}
-
-			if (subject == null) {
-				String error = "入学年度を選択してください。";
-				hasError = true;
-			}
-
-			if (num == 0) {
-				String error = "入学年度を選択してください。";
+			if (entYear == 0 || classNum == "0" || subject == "0"  || num == 0) {
+				String errors = "入学年度とクラスと科目と回数を選択してください。";
+				request.setAttribute("errors", errors);
 				hasError = true;
 			}
 
@@ -117,9 +93,10 @@ public class TestRegistAction extends Action{
 
 	            // `StudentCreateAction` から渡されたクラス情報を再度セット
 	            List<String> classNumList = cNumDao.filter(teacher.getSchool());
-
 	            request.setAttribute("class_num_set", classNumList);
 	            request.setAttribute("subjects", subjectList);
+
+
 
 	            request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
 	            return;
@@ -137,7 +114,7 @@ public class TestRegistAction extends Action{
 				}
 			}
 
-
+				session.setAttribute("tests", tests);
 
 				request.setAttribute("subjects", subjectList);
 
@@ -155,7 +132,6 @@ public class TestRegistAction extends Action{
 				request.setAttribute("tests", tests);
 				request.setAttribute("class_num_set", list);
 
-				request.setAttribute("errors", errors);
 				//JSPへフォワード
 				request.getRequestDispatcher("test_regist.jsp").forward(request, response);
 
