@@ -110,8 +110,7 @@
 	<%-- 検索結果件数の表示 --%>
 	<p>検索結果:${tests.size()}件</p>
 
-	<%-- TestListSubjectExecute.actionに入学年度、クラス、科目を送信 --%>
-	<form action="TestListSubjectExecute.action" method="post">
+
 		<table border="1">
 			<tr>
             	<th><label>入学年度</label></th>
@@ -158,7 +157,7 @@
            		</c:if>
         	</c:forEach>
     	</table>
-    </form>
+
 	</c:when>
 <c:otherwise>
     <p>学生データが存在しません。</p>
