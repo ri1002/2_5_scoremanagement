@@ -15,50 +15,11 @@ import bean.Test;
 public class TestDao extends Dao {
 	private String baseSql = "select * from student where school_cd=?";
 
-/*	//学生情報の取得
-	public Test get(Student student, Subject subject, Integer no) throws Exception {
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
 
-		try {
-			statement = connection.prepareStatement("select * from student where no=?");
-			statement.setString(1, no);
-			ResultSet rSet = statement.executeQuery();
-
-			SchoolDao schoolDao = new SchoolDao();
-
-			if (rSet.next()) {
-				student.setNo(rSet.getString("no"));
-				student.setName(rSet.getString("name"));
-				student.setEntYear(rSet.getInt("ent_year"));
-				student.setClassNum(rSet.getString("class_num"));
-				student.setAttend(rSet.getBoolean("is_attend"));
-				student.setSchool(schoolDao.get(rSet.getString("school_cd")));
-			} else {
-				student = null;
-			}
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
-
+	public Test get(Student student, Subject subject, School school, int no){
+		Test test = new Test();
 		return test;
-	}*/
+	}
 
 	//一覧表示
 	private List<Test> postFilter(ResultSet rSet, School school) throws Exception {
@@ -134,55 +95,85 @@ public class TestDao extends Dao {
 	}
 
 
-/*	public boolean save(Student student) throws Exception {
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
-		int count = 0;
+	public boolean save(List<Test> list) throws Exception {
+	    boolean success = true;
+	    Connection connection = null;
 
-		try {
-			Student old = get(student.getNo());
-			if (old == null) {
-				statement = connection.prepareStatement("insert into student(no, name, ent_year, class_num, is_attend, school_cd) values(?, ?, ?, ?, ?, ?)");
-				statement.setString(1, student.getNo());
-				statement.setString(2, student.getName());
-				statement.setInt(3, student.getEntYear());
-				statement.setString(4, student.getClassNum());
-				statement.setBoolean(5, student.getAttend());
-				statement.setString(6, student.getSchool().getCd());
-			} else {
-				statement = connection.prepareStatement("update student set name=?, ent_year=?, class_num=?, is_attend=? where no=?");
-				statement.setString(1, student.getName());
-				statement.setInt(2, student.getEntYear());
-				statement.setString(3, student.getClassNum());
-				statement.setBoolean(4, student.getAttend());
-				statement.setString(5, student.getNo());
-			}
+	    try {
+	        connection = getConnection();
+	        connection.setAutoCommit(false);  // トランザクション開始
 
-			count = statement.executeUpdate();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			if (statement != null) {
-				try {
-					statement.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
+	        for (Test test : list) {
+	            save(test, connection);  // 個別に保存（次のメソッドを呼び出す）
+	        }
 
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
+	        connection.commit();  // 全件成功でコミット
+	    } catch (Exception e) {
+	        success = false;
+	        if (connection != null) {
+	            connection.rollback();  // エラー時にロールバック
+	        }
+	        throw e;
+	    } finally {
+	        if (connection != null) connection.close();
+	    }
 
-		if (count > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}*/
+	    return success;
+	}
+
+	public boolean save(Test test, Connection connection) throws Exception {
+		boolean result = false;
+
+		 // 既存のデータがあるかチェック
+	    String checkSql = "SELECT COUNT(*) FROM test WHERE student_no = ? AND subject_cd = ? AND no = ?";
+	    String insertSql = "INSERT INTO test (student_no, subject_cd, no, point) VALUES (?, ?, ?, ?)";
+	    String updateSql = "UPDATE test SET point = ? WHERE student_no = ? AND subject_cd = ? AND no = ?";
+	    String deleteSql = "DELETE FROM test WHERE student_no = ? AND subject_cd = ? AND no = ?";
+
+	    try (
+	        PreparedStatement checkStmt = connection.prepareStatement(checkSql);
+	        PreparedStatement insertStmt = connection.prepareStatement(insertSql);
+	        PreparedStatement updateStmt = connection.prepareStatement(updateSql);
+	    	PreparedStatement deleteStmt = connection.prepareStatement(deleteSql)
+	    ) {
+	        checkStmt.setString(1, test.getStudent().getNo());
+	        checkStmt.setString(2, test.getSubject().getCd());
+	        checkStmt.setInt(3, test.getNo());
+
+	        ResultSet rs = checkStmt.executeQuery();
+	        rs.next();
+	        int count = rs.getInt(1);
+
+	        if (test.getPoint() == -1) { // 点数が空（削除対象）
+	            if (count > 0) {
+	                // 既に存在するなら削除
+	                deleteStmt.setString(1, test.getStudent().getNo());
+	                deleteStmt.setString(2, test.getSubject().getCd());
+	                deleteStmt.setInt(3, test.getNo());
+	                result = deleteStmt.executeUpdate() == 1;
+	            } else {
+	                // もともと存在しなければ何もしない（成功とみなす）
+	                result = true;
+	            }
+	        } else {
+	        if (count > 0) {
+	            // UPDATE
+	            updateStmt.setInt(1, test.getPoint());
+	            updateStmt.setString(2, test.getStudent().getNo());
+	            updateStmt.setString(3, test.getSubject().getCd());
+	            updateStmt.setInt(4, test.getNo());
+	            result = updateStmt.executeUpdate() == 1;
+	        } else {
+	            // INSERT
+	            insertStmt.setString(1, test.getStudent().getNo());
+	            insertStmt.setString(2, test.getSubject().getCd());
+	            insertStmt.setInt(3, test.getNo());
+	            insertStmt.setInt(4, test.getPoint());
+	            result = insertStmt.executeUpdate() == 1;
+	        }
+	    }
+	}
+
+	    return result;
+	}
 }

@@ -22,7 +22,7 @@
 				<c:forEach var="num" items="${class_num_set}">
 					<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
 				</c:forEach>
-			</select>
+		</select>
 
 		<label for="subject">科目</label>
 		<select id="subject" name="f3">

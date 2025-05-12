@@ -25,8 +25,8 @@
                     <td>${subj.cd}</td>
                     <td>${subj.name}</td>
                     <td>
-                        <a href="SubjectUpdate.action?code=${subj.cd}">変更</a> |
-                        <a href="subject_delete.jsp?code=${subj.cd}" onclick="return confirm('本当に削除しますか？');">削除</a>
+                        <a href="http://localhost:8080/scoremanagement/main/SubjectUpdate.action?code=${subj.cd}">変更</a> |
+                        <a href="http://localhost:8080/scoremanagement/main/SubjectDelete.action?code=${subj.cd}" onclick="return confirm('本当に削除しますか？');">削除</a>
                     </td>
                 </tr>
             </c:forEach>

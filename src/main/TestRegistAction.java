@@ -1,9 +1,7 @@
 package main;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +34,8 @@ public class TestRegistAction extends Action{
 			String entYearStr="";//入力された入学年度
 			String classNum=""; //入力されたクラス番号
 			int entYear = 0;//入学年度
+			int cN = 0;
+			int su = 0;
 			String subject;
 			String numStr;
 			List<Test> tests = null;//学生リスト
@@ -43,7 +43,7 @@ public class TestRegistAction extends Action{
 			int year = todaysDate.getYear();//現在の年を取得
 			TestDao tDao = new TestDao();//学生Dao
 			ClassNumDao cNumDao = new ClassNumDao();//クラス番号Daoを初期化
-			Map<String, String> errors = new HashMap<>();//エラーメッセージ
+			boolean hasError = false;
 
 
 			//リクエストパラメーターの取得
@@ -52,23 +52,27 @@ public class TestRegistAction extends Action{
 			subject = request.getParameter("f3");
 			numStr = request.getParameter("f4");
 
+
+
+
+
 			// 入学年度をintに変換
 			int num = 0;
 			if (entYearStr != null && !entYearStr.isEmpty() && !entYearStr.equals("0")) {
-			    try {
-			        entYear = Integer.parseInt(entYearStr);
-			    } catch (NumberFormatException e) {
-			        errors.put("errors", "入学年度の形式が正しくありません");
-			    }
+			    entYear = Integer.parseInt(entYearStr);
+			}
+
+			if (classNum != null && !classNum.isEmpty() && !classNum.equals("0")) {
+			    cN = Integer.parseInt(classNum);
+			}
+
+			if (subject != null && !subject.isEmpty() && !subject.equals("0")) {
+			    su = Integer.parseInt(subject);
 			}
 
 			// テスト回数をintに変換
 			if (numStr != null && !numStr.isEmpty() && !numStr.equals("0")) {
-			    try {
-			        num = Integer.parseInt(numStr);
-			    } catch (NumberFormatException e) {
-			        errors.put("errors", "テスト回数の形式が正しくありません");
-			    }
+			    num = Integer.parseInt(numStr);
 			}
 
 			// エラーメッセージ
@@ -77,7 +81,38 @@ public class TestRegistAction extends Action{
 			}
 
 
+
 			List<String> list = cNumDao.filter(teacher.getSchool());
+
+			SubjectDao subjectDao = new SubjectDao();
+			List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
+
+
+
+			if (entYear == 0 || cN == 0 || su == 0  || num == 0) {
+				String errors = "入学年度とクラスと科目と回数を選択してください。";
+				request.setAttribute("errors", errors);
+				hasError = true;
+			}
+
+	        // エラーがあった場合は再入力画面へ戻す
+	        if (hasError) {
+	        	request.setAttribute("entYear", entYear);
+	            request.setAttribute("classNum", classNum);
+	            request.setAttribute("subject", subject);
+	            request.setAttribute("num", num);
+
+	            // `StudentCreateAction` から渡されたクラス情報を再度セット
+	            List<String> classNumList = cNumDao.filter(teacher.getSchool());
+	            request.setAttribute("class_num_set", classNumList);
+	            request.setAttribute("subjects", subjectList);
+
+
+
+	            request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
+	            return;
+	        }
+
 
 			Subject sub = new Subject();
 			sub.setCd(subject);
@@ -88,18 +123,11 @@ public class TestRegistAction extends Action{
 				if (tests != null) {
 				    System.out.println("Tests list size: " + tests.size());
 				}
-			} else {
-			    // フィールドが無効な場合
-			    if (entYear == 0 || classNum.equals("0") || subject == null || subject.equals("0") || num == 0) {
-			        errors.put("errors", "入学年度とクラスと科目と回数を選択してください");
-			    }
 			}
 
-				SubjectDao subjectDao = new SubjectDao();
-				List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
+				session.setAttribute("tests", tests);
+
 				request.setAttribute("subjects", subjectList);
-
-
 
 				//レスポンス値をセット
 				//リクエストに入学年度をセット
@@ -115,7 +143,6 @@ public class TestRegistAction extends Action{
 				request.setAttribute("tests", tests);
 				request.setAttribute("class_num_set", list);
 
-				request.setAttribute("errors", errors);
 				//JSPへフォワード
 				request.getRequestDispatcher("test_regist.jsp").forward(request, response);
 
