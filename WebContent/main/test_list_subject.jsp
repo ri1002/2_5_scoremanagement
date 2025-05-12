@@ -129,21 +129,6 @@
 	    	        <td>${test.student.no}</td>
 
     	    	    <td>${test.student.name}</td>
-        	    	<td>
-        	    		<%-- 得点をサーブレットに送信 --%>
-            			<input type="text" name="point" value="${test.point}">
-            		</td>
-            		<td>
-            			<input type="hidden" name="regist" value="${test.student.no}">
-            		</td>
-            		<td>
-            			<input type="hidden" name="count" value="${f4}">
-            		</td>
-            		<td>
-            			<input type="hidden" name="subject" value="${f3}">
-           			</td>
-
-
            		</tr>
            		<% String error = request.getParameter("error"); %>
            		<c:if test="${not empty error}">
