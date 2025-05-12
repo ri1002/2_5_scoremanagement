@@ -104,6 +104,67 @@
 	</form>
 </div>
 
+<c:choose>
+	<c:when test="${tests.size() > 0 }">
+
+	<%-- 検索結果件数の表示 --%>
+	<p>検索結果:${tests.size()}件</p>
+
+	<%-- TestListSubjectExecute.actionに入学年度、クラス、科目を送信 --%>
+	<form action="TestListSubjectExecute.action" method="post">
+		<table border="1">
+			<tr>
+            	<th><label>入学年度</label></th>
+            	<th><label>クラス</label></th>
+            	<th><label>学生番号</label></th>
+         	   	<th><label>氏名</label></th>
+            	<th><label>1回</label></th>
+            	<th><label>2回</label></th>
+        	</tr>
+        	<%-- 検索結果の生徒を表示 --%>
+        	<c:forEach var="test" items="${tests}">
+        		<tr>
+	            	<td>${test.student.entYear}</td>
+	    	        <td>${test.student.classNum}</td>
+	    	       	<%--学生番号をサーブレットに送信 --%>
+	    	        <td>${test.student.no}</td>
+
+    	    	    <td>${test.student.name}</td>
+        	    	<td>
+        	    		<%-- 得点をサーブレットに送信 --%>
+            			<input type="text" name="point" value="${test.point}">
+            		</td>
+            		<td>
+            			<input type="hidden" name="regist" value="${test.student.no}">
+            		</td>
+            		<td>
+            			<input type="hidden" name="count" value="${f4}">
+            		</td>
+            		<td>
+            			<input type="hidden" name="subject" value="${f3}">
+           			</td>
+
+
+           		</tr>
+           		<% String error = request.getParameter("error"); %>
+           		<c:if test="${not empty error}">
+           			<tr>
+           				<td> </td>
+           				<td> </td>
+           				<td> </td>
+           				<td> </td>
+           		    	<td>${error}</td>
+           			</tr>
+           		</c:if>
+        	</c:forEach>
+    	</table>
+    </form>
+	</c:when>
+<c:otherwise>
+    <p>学生データが存在しません。</p>
+</c:otherwise>
+</c:choose>
+
 <div class="student-info">
 	<jsp:include page="/common/test_list_student_header.jsp" />
 	<form action="TestList.action" method="post">
