@@ -58,8 +58,47 @@
 			    text-align: center;
 			    margin: 10px auto;
 			    }
-
-
+	/* チェックボックスのデフォルトの見た目を隠す */
+			#showPassword {
+			    display: none;
+			}
+			
+			/* チェックボックスラベルのスタイル */
+			#showPassword + label {
+			    position: relative;
+			    padding-left: 20px; /* チェックボックスの左側の余白 */
+			    cursor: pointer;
+			    font-size: 16px;
+			}
+			
+			/* チェックボックスのカスタム見た目 */
+			#showPassword + label::before {
+			    content: '';
+			    position: absolute;
+			    left: 0;
+			    top: 0;
+			    width: 15px;
+			    height: 15px;
+			    border: 2px solid #ccc;
+			    border-radius: 4px;
+			    background-color: white;
+			    transition: all 0.3s ease;
+			}
+			
+			/* チェックボックスがチェックされた時のカスタム見た目 */
+			#showPassword:checked + label::before {
+			    background-color: #1E90FF; /* チェック時の背景色 */
+			    border-color:#1E90FF; /* チェック時の境界線色 */
+			}
+			
+			/* チェックボックスがチェックされた時に中にチェックマークを表示 */
+			#showPassword:checked + label::after {
+			    content: '✔';
+			    position: absolute;
+			    left: 2px;
+			    top: 1px;
+			    color: white;
+			}
 
 
 
@@ -88,7 +127,7 @@
 
 
 
-				<input type="checkbox" id="showPassword" onclick="togglePassword()" >
+				<input type="checkbox" id="showPassword" onclick="togglePassword()" class="accented">
         		<label for="showPassword">パスワードを表示する</label><br><br>
 
 			<br>
