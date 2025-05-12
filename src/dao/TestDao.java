@@ -13,6 +13,12 @@ import bean.Test;
 
 public class TestDao extends Dao {
 
+	public Test get(Student student, Subject subject, School school, int no){
+		Test test = new Test();
+		return test;
+
+	}
+
     public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) throws Exception {
         List<Test> list = new ArrayList<>();
         Connection connection = getConnection();
