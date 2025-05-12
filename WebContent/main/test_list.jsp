@@ -99,7 +99,7 @@
 
 <div id="search-header">
 	<jsp:include page="/common/test_list_subject_header.jsp" />
-	<form action="TestList.action" method="post">
+	<form action="TestListSubjectExecute.action" method="post">
 	<button type="submit">検索</button>
 	</form>
 </div>
