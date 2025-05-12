@@ -65,7 +65,7 @@ public class TestRegistExecuteAction extends Action {
 	            request.setAttribute("class_num_set", classNumList);
 	            request.setAttribute("subjects", subjectList);
 	            request.setAttribute("tests", tests);
-	            
+
 	            request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
                 return;
             }
@@ -92,6 +92,8 @@ public class TestRegistExecuteAction extends Action {
 
             TestDao dao = new TestDao();
             dao.save(list);
+
+            session.removeAttribute("tests");
 
             request.getRequestDispatcher("/main/test_regist_done.jsp").forward(request, response);
         }

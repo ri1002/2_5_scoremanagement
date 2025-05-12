@@ -128,11 +128,13 @@ public class TestDao extends Dao {
 	    String checkSql = "SELECT COUNT(*) FROM test WHERE student_no = ? AND subject_cd = ? AND no = ?";
 	    String insertSql = "INSERT INTO test (student_no, subject_cd, no, point) VALUES (?, ?, ?, ?)";
 	    String updateSql = "UPDATE test SET point = ? WHERE student_no = ? AND subject_cd = ? AND no = ?";
+	    String deleteSql = "DELETE FROM test WHERE student_no = ? AND subject_cd = ? AND no = ?";
 
 	    try (
 	        PreparedStatement checkStmt = connection.prepareStatement(checkSql);
 	        PreparedStatement insertStmt = connection.prepareStatement(insertSql);
-	        PreparedStatement updateStmt = connection.prepareStatement(updateSql)
+	        PreparedStatement updateStmt = connection.prepareStatement(updateSql);
+	    	PreparedStatement deleteStmt = connection.prepareStatement(deleteSql)
 	    ) {
 	        checkStmt.setString(1, test.getStudent().getNo());
 	        checkStmt.setString(2, test.getSubject().getCd());
@@ -142,6 +144,18 @@ public class TestDao extends Dao {
 	        rs.next();
 	        int count = rs.getInt(1);
 
+	        if (test.getPoint() == -1) { // 点数が空（削除対象）
+	            if (count > 0) {
+	                // 既に存在するなら削除
+	                deleteStmt.setString(1, test.getStudent().getNo());
+	                deleteStmt.setString(2, test.getSubject().getCd());
+	                deleteStmt.setInt(3, test.getNo());
+	                result = deleteStmt.executeUpdate() == 1;
+	            } else {
+	                // もともと存在しなければ何もしない（成功とみなす）
+	                result = true;
+	            }
+	        } else {
 	        if (count > 0) {
 	            // UPDATE
 	            updateStmt.setInt(1, test.getPoint());
@@ -158,6 +172,7 @@ public class TestDao extends Dao {
 	            result = insertStmt.executeUpdate() == 1;
 	        }
 	    }
+	}
 
 	    return result;
 	}
