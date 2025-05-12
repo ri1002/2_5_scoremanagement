@@ -50,10 +50,13 @@ public class TestListSubjectExecuteAction extends Action{
 			entYearStr = request.getParameter("f1");
 			classNum = request.getParameter("f2");
 			subject = request.getParameter("f3");
+			System.out.println(entYearStr);
+			System.out.println(classNum);
+			System.out.println(subject);
 
 
 			// 入学年度をintに変換
-			int num = 0;
+			//int num = 0;
 			if (entYearStr != null && !entYearStr.isEmpty() && !entYearStr.equals("0")) {
 			    entYear = Integer.parseInt(entYearStr);
 			}

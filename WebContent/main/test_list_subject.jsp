@@ -98,9 +98,17 @@
 <h2>成績一覧(科目)</h2>
 
 <div id="search-header">
+	<form action="TestListSubjectExecute.action" method="post">
 	<jsp:include page="/common/test_list_subject_header.jsp" />
-	<form action="TestList.action" method="post">
 	<button type="submit">検索</button>
+	</form>
+</div>
+
+<div class="student-info">
+	<form action="TestListStudent.action" method="post">
+	<jsp:include page="/common/test_list_student_header.jsp" />
+	<button type="submit">検索</button>
+		<p class="error-message">${errorMessage}</p>
 	</form>
 </div>
 
@@ -148,14 +156,6 @@
     <p>学生データが存在しません。</p>
 </c:otherwise>
 </c:choose>
-
-<div class="student-info">
-	<jsp:include page="/common/test_list_student_header.jsp" />
-	<form action="TestList.action" method="post">
-	<button type="submit">検索</button>
-		<p class="error-message">${errorMessage}</p>
-	</form>
-</div>
 
 <div id="text">
 <p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください。</p>

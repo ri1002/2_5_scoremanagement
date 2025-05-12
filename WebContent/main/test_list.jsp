@@ -98,15 +98,15 @@
 <h2>成績参照</h2>
 
 <div id="search-header">
-	<jsp:include page="/common/test_list_subject_header.jsp" />
 	<form action="TestListSubjectExecute.action" method="post">
+	<jsp:include page="/common/test_list_subject_header.jsp" />
 	<button type="submit">検索</button>
 	</form>
 </div>
 
 <div class="student-info">
-	<jsp:include page="/common/test_list_student_header.jsp" />
 	<form action="TestListStudent.action" method="post">
+	<jsp:include page="/common/test_list_student_header.jsp" />
 	<button type="submit">検索</button>
 		<p class="error-message">${errorMessage}</p>
 	</form>
