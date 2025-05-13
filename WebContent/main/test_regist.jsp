@@ -73,12 +73,12 @@
 <div id = "sheader">
 	<form action="TestRegist.action" method="post">
 		<jsp:include page="/common/test_header.jsp" />
-		<button type="submit">検索</button>
+		<button type="submit" name="search">検索</button>
 		<!-- エラーメッセージの表示 -->
 
-		<c:if test="${not empty errors['errors']}">
-		    <p style="color:red;">${errors['errors']}</p>
-		</c:if>
+	<c:if test="${param.search != null and not empty errors}">
+    	<p style="color:red;">${errors}</p>
+	</c:if>
 	</form>
 </div>
 <c:choose>
@@ -108,7 +108,7 @@
     	    	    <td>${test.student.name}</td>
         	    	<td>
         	    		<%-- 得点をサーブレットに送信 --%>
-            			<input type="text" name="point_${test.point}" value="${test.point}">
+            			<input type="text" name="point" value="${test.point}">
             		</td>
             		<td>
             			<input type="hidden" name="regist" value="${test.student.no}">
@@ -119,7 +119,19 @@
             		<td>
             			<input type="hidden" name="subject" value="${f3}">
            			</td>
+
+
            		</tr>
+           		<% String error = request.getParameter("error"); %>
+           		<c:if test="${not empty error}">
+           			<tr>
+           				<td> </td>
+           				<td> </td>
+           				<td> </td>
+           				<td> </td>
+           		    	<td>${error}</td>
+           			</tr>
+           		</c:if>
         	</c:forEach>
     	</table>
     <button>登録して終了</button>

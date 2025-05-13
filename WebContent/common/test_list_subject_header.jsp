@@ -7,10 +7,10 @@
 	<p>科目情報</p>
 		<label for="admissionYear">入学年度</label>
 		<select id="admissionYear" name="f1">
-			<option value="">--------</option>
+			<option value="0">--------</option>
 			<% int currentYear = LocalDate.now().getYear(); %>
 			<% for (int i = currentYear; i >= currentYear - 10; i--) { %>
-				<option value="<%= i %>" <%= (request.getParameter("admissionYear") != null && request.getParameter("admissionYear").equals(String.valueOf(i))) ? "selected" : "" %>>
+				<option value="<%= i %>" <%= (request.getParameter("f1") != null && request.getParameter("f1").equals(String.valueOf(i))) ? "selected" : "" %>>
 					<%= i %>
 				</option>
 			<% } %>
@@ -20,14 +20,14 @@
 		<select id="class" name="f2">
 				<option value="0">--------</option>
 				<c:forEach var="num" items="${class_num_set}">
-					<option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
+					<option value="${num}" <c:if test="${num == f2}">selected</c:if>>${num}</option>
 				</c:forEach>
-			</select>
+		</select>
 
 		<label for="subject">科目</label>
 		<select id="subject" name="f3">
-			<option value="">--------</option>
+			<option value="0">--------</option>
 			<c:forEach var="subject" items="${subjects}">
-				<option value="${subject.cd}">${subject.name}</option>
+				<option value="${subject.cd}" <c:if test="${subject.cd == f3}">selected</c:if>>${subject.name}</option>
 			</c:forEach>
 		</select>

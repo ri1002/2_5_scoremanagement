@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<jsp:include page="../tool/header.html" />
+<jsp:include page="../common/header.jsp" />
 <jsp:include page="../tool/sidebar.html" />
 <%@ page import="java.time.LocalDate"%>
 <%@page import="bean.ClassNum, java.util.*" %>
@@ -98,15 +98,15 @@
 <h2>成績参照</h2>
 
 <div id="search-header">
+	<form action="TestListSubjectExecute.action" method="post">
 	<jsp:include page="/common/test_list_subject_header.jsp" />
-	<form action="TestList.action" method="post">
 	<button type="submit">検索</button>
 	</form>
 </div>
 
 <div class="student-info">
+	<form action="TestListStudent.action" method="post">
 	<jsp:include page="/common/test_list_student_header.jsp" />
-	<form action="TestList.action" method="post">
 	<button type="submit">検索</button>
 		<p class="error-message">${errorMessage}</p>
 	</form>

@@ -1,9 +1,19 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import bean.Student;
+import bean.Subject;
 import bean.Teacher;
+import bean.Test;
+import dao.ClassNumDao;
+import dao.SubjectDao;
+import dao.TestDao;
 import tool.Action;
 
 public class TestRegistExecuteAction extends Action {
@@ -18,72 +28,85 @@ public class TestRegistExecuteAction extends Action {
     }
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // 教師・学校情報
-    	Teacher teacher = (Teacher)session.getAttribute("teacher");
-    	session.setAttribute("user", teacher);
+        Teacher teacher = (Teacher) request.getSession().getAttribute("teacher");
+        request.getSession().setAttribute("user", teacher);
 
-    	String regist = request.getParameter("regist");
-    	Integer count = (Integer.parseInt(request.getParameter("count")));
-    	String subject = request.getParameter("subject");
+        String[] regists = request.getParameterValues("regist");
+        String[] points = request.getParameterValues("point");
+        String[] counts = request.getParameterValues("count");
+        String[] subjects = request.getParameterValues("subject");
 
+        HttpSession session = request.getSession();
+        List<Test> tests = (List<Test>) session.getAttribute("tests");
 
-        // パラメータ取得
-        /*String entYearStr = request.getParameter("f1");
-        String classNum = request.getParameter("f2");
+        List<Test> list = new ArrayList<>();
 
-        // バリデーション
-        Map<String, String> errors = new HashMap<>();
-        int entYear = 0;
-        boolean hasError = false;
+        for (int i = 0; i < regists.length; i++) {
 
-        if (entYearStr == null || entYearStr.equals("0")) {
-            errors.put("f1", "入学年度を選択してください。");
-            hasError = true;
-        } else {
-            try {
-                entYear = Integer.parseInt(entYearStr);
-            } catch (NumberFormatException e) {
-                errors.put("f1", "入学年度が不正です。");
-                hasError = true;
+        	if (regists[i] == null || regists[i].trim().isEmpty() ||
+        	        counts.length <= i || subjects.length <= i) {
+        	        continue; // 不正な入力をスキップ
+        	    }
+
+            String pointStr = points[i];
+            Integer point = null;
+
+            if (pointStr != null && !pointStr.trim().isEmpty()) {
+                try {
+                    point = Integer.parseInt(pointStr);
+                } catch (NumberFormatException e) {
+                    point = null;
+                }
+                if (point < 0 || point > 100) {
+                    request.setAttribute("error", "点数は0～100の範囲で入力してください");
+
+                    SubjectDao subjectDao = new SubjectDao();
+                    List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
+
+                    ClassNumDao cNumDao = new ClassNumDao();
+                    List<String> classNumList = cNumDao.filter(teacher.getSchool());
+
+                    request.setAttribute("class_num_set", classNumList);
+                    request.setAttribute("subjects", subjectList);
+                    request.setAttribute("tests", tests);
+
+                    request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
+                    return;
+                }
             }
+
+            //各項目がnullでないことを確認
+            String regist = regists[i];
+            int count = Integer.parseInt(counts[i]);
+            String subjectCd = subjects[i];
+
+            Student student = new Student();
+            student.setNo(regist);
+
+            Subject subject = new Subject();
+            subject.setCd(subjectCd);
+
+            System.out.println("teacher = " + teacher);
+            System.out.println("regists[i] = " + regists[i]);
+            System.out.println("counts[i] = " + counts[i]);
+            System.out.println("subjects[i] = " + subjects[i]);
+            System.out.println("point = " + point);
+
+            
+            Test test = new Test();
+            test.setStudent(student);
+            test.setSubject(subject);
+            test.setNo(count);
+            test.setPoint(point);  // null可
+            test.setSchool(teacher.getSchool());
+
+            list.add(test);
         }
 
-        if (classNum == null || classNum.equals("0")) {
-            errors.put("f2", "クラスを選択してください。");
-            hasError = true;
-        }
+        TestDao dao = new TestDao();
+        dao.save(list);
 
-        // エラーがある場合はフォームに戻す
-        if (hasError) {
-            // クラス番号再取得
-            ClassNumDao cNumDao = new ClassNumDao();
-            List<String> classNumSet = cNumDao.filter(school);
-
-            // 科目一覧取得（必要なら）
-            SubjectDao subjectDao = new SubjectDao();
-            List subjects = subjectDao.filter(school);
-
-            // エラーと元データをセットして戻す
-            request.setAttribute("errors", errors);
-            request.setAttribute("f1", entYearStr);
-            request.setAttribute("f2", classNum);
-            request.setAttribute("class_num_set", classNumSet);
-            request.setAttribute("subjects", subjects);
-
-            request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
-            return;
-        }
-
-        // 検索実行
-        StudentDao sDao = new StudentDao();
-        boolean isAttend = false;
-        List<Student> students = sDao.filter(school, entYear, classNum, isAttend);
-
-        // 検索結果をセットして結果JSPへ
-        request.setAttribute("students", students);
-        request.setAttribute("f1", entYearStr);
-        request.setAttribute("f2", classNum);
-
-        request.getRequestDispatcher("/main/test_regist_done.jsp").forward(request, response);*/
+        session.removeAttribute("tests");
+        request.getRequestDispatcher("/main/test_regist_done.jsp").forward(request, response);
     }
 }

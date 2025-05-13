@@ -7,7 +7,7 @@ public class Test implements java.io.Serializable {
 	private Subject subject;
 	private School school;
 	private Integer no;
-	private int point;
+	private Integer point;
 
 	public boolean getIsAuthenticated(){
 		return this.isAuthenticated;
@@ -61,7 +61,7 @@ public class Test implements java.io.Serializable {
 		return this.point;
 	}
 
-	public void setPoint(int point){
+	public void setPoint(Integer point){
 		this.point=point;
 }
 }

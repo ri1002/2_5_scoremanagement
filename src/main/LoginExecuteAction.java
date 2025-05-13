@@ -17,9 +17,6 @@ public class LoginExecuteAction extends Action {
         TeacherDao dao = new TeacherDao();
         Teacher teacher = dao.login(id, password);
 
-        System.out.println("ログイン試行 - 入力ID: " + id);
-        System.out.println("ログイン試行 - 入力Password: " + password);
-        System.out.println("Teacher オブジェクト: " + (teacher != null ? "存在する" : "null"));
 
         if (teacher != null) {
             session.setAttribute("teacher", teacher);

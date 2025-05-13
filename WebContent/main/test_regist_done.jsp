@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<jsp:include page="../tool/header.html" />
+<jsp:include page="../common/header.jsp" />
 <jsp:include page="../tool/sidebar.html" />
 
 <h2>成績管理</h2>
