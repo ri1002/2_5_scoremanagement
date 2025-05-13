@@ -93,7 +93,31 @@
 		color: red;
 		margin-top: 10px;
 	}
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+        background-color: #fff;
+        font-family: sans-serif;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table-wrapper {
+        margin: 20px 0;
+        overflow-x: auto;
+    }
 </style>
+
 
 <h2>成績一覧(科目)</h2>
 
@@ -114,51 +138,50 @@
 
 <c:choose>
 	<c:when test="${tests.size() > 0 }">
-
-	<%-- 検索結果件数の表示 --%>
-	<p>検索結果:${tests.size()}件</p>
+		<p>科目:${selectedSubject.name}</p>
 
 
-		<table border="1">
-			<tr>
-            	<th><label>入学年度</label></th>
-            	<th><label>クラス</label></th>
-            	<th><label>学生番号</label></th>
-         	   	<th><label>氏名</label></th>
-            	<th><label>1回</label></th>
-            	<th><label>2回</label></th>
-        	</tr>
-        	<%-- 検索結果の生徒を表示 --%>
-        	<c:forEach var="test" items="${tests}">
-        		<tr>
-	            	<td>${test.student.entYear}</td>
-	    	        <td>${test.student.classNum}</td>
-	    	       	<%--学生番号をサーブレットに送信 --%>
-	    	        <td>${test.student.no}</td>
-
-    	    	    <td>${test.student.name}</td>
-           		</tr>
-           		<% String error = request.getParameter("error"); %>
-           		<c:if test="${not empty error}">
-           			<tr>
-           				<td> </td>
-           				<td> </td>
-           				<td> </td>
-           				<td> </td>
-           		    	<td>${error}</td>
-           			</tr>
-           		</c:if>
-        	</c:forEach>
-    	</table>
+		<div class="table-wrapper">
+<table>
+    <tr>
+        <th>入学年度</th>
+        <th>クラス</th>
+        <th>学生番号</th>
+        <th>氏名</th>
+        <th>1回</th>
+        <th>2回</th>
+    </tr>
+    <c:forEach var="test" items="${tests}">
+        <tr>
+            <td>${test.student.entYear}</td>
+            <td>${test.student.classNum}</td>
+            <td>${test.student.no}</td>
+            <td>${test.student.name}</td>
+            <td>
+                <c:choose>
+                    <c:when test="${test.point1 != null}">
+                        ${test.point1}
+                    </c:when>
+                    <c:otherwise>-</c:otherwise>
+                </c:choose>
+            </td>
+            <td>
+                <c:choose>
+                    <c:when test="${test.point2 != null}">
+                        ${test.point2}
+                    </c:when>
+                    <c:otherwise>-</c:otherwise>
+                </c:choose>
+            </td>
+        </tr>
+    </c:forEach>
+</table>
+</div>
 
 	</c:when>
 <c:otherwise>
     <p>学生データが存在しません。</p>
 </c:otherwise>
 </c:choose>
-
-<div id="text">
-<p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください。</p>
-</div>
 
 <jsp:include page="../tool/footer.html" />
