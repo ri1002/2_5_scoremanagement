@@ -70,6 +70,26 @@
         #score_menu {
             padding: 0 0 0 10px;
         }
+        #menu ul {
+    		list-style: none;
+		}
+
+		#menu .menu-label {
+    		font-weight: bold;
+		    margin-top: 1rem;
+		}
+
+		#menu .submenu {
+	    	margin-left: 1rem;
+		    list-style: none;
+		    padding-left: 1rem;
+	    	border-left: 2px dotted #ccc;
+		}
+
+		#menu .submenu li {
+	    	margin: 0.3rem 0;
+		}
+
 
         #main_screen {
             flex: 1;
@@ -87,17 +107,18 @@
             text-align: center;
             padding: 1rem;
         }
+
     </style>
 </head>
 <body>
 
         <div id="header">
-            <div id="title"><h2>得点管理システム</h2></div>
+            <div id="title"><h1>得点管理システム</h1></div>
             <div id="subInfo">
                 <!-- ログイン状態の制御 -->
                 <div id="subleft">
                     <c:if test="${not empty sessionScope.teacher}">
-                        <p>${sessionScope.teacher.name} さん</p>
+                        <span>${sessionScope.teacher.name} 様</span>
                     </c:if>
                     <c:if test="${empty sessionScope.teacher}">
                         <p>ログインしていません</p>
