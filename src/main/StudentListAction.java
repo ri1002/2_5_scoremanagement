@@ -19,7 +19,7 @@ import tool.Action;
 public class StudentListAction extends Action{
 
 	@Override
-	public String execute
+	public void execute
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception{
 		HttpSession session = request.getSession();
@@ -91,8 +91,7 @@ public class StudentListAction extends Action{
 		request.setAttribute("ent_year_set", entYearSet);
 
 		//JSPへフォワード
-		//request.getRequestDispatcher("student_list.jsp").forward(request, response);
-		return "student_list.jsp";
+		request.getRequestDispatcher("student_list.jsp").forward(request, response);
 
 	}
 }
