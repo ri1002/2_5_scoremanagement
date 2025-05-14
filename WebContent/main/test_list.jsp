@@ -105,7 +105,7 @@
 </div>
 
 <div class="student-info">
-	<form action="TestListStudent.action" method="post">
+	<form action="TestListStudentExecute.action" method="post">
 	<jsp:include page="/common/test_list_student_header.jsp" />
 	<button type="submit">検索</button>
 		<p class="error-message">${errorMessage}</p>
