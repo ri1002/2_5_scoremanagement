@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<jsp:include page="../tool/header.html" />
+<jsp:include page="../common/header.jsp" />
 <jsp:include page="../tool/sidebar.html" />
 <%@ page import="java.time.LocalDate"%>
 <%@page import="bean.ClassNum, java.util.*" %>
@@ -93,6 +93,39 @@
 		color: red;
 		margin-top: 10px;
 	}
+
+	table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #fff;
+    font-family: sans-serif;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-wrapper {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  gap: 10px;      /* 要素間のスペース */
+  flex-wrap: nowrap; /* 改行させない */
+}
+
+form button {
+  white-space: nowrap; /* ボタン内での折り返し防止 */
+}
 </style>
 
 <h2>成績一覧(学生)</h2>
@@ -114,7 +147,7 @@
 
 <c:choose>
 	<c:when test="${tests.size() > 0 }">
-		<p>氏名:${selectedSubject.name} (学生番号: ${selectedSubject.studentId})</p>
+		 <p>氏名: ${selectedStudent.name}(${selectedStudent.no})</p>
 
 
 		<div class="table-wrapper">

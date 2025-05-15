@@ -93,6 +93,17 @@
 		color: red;
 		margin-top: 10px;
 	}
+
+	form {
+  display: flex;
+  align-items: center;
+  gap: 10px;      /* 要素間のスペース */
+  flex-wrap: nowrap; /* 改行させない */
+}
+
+form button {
+  white-space: nowrap; /* ボタン内での折り返し防止 */
+}
 </style>
 
 <h2>成績参照</h2>
