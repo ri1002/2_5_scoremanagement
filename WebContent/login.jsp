@@ -122,7 +122,7 @@
 					</small>
 				</b>
 
-				<input type="text" placeholder="ID:" name="id" required id="id" maxlength="10" pattern="^[a-zA-Z0-9]+$"><br>
+				<input type="text" placeholder="ID" name="id" required id="id" maxlength="10" pattern="^[a-zA-Z0-9]+$"><br>
 				<input type="password" placeholder="パスワード" name="password" required id="password" maxlength="30" pattern="^[a-zA-Z0-9]+$"><br>
 
 
