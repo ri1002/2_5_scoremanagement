@@ -105,15 +105,41 @@
 </div>
 
 <div class="student-info">
-	<form action="TestListStudent.action" method="post">
+	<form action="TestListStudentExecute.action" method="post">
 	<jsp:include page="/common/test_list_student_header.jsp" />
 	<button type="submit">検索</button>
 		<p class="error-message">${errorMessage}</p>
 	</form>
 </div>
 
-<div id="text">
-<p>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください。</p>
+<c:choose>
+	<c:when test="${tests.size() > 0 }">
+		<p>氏名:${selectedSubject.name} (学生番号: ${selectedSubject.studentId})</p>
+
+
+		<div class="table-wrapper">
+<table>
+    <tr>
+        <th>科目名</th>
+        <th>科目コード</th>
+        <th>回数</th>
+        <th>点数</th>
+    </tr>
+    <c:forEach var="test" items="${tests}">
+        <tr>
+            <td>${test.subjectName}</td>
+            <td>${test.subjectCd}</td>
+            <td>${test.num}</td>
+            <td>${test.point}</td>
+        </tr>
+    </c:forEach>
+</table>
 </div>
+
+	</c:when>
+<c:otherwise>
+    <p>成績情報が存在しませんでした。</p>
+</c:otherwise>
+</c:choose>
 
 <jsp:include page="../tool/footer.html" />

@@ -62,7 +62,7 @@
 			#showPassword {
 			    display: none;
 			}
-
+			
 			/* チェックボックスラベルのスタイル */
 			#showPassword + label {
 			    position: relative;
@@ -70,7 +70,7 @@
 			    cursor: pointer;
 			    font-size: 16px;
 			}
-
+			
 			/* チェックボックスのカスタム見た目 */
 			#showPassword + label::before {
 			    content: '';
@@ -84,13 +84,13 @@
 			    background-color: white;
 			    transition: all 0.3s ease;
 			}
-
+			
 			/* チェックボックスがチェックされた時のカスタム見た目 */
 			#showPassword:checked + label::before {
 			    background-color: #1E90FF; /* チェック時の背景色 */
 			    border-color:#1E90FF; /* チェック時の境界線色 */
 			}
-
+			
 			/* チェックボックスがチェックされた時に中にチェックマークを表示 */
 			#showPassword:checked + label::after {
 			    content: '✔';
@@ -122,8 +122,13 @@
 					</small>
 				</b>
 
+<<<<<<< HEAD
 				<input type="text" placeholder="ID" name="id" required id="id" maxlength="10"><br>
 				<input type="password" placeholder="パスワード" name="password" required id="password" maxlength="30"><br>
+=======
+				<input type="text" placeholder="ID" name="id" required id="id" maxlength="10" pattern="^[a-zA-Z0-9]+$"><br>
+				<input type="password" placeholder="パスワード" name="password" required id="password" maxlength="30" pattern="^[a-zA-Z0-9]+$"><br>
+>>>>>>> branch 'master' of https://github.com/ri1002/2_5_scoremanagement.git
 
 
 

@@ -78,7 +78,7 @@ public class TestListSubjectExecuteAction extends Action {
             }
         }
 
-        session.setAttribute("tests", tests);
+        //session.setAttribute("tests", tests);
         request.setAttribute("tests", tests);
         request.setAttribute("subjects", subjectList);
         request.setAttribute("class_num_set", classNumList);
