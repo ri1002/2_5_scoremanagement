@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.School;
 import bean.Student;
@@ -28,6 +29,10 @@ public class StudentCreateExecuteAction extends Action {
 	public void execute
 		( HttpServletRequest request, HttpServletResponse response
 		) throws Exception {
+
+		HttpSession session = request.getSession();
+		Teacher teacher = (Teacher)session.getAttribute("teacher");
+
 
 		Integer ent_year = Integer.parseInt(request.getParameter("ent_year"));
         String no = request.getParameter("no");
@@ -63,7 +68,6 @@ public class StudentCreateExecuteAction extends Action {
 
             // `StudentCreateAction` から渡されたクラス情報を再度セット
             ClassNumDao cNumDao = new ClassNumDao();
-            Teacher teacher = (Teacher) request.getSession().getAttribute("user");
             List<String> classNumList = cNumDao.filter(teacher.getSchool());
             request.setAttribute("class_num_set", classNumList);
 
@@ -84,7 +88,6 @@ public class StudentCreateExecuteAction extends Action {
 
 			// クラス情報の再取得とセット
 			ClassNumDao cNumDao = new ClassNumDao();
-			Teacher teacher = (Teacher) request.getSession().getAttribute("user");
 			List<String> classNumList = cNumDao.filter(teacher.getSchool());
 			request.setAttribute("class_num_set", classNumList);
 
@@ -99,10 +102,9 @@ public class StudentCreateExecuteAction extends Action {
 			student.setEntYear(ent_year);          // 入学年度
 			student.setClassNum(class_num);         // クラス番号
 			student.setAttend(true);           // 在学中フラグ
+			School school = teacher.getSchool();
 
-			School school = new School();      // 学校情報（省略してたらここ必要！）
-			school.setCd("tes");
-			student.setSchool(school);         // 学校コードをセット
+			student.setSchool(school);   // 学校情報（省略してたらここ必要！）
 
 			StudentDao dao = new StudentDao();
 			boolean result = dao.save(student);  // ← 登録・更新の実行

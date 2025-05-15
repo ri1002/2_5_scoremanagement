@@ -21,11 +21,11 @@
 
 <h2>科目情報登録</h2>
 
-<form action="subject_create" method="post">
+<form action="SubjectCreateExecute.action" method="post">
 
 
         <label>科目コード</label><br>
-        <input type="text" placeholder="科目コードを入力してください" name="code"><br>
+        <input type="text" placeholder="科目コードを入力してください" name="cd"><br>
 
         <label>科目名</label><br>
         <input type="text" placeholder="科目名を入力してください" name="name"><br>
