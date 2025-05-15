@@ -32,7 +32,6 @@ public class TestListStudentExecuteAction extends Action {
         School school = teacher.getSchool();
 
         if (studentId == null || studentId.isEmpty()) {
-            request.setAttribute("errorMessage", "学生番号を入力してください。");
             request.getRequestDispatcher("/main/test_list.jsp").forward(request, response);
             return;
         }

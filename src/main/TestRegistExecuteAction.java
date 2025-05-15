@@ -92,7 +92,7 @@ public class TestRegistExecuteAction extends Action {
             System.out.println("subjects[i] = " + subjects[i]);
             System.out.println("point = " + point);
 
-            
+
             Test test = new Test();
             test.setStudent(student);
             test.setSubject(subject);

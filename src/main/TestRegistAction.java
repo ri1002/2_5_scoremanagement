@@ -125,6 +125,19 @@ public class TestRegistAction extends Action{
 				}
 			}
 
+			// ★ここで選択された科目情報を取得してJSPに渡す
+	        Subject selectedSubject = null;
+	        for (Subject s : subjectList) {
+	            if (s.getCd().equals(subject)) {
+	                selectedSubject = s;
+	                break;
+	            }
+	        }
+
+	     // ★ここでJSPに渡す
+	        request.setAttribute("selectedSubject", selectedSubject);
+
+
 				session.setAttribute("tests", tests);
 
 				request.setAttribute("subjects", subjectList);
