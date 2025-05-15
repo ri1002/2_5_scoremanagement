@@ -37,13 +37,13 @@
         #subInfo {
             display: flex;
             align-items: center;
-            background-color: lemonchiffon;
             padding: 0.5rem;
             font-size: small;
         }
 
         #subleft, #subright {
             margin: 0 0.5rem;
+            margin-top: 0.5rem;
         }
 
         #bodyArea {
