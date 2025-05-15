@@ -87,18 +87,21 @@
 
 </style>
 
-
+<%--画面タイトル --%>
 <h2>学生管理</h2>
 
+<%--新規登録リンク --%>
 <div id = "new_registration"><a href = "http://localhost:8080/scoremanagement/main/StudentCreate.action">新規登録</a></div>
 
 <form action="StudentList.action" method="post">
 
 	<div id = "filtering">
 		<div id = "year_filter">
+			<%--入学年度 --%>
 			<label>入学年度</label><br>
 
 
+			<%--入学年度セレクトボックス --%>
 			<select name="f1">
 				<option value="0">--------</option>
 				<%int currentYear = LocalDate.now().getYear();%>
@@ -110,8 +113,11 @@
    				<% } %>
 			</select>
 		</div>
+
 		<div id = "class_filter">
+		<%--クラス --%>
 			<label>クラス</label><br>
+			<%--クラスセレクトボックス --%>
 			<select name="f2">
 				<option value="0">--------</option>
 				<c:forEach var="num" items="${class_num_set}">
@@ -121,11 +127,13 @@
 		</div>
 
 		<div id = "currently_enrolled_filter">
+			<%--在学中ON/OFF --%>
 			<label>
 				<input type="checkbox" name="f3" value="t"<c:if test="${!empty f3}">checked</c:if>>在学中
 			</label>
 		</div>
 
+		<%--絞り込みボタン --%>
 		<div id = "filter_filter">
 			<button type="submit">絞込み</button>
 		</div>
@@ -135,9 +143,12 @@
 <c:choose>
 	<c:when test="${students.size()>0 }">
 
+	<%--検索結果件数 --%>
 	<p>検索結果:${students.size()}件</p>
 
+	<%--学生一覧テーブル --%>
 	<table border="1">
+		<%--ヘッダー --%>
         <tr>
             <th>入学年度</th>
             <th>学生番号</th>
@@ -146,6 +157,7 @@
             <th>在学中</th>
             <th>　</th>
         </tr>
+        <%--学生情報 --%>
         <c:forEach var="student" items="${students }">
             <tr>
                 <td>${student.entYear}</td>
@@ -156,15 +168,17 @@
                 	<c:choose>
                     	<c:when test="${student.getAttend() }">〇</c:when>
                     	<c:otherwise>×</c:otherwise>
-                </c:choose>
+                	</c:choose>
                 </td>
+                <%--学生情報変更リンク --%>
                 <td><a href="http://localhost:8080/scoremanagement/main/StudentUpdate.action?no=${student.no}">変更</a></td>
             </tr>
         </c:forEach>
     </table>
 </c:when>
+<%--学生情報なしメッセージ --%>
 <c:otherwise>
-    <p>学生データが存在しません。</p>
+    <div><p>学生データが存在しません。</p></div>
 </c:otherwise>
 </c:choose>
 <jsp:include page="../tool/footer.html" />
