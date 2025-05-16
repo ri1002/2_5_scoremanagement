@@ -86,28 +86,20 @@
 
 <h2>科目情報登録</h2>
 
-<form action="SubjectUpdateExecute.action" method="post">
+<form action="SubjectDeleteExecute.action" method="post">
 
 
-        <label>科目コード</label><br>
-        <input type="hidden" name="cd" value="${subject.cd}">${subject.cd}<br>
-
-        <label>科目名</label><br>
-        <input type="text" placeholder="科目名を入力してください" name="name" value="${subject.name}"><br>
-            <!-- 氏名エラー -->
-            <c:if test="${not empty error_subject_name}">
-                <div class="error-wrapper">
-                    <div class="error-message">
-                        <div class="error-arrow"></div>
-                        <span class="error-icon">!</span>
-                       	${error_subject_name}<%--エラーメッセージ（このフィールドを入力してください） --%>
-                    </div>
-                </div>
-            </c:if>
+        <label>${subject.name}を削除してもよろしいですか</label><br>
+        <input type="hidden" name="subject_cd" value="${subject.cd}">
+		<input type="hidden" name="subject_name" value="${subject.name}">
 
         <div id="create_end">
-            <button type="submit" name="end">変更</button>
+            <button type="submit" name="end">削除</button>
         </div>
 </form>
+
+<td><a href="http://localhost:8080/scoremanagement/main/SubjectList.action">戻る</a></td>
+
+
 
 <jsp:include page="../tool/footer.html" />

@@ -29,13 +29,6 @@ public class SubjectCreateExecuteAction extends Action {
     Subject existingSubject = subjectdao.get(cd);
 
 
-	if ( existingSubject != null) {
-		// クラス情報の再取得とセット
-
-		// フォワード
-		request.getRequestDispatcher("/main/subject_create.jsp").forward(request, response);
-		return;
-	}
 
 	//nameがnullの時エラー
 	if (name == null || name.trim().isEmpty()) {
@@ -51,6 +44,14 @@ public class SubjectCreateExecuteAction extends Action {
 		hasError = true;
 	}
 
+	//cdが三文字以下の時エラー
+	if (cd.length() != 3) {
+		String error_subject_cd_number= "科目コードは3文字で入力してください";
+		request.setAttribute("error_subject_cd_number", error_subject_cd_number);
+		hasError = true;
+	}
+
+
     // エラーがあった場合は再入力画面へ戻す
     if (hasError) {
 
@@ -61,6 +62,23 @@ public class SubjectCreateExecuteAction extends Action {
         request.getRequestDispatcher("/main/subject_create.jsp").forward(request, response);
         return;
     }
+
+    Subject exiSubject = subjectdao.get(cd);
+
+	if ( exiSubject != null) {
+		String subject_duplication = "学生番号が重複しています";
+
+		request.setAttribute("subject_duplication", subject_duplication);
+
+		// 入力値を戻すためのセット（必要であれば）
+		request.setAttribute("cd", cd);
+		request.setAttribute("name", name);
+
+
+		// フォワード
+		request.getRequestDispatcher("/main/subject_create.jsp").forward(request, response);
+		return;
+	}
 
 
 		Subject subject = new Subject();

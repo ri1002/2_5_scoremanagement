@@ -93,6 +93,16 @@
                 </div>
             </c:if>
 
+		<%--科目コードが3文字以外の場合エラー表示 --%>
+		<c:if test="${not empty error_subject_cd_number}">
+    		<p style="color:#FFCC33">${error_subject_cd_number}</p>
+		</c:if>
+
+		<%--科目が重複している場合エラー表示 --%>
+		<c:if test="${not empty subject_duplication}">
+    		<p style="color:#FFCC33">${subject_duplication}</p>
+		</c:if>
+
 
         <label>科目名</label><br>
         <input type="text" placeholder="科目名を入力してください" name="name"><br>
