@@ -12,7 +12,6 @@
 		margin: 2em 0;
 		border: solid 1px #ccc;
 		border-radius: 5px;
-		background-color: #f9f9f9;
 	}
 
 	#search-header label {
@@ -38,7 +37,6 @@
 		padding: 1em;
 		border: solid 1px #ccc;
 		border-radius: 5px;
-		background-color: #f9f9f9;
 	}
 
 	.student-info label {
@@ -89,12 +87,6 @@
 
 	}
 
-	.error-message {
-		color: red;
-		margin-top: 10px;
-	}
-
-
     table {
         width: 100%;
         border-collapse: collapse;
@@ -143,7 +135,6 @@ form button {
 	<form action="TestListStudentExecute.action" method="post">
 	<jsp:include page="/common/test_list_student_header.jsp" />
 	<button type="submit">検索</button>
-		<p class="error-message">${errorMessage}</p>
 	</form>
 </div>
 
