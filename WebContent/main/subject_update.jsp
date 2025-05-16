@@ -25,7 +25,8 @@
 
 
         <label>科目コード</label><br>
-        <input type="text" placeholder="科目コードを入力してください" name="code"><br>
+
+        <input type="hidden" name="code"><br>
 
         <label>科目名</label><br>
         <input type="text" placeholder="科目名を入力してください" name="name"><br>
