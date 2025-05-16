@@ -73,7 +73,7 @@ public class StudentUpdateExecuteAction extends Action {
     		request.setAttribute("class_num_set", list);
             request.setAttribute("student_name", student_name);
 
-            request.getRequestDispatcher("/main/subject_update.jsp").forward(request, response);
+            request.getRequestDispatcher("/main/student_update.jsp").forward(request, response);
             return;
         }
 
