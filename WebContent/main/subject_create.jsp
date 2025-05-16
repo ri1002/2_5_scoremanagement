@@ -17,6 +17,61 @@
         width: 100%;
     }
 
+    	/* エラーメッセージラッパー */
+	.error-wrapper {
+    	position: relative;
+	    top: 18px; /* フィールドの中央に配置 */
+    	left: 10px; /* 左側に少し寄せる */
+	    transform: translateY(-50%); /* 垂直方向の中央に配置 */
+    	display: flex;
+    	justify-content: center; /* 中央に配置 */
+    	align-items: center;
+    	z-index: 1; /* 他の要素より前面に表示 */
+	}
+
+	/* エラーメッセージのスタイル */
+	.error-message {
+    	position: relative;
+	    text-align: center;
+    	background: #fff;
+    	border: 2px solid #ddd;
+    	border-radius: 8px;
+    	padding: 5px;
+    	font-size: 14px;
+    	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    	max-width: 300px;
+    	z-index: 2;
+	}
+
+	/* エラーメッセージの矢印 */
+	.error-arrow {
+	    position: absolute;
+    	top: -6px;
+    	left: 10px;
+    	width: 12px;
+    	height: 12px;
+    	background: #fff;
+    	border-top: 2px solid #ddd;
+    	border-left: 2px solid #ddd;
+    	transform: translateX(-50%) rotate(45deg);
+    	z-index: 1;
+	}
+
+	.error-icon {
+	    background: #FFC800;
+	    color: #fff;
+    	font-weight: bold;
+	    width: 20px;
+    	height: 20px;
+	    display: inline-flex;
+    	align-items: center;
+	    justify-content: center;
+    	margin-left: 5px;
+	    font-size: 14px;
+    	z-index: 2;
+	    position: relative;
+	}
+
 </style>
 
 <h2>科目情報登録</h2>
@@ -26,14 +81,36 @@
 
         <label>科目コード</label><br>
         <input type="text" placeholder="科目コードを入力してください" name="cd"><br>
+            <!-- 科目コードエラー -->
+            <c:if test="${not empty error_subject_cd}">
+                <div class="error-wrapper">
+                    <div class="error-message">
+                        <div class="error-arrow"></div>
+                        <span class="error-icon">!</span>
+                       		${error_subject_cd}
+                       		<%--エラーメッセージ（このフィールドを入力してください） --%>
+                    </div>
+                </div>
+            </c:if>
+
 
         <label>科目名</label><br>
         <input type="text" placeholder="科目名を入力してください" name="name"><br>
 
+            <!-- 氏名エラー -->
+            <c:if test="${not empty error_subject_name}">
+                <div class="error-wrapper">
+                    <div class="error-message">
+                        <div class="error-arrow"></div>
+                        <span class="error-icon">!</span>
+                       	${error_subject_name }<%--エラーメッセージ（このフィールドを入力してください） --%>
+                    </div>
+                </div>
+            </c:if>
+
         <div id="create_end">
             <button type="submit" name="end">登録して終了</button>
         </div>
-    </div>
 </form>
 
 <jsp:include page="../tool/footer.html" />

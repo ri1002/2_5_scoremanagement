@@ -32,7 +32,8 @@ public class SubjectUpdateExecuteAction extends Action {
 
 
 		if (SubjectName == null || SubjectName.trim().isEmpty()) {
-			String student_name = "このフィールドを入力してください。";
+			String error_subject_name = "このフィールドを入力してください。";
+			request.setAttribute("error_subject_name", error_subject_name);
 			hasError = true;
 		}
 
@@ -41,10 +42,11 @@ public class SubjectUpdateExecuteAction extends Action {
 
     	    // そのIDに対応する学生情報をDBから取得する
         	SubjectDao subjectdao = new SubjectDao();
-    	    Subject subjectGet = subjectdao.get(SubjectCd);
+    	    Subject subject = subjectdao.get(SubjectCd);
 
     		//リクエストに変更したい学生情報をセット
-    		request.setAttribute("subjectGet", subjectGet);
+    		request.setAttribute("subject", subject);
+
 
             request.getRequestDispatcher("/main/subject_update.jsp").forward(request, response);
             return;

@@ -5,10 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.School;
-import bean.Student;
 import bean.Subject;
 import bean.Teacher;
-import dao.StudentDao;
 import dao.SubjectDao;
 import tool.Action;
 
@@ -25,17 +23,45 @@ public class SubjectCreateExecuteAction extends Action {
 		String cd = request.getParameter("cd");
 		String name = request.getParameter("name");
 
-    StudentDao studentdao = new StudentDao();
-    Student existingStudent = studentdao.get(cd);
+		boolean hasError = false;
+
+    SubjectDao subjectdao = new SubjectDao();
+    Subject existingSubject = subjectdao.get(cd);
 
 
-	if ( existingStudent != null) {
+	if ( existingSubject != null) {
 		// クラス情報の再取得とセット
 
 		// フォワード
 		request.getRequestDispatcher("/main/subject_create.jsp").forward(request, response);
 		return;
 	}
+
+	//nameがnullの時エラー
+	if (name == null || name.trim().isEmpty()) {
+		String error_subject_name = "このフィールドを入力してください。";
+		request.setAttribute("error_subject_name", error_subject_name);
+		hasError = true;
+	}
+
+	//cdがnullの時エラー
+	if (cd == null || cd.trim().isEmpty()) {
+		String error_subject_cd = "このフィールドを入力してください。";
+		request.setAttribute("error_subject_cd", error_subject_cd);
+		hasError = true;
+	}
+
+    // エラーがあった場合は再入力画面へ戻す
+    if (hasError) {
+
+		//リクエストに変更したい学生情報をセット
+		request.setAttribute("subject", existingSubject);
+
+
+        request.getRequestDispatcher("/main/subject_create.jsp").forward(request, response);
+        return;
+    }
+
 
 		Subject subject = new Subject();
 		subject.setCd(cd);              // 学生番号
