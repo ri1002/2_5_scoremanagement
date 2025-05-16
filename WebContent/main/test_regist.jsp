@@ -121,7 +121,7 @@
 
 
            		</tr>
-           		<% String error = request.getParameter("error"); %>
+           		<% String error = request.getParameter("errors"); %>
            		<c:if test="${not empty error}">
            			<tr>
            				<td> </td>
