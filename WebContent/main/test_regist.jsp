@@ -84,8 +84,7 @@
 <c:choose>
 	<c:when test="${tests.size() > 0 }">
 
-	<%-- 検索結果件数の表示 --%>
-	<p>検索結果:${tests.size()}件</p>
+	<p>科目:${selectedSubject.name}</p>
 
 	<%-- TestRegistDone.actionに入学年度、クラス、氏名、点数を送信 --%>
 	<form action="TestRegistExecute.action" method="post">
