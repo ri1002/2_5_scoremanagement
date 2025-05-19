@@ -43,9 +43,8 @@ public class SubjectCreateExecuteAction extends Action {
 		request.setAttribute("error_subject_cd", error_subject_cd);
 		hasError = true;
 	}
-
 	//cdが三文字以下の時エラー
-	if (cd.length() != 3) {
+	else if (cd.length() != 3) {
 		String error_subject_cd_number= "科目コードは3文字で入力してください";
 		request.setAttribute("error_subject_cd_number", error_subject_cd_number);
 		hasError = true;
