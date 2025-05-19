@@ -27,6 +27,33 @@
         box-sizing: border-box;
     }
 
+    button{
+  		padding: 0;
+  		border: none;
+  		outline: none;
+  		appearance: none;
+		background: none;
+  		cursor: pointer;
+	}
+
+	#filter_filter button {
+  		color: #FFFFFF;
+  		background: #A5AAF7;
+ 	 	display: inline-block;
+ 	 	width: 50%;
+ 	 	min-width: 80px;        /* どんなに画面が狭くても最低100px */
+    	max-width: 200px;
+  		padding:10px;
+  		border-radius:5px;
+  		text-align: center;
+  		font-weight: bold;
+  		text-decoration: none;
+	}
+	#filter_filter button:hover {
+  		color: #FFFFFF;
+  		background: #CCCEF7;
+	}
+
 	/* エラーメッセージラッパー */
 	.error-wrapper {
     	position: relative;
@@ -105,7 +132,7 @@
                 </div>
             </c:if>
 
-        <div id="create_end">
+        <div id = "filter_filter">
             <button type="submit" name="end">変更</button>
         </div>
 </form>
