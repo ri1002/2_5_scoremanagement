@@ -170,90 +170,109 @@ public class SubjectDao extends Dao {
     }
 
     public boolean save(Subject subject) throws Exception {
-
 		Connection connection = getConnection();
-
 		PreparedStatement statement = null;
-
 		int count = 0;
 
 
 		try {
-
 			Subject old = get(subject.getCd());
-
 			if (old == null) {
-
 				statement = connection.prepareStatement("insert into subject(school_cd,cd,name) values(?, ?, ?)");
-
 				statement.setString(1, subject.getSchool().getCd());
-
 				statement.setString(2, subject.getCd());
-
 				statement.setString(3, subject.getName());
 
 			} else {
-
 				statement = connection.prepareStatement("update subject set school_cd=?, cd=?, name=? where cd=?");
-
 				statement.setString(1, subject.getSchool().getCd());
-
 				statement.setString(2, subject.getCd());
-
 				statement.setString(3, subject.getName());
-
 				statement.setString(4, subject.getCd());
-
 			}
 
 			count = statement.executeUpdate();
 
 		} catch (Exception e) {
-
 			throw e;
 
 		} finally {
-
 			if (statement != null) {
 
 				try {
-
 					statement.close();
 
 				} catch (SQLException sqle) {
-
 					throw sqle;
-
 				}
-
 			}
 
 			if (connection != null) {
-
 				try {
-
 					connection.close();
-
 				} catch (SQLException sqle) {
-
 					throw sqle;
-
 				}
-
 			}
-
 		}
 
 		if (count > 0) {
-
 			return true;
 
 		} else {
-
 			return false;
 
 		}
 
 	}
 
+
+    public boolean delete(Subject subject)  throws Exception {
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
+		int count = 0;
+
+		try {
+			Subject old = get(subject.getCd());
+
+			if (old != null) {
+				statement = connection.prepareStatement("DELETE FROM subject WHERE cd = ?;");
+				statement.setString(1, subject.getCd());
+				count = statement.executeUpdate();
+			} else {
+				count = 0;
+			}
+
+		} catch (Exception e) {
+			throw e;
+
+		} finally {
+			if (statement != null) {
+
+				try {
+					statement.close();
+
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
+
+		if (count > 0) {
+			return true;
+
+		} else {
+			return false;
+
+		}
+
+    }
 }

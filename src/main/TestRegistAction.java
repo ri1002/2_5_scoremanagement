@@ -1,12 +1,13 @@
 package main;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Student;
 import bean.Subject;
 import bean.Teacher;
 import bean.Test;
@@ -15,149 +16,101 @@ import dao.SubjectDao;
 import dao.TestDao;
 import tool.Action;
 
-public class TestRegistAction extends Action{
+public class TestRegistAction extends Action {
 
-	@Override
-	public void execute
-		( HttpServletRequest request, HttpServletResponse response
-		) throws Exception{
-		HttpSession session = request.getSession();
-		Teacher teacher = (Teacher)session.getAttribute("teacher");
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        Teacher teacher = (Teacher) session.getAttribute("teacher");
 
-		if (teacher == null) {
-		    response.sendRedirect("login.jsp"); // ログインページに飛ばすなどの処理
-		    return;
-		}
-			// セッションにTeacherオブジェクトを保存
-			session.setAttribute("user", teacher);
+        if (teacher == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
 
-			String entYearStr="";//入力された入学年度
-			String classNum=""; //入力されたクラス番号
-			int entYear = 0;//入学年度
-			int cN = 0;
-			int su = 0;
-			String subject;
-			String numStr;
-			List<Test> tests = null;//学生リスト
-			LocalDate todaysDate = LocalDate.now();//LocalDateインスタンスを取得
-			int year = todaysDate.getYear();//現在の年を取得
-			TestDao tDao = new TestDao();//学生Dao
-			ClassNumDao cNumDao = new ClassNumDao();//クラス番号Daoを初期化
-			boolean hasError = false;
+        session.setAttribute("user", teacher);
 
+        String entYearStr = request.getParameter("f1");
+        String classNum = request.getParameter("f2");
+        String subject = request.getParameter("f3");
+        String numStr = request.getParameter("f4");
 
-			//リクエストパラメーターの取得
-			entYearStr = request.getParameter("f1");
-			classNum = request.getParameter("f2");
-			subject = request.getParameter("f3");
-			numStr = request.getParameter("f4");
+        int entYear = 0;
+        int cN = 0;
+        int su = 0;
+        int num = 0;
+        boolean hasError = false;
 
+        if (entYearStr != null && !entYearStr.isEmpty() && !entYearStr.equals("0")) {
+            entYear = Integer.parseInt(entYearStr);
+        }
+        if (classNum != null && !classNum.isEmpty() && !classNum.equals("0")) {
+            cN = Integer.parseInt(classNum);
+        }
+        if (subject != null && !subject.isEmpty() && !subject.equals("0")) {
+            su = Integer.parseInt(subject);
+        }
+        if (numStr != null && !numStr.isEmpty() && !numStr.equals("0")) {
+            num = Integer.parseInt(numStr);
+        }
 
+        SubjectDao subjectDao = new SubjectDao();
+        List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
 
+        ClassNumDao cNumDao = new ClassNumDao();
+        List<String> classNumList = cNumDao.filter(teacher.getSchool());
 
+        if (entYear == 0 || cN == 0 || su == 0 || num == 0) {
+            String errors = "入学年度とクラスと科目と回数を選択してください。";
+            request.setAttribute("errors", errors);
+            hasError = true;
+        }
 
-			// 入学年度をintに変換
-			int num = 0;
-			if (entYearStr != null && !entYearStr.isEmpty() && !entYearStr.equals("0")) {
-			    entYear = Integer.parseInt(entYearStr);
-			}
+        if (hasError) {
+            request.setAttribute("entYear", entYear);
+            request.setAttribute("classNum", classNum);
+            request.setAttribute("subject", subject);
+            request.setAttribute("num", num);
+            request.setAttribute("class_num_set", classNumList);
+            request.setAttribute("subjects", subjectList);
+            request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
+            return;
+        }
 
-			if (classNum != null && !classNum.isEmpty() && !classNum.equals("0")) {
-			    cN = Integer.parseInt(classNum);
-			}
+        Subject selectedSubject = null;
+        for (Subject s : subjectList) {
+            if (s.getCd().equals(subject)) {
+                selectedSubject = s;
+                break;
+            }
+        }
 
-			if (subject != null && !subject.isEmpty() && !subject.equals("0")) {
-			    su = Integer.parseInt(subject);
-			}
+        TestDao tDao = new TestDao();
+        List<Test> registeredTests = tDao.filter(entYear, classNum, selectedSubject, num, teacher.getSchool());
+        List<Student> unregisteredStudents = tDao.findStudentsWithoutTest(entYear, classNum, selectedSubject, num, teacher.getSchool());
 
-			// テスト回数をintに変換
-			if (numStr != null && !numStr.isEmpty() && !numStr.equals("0")) {
-			    num = Integer.parseInt(numStr);
-			}
+        List<Test> tests = new ArrayList<>(registeredTests);
+        for (Student student : unregisteredStudents) {
+            Test test = new Test();
+            test.setStudent(student);
+            test.setSubject(selectedSubject);
+            test.setNo(num);
+            test.setPoint(null); // 未入力
+            test.setSchool(teacher.getSchool());
+            test.setClassNum(student.getClassNum());
+            tests.add(test);
+        }
 
-			// エラーメッセージ
-			if (subject != null && !subject.equals("0")) {
-				System.out.println("subject");
-			}
+        session.setAttribute("tests", tests);
+        request.setAttribute("tests", tests);
+        request.setAttribute("selectedSubject", selectedSubject);
+        request.setAttribute("subjects", subjectList);
+        request.setAttribute("class_num_set", classNumList);
+        request.setAttribute("f1", entYear);
+        request.setAttribute("f2", classNum);
+        request.setAttribute("f3", subject);
+        request.setAttribute("f4", num);
 
-
-
-			List<String> list = cNumDao.filter(teacher.getSchool());
-
-			SubjectDao subjectDao = new SubjectDao();
-			List<Subject> subjectList = subjectDao.filter(teacher.getSchool());
-
-
-
-			if (entYear == 0 || cN == 0 || su == 0  || num == 0) {
-				String errors = "入学年度とクラスと科目と回数を選択してください。";
-				request.setAttribute("errors", errors);
-				hasError = true;
-			}
-
-	        // エラーがあった場合は再入力画面へ戻す
-	        if (hasError) {
-	        	request.setAttribute("entYear", entYear);
-	            request.setAttribute("classNum", classNum);
-	            request.setAttribute("subject", subject);
-	            request.setAttribute("num", num);
-
-	            // `StudentCreateAction` から渡されたクラス情報を再度セット
-	            List<String> classNumList = cNumDao.filter(teacher.getSchool());
-	            request.setAttribute("class_num_set", classNumList);
-	            request.setAttribute("subjects", subjectList);
-
-
-
-	            request.getRequestDispatcher("/main/test_regist.jsp").forward(request, response);
-	            return;
-	        }
-
-
-			Subject sub = new Subject();
-			sub.setCd(subject);
-
-			if (entYear != 0 && !classNum.equals("0")) {
-				//testsに検索した内容を入れる
-				tests = tDao.filter(entYear, classNum, sub, num, teacher.getSchool());
-				if (tests != null) {
-				    System.out.println("Tests list size: " + tests.size());
-				}
-			}
-
-			// ★ここで選択された科目情報を取得してJSPに渡す
-	        Subject selectedSubject = null;
-	        for (Subject s : subjectList) {
-	            if (s.getCd().equals(subject)) {
-	                selectedSubject = s;
-	                break;
-	            }
-	        }
-
-	     // ★ここでJSPに渡す
-	        request.setAttribute("selectedSubject", selectedSubject);
-
-
-				session.setAttribute("tests", tests);
-
-				request.setAttribute("subjects", subjectList);
-
-				//レスポンス値をセット
-				//リクエストに入学年度をセット
-				request.setAttribute("f1", entYear);
-				//リクエストにクラス番号をセット
-				request.setAttribute("f2", classNum);
-				//リクエストに科目をセット
-				request.setAttribute("f3", subject);
-				//リクエストにテスト回数をセット
-				request.setAttribute("f4", num);
-
-				//リクエストにテストリストをセット
-				request.setAttribute("tests", tests);
-				request.setAttribute("class_num_set", list);
-
-				//JSPへフォワード
-				request.getRequestDispatcher("test_regist.jsp").forward(request, response);
-
-	}
+        request.getRequestDispatcher("test_regist.jsp").forward(request, response);
+    }
 }
