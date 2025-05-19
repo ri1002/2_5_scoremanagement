@@ -78,7 +78,7 @@
 
 <c:choose>
 	<c:when test="${tests.size() > 0}">
-		<p>科目: ${selectedSubject.name}</p>
+		<p>科目: ${selectedSubject.name}(${f4}回)</p>
 
 		<!-- TestRegistExecute.actionに入学年度、クラス、氏名、点数を送信 -->
 		<form action="TestRegistExecute.action" method="post">
@@ -108,6 +108,9 @@
         </td>
     </tr>
 </c:forEach>
+		<c:if test="${not empty error}">
+    		<p style="color:orange">${error}</p>
+		</c:if>
 	    	</table>
 	    	<button>登録して終了</button>
 	    </form>
