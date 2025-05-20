@@ -116,7 +116,7 @@
 <form action="SubjectDeleteExecute.action" method="post">
 
 
-        <label>${subject.name}を削除してもよろしいですか</label><br>
+        <label>「${subject.name}」を削除してもよろしいですか</label><br>
         <input type="hidden" name="subject_cd" value="${subject.cd}">
 		<input type="hidden" name="subject_name" value="${subject.name}">
 
