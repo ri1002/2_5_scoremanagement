@@ -31,8 +31,10 @@ public class TestListStudentExecuteAction extends Action {
         String studentId = request.getParameter("f4");
         School school = teacher.getSchool();
 
+        // 学生番号が未入力の場合、エラーメッセージを設定して元の画面に戻る
         if (studentId == null || studentId.isEmpty()) {
-            request.getRequestDispatcher("/main/test_list.jsp").forward(request, response);
+            request.setAttribute("error_student_no", "このフィールドを入力してください。");
+            request.getRequestDispatcher("test_list_student.jsp").forward(request, response);
             return;
         }
 
