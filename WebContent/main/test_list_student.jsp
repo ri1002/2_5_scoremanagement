@@ -119,6 +119,50 @@ form {
 form button {
   white-space: nowrap; /* ボタン内での折り返し防止 */
 }
+
+/* エラーメッセージ自体 */
+	.error-message {
+    	position: relative;
+	    text-align: center;
+    	font-size: 14px;
+	    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	    max-width: 300px;
+	    bottom: 5px;
+	    float: right;
+	    margin: 0 auto;
+    	padding: 5px;
+    	background: #fff;
+    	border: 2px solid #ddd;
+    	border-radius: 8px;
+	}
+
+	/* エラーメッセージアイコン */
+	.error-icon {
+    	background: #FFC800;
+	    color: #fff;
+    	font-weight: bold;
+	    width: 20px;
+    	height: 20px;
+	    display: inline-flex;
+	    align-items: center;
+	    justify-content: center;
+	    margin-left: 5px;
+	    font-size: 14px;
+	    position: relative;
+	}
+
+	/* エラーメッセージの矢印 */
+	.error-arrow {
+    	position: absolute;
+	    top: -6px;
+	    left: 10px;
+	    width: 12px;
+	    height: 12px;
+	    background: #fff;
+	    border-top: 2px solid #ddd;
+	    border-left: 2px solid #ddd;
+	    transform: translateX(-50%) rotate(45deg);
+	}
 </style>
 
 <h2>成績一覧(学生)</h2>
@@ -137,34 +181,34 @@ form button {
 	</form>
 </div>
 
+<c:if test="${not empty selectedStudent}">
+    <p>氏名: ${selectedStudent.name} (${selectedStudent.no})</p>
+</c:if>
+
 <c:choose>
-	<c:when test="${tests.size() > 0 }">
-		 <p>氏名: ${selectedStudent.name}(${selectedStudent.no})</p>
-
-
-		<div class="table-wrapper">
-<table>
-    <tr>
-        <th>科目名</th>
-        <th>科目コード</th>
-        <th>回数</th>
-        <th>点数</th>
-    </tr>
-    <c:forEach var="test" items="${tests}">
-        <tr>
-            <td>${test.subjectName}</td>
-            <td>${test.subjectCd}</td>
-            <td>${test.num}</td>
-            <td>${test.point}</td>
-        </tr>
-    </c:forEach>
-</table>
-</div>
-
-	</c:when>
-<c:otherwise>
-    <p>成績情報が存在しませんでした</p>
-</c:otherwise>
+    <c:when test="${tests.size() > 0}">
+        <div class="table-wrapper">
+            <table>
+                <tr>
+                    <th>科目名</th>
+                    <th>科目コード</th>
+                    <th>回数</th>
+                    <th>点数</th>
+                </tr>
+                <c:forEach var="test" items="${tests}">
+                    <tr>
+                        <td>${test.subjectName}</td>
+                        <td>${test.subjectCd}</td>
+                        <td>${test.num}</td>
+                        <td>${test.point}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <p>成績情報が存在しませんでした</p>
+    </c:otherwise>
 </c:choose>
 
 <jsp:include page="../tool/footer.html" />
