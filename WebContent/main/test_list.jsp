@@ -104,6 +104,7 @@ form button {
 
 <div id="search-header">
 	<form action="TestListSubjectExecute.action" method="post">
+	<input type="hidden" name="f" value="sj" />
 	<jsp:include page="/common/test_list_subject_header.jsp" />
 	<button type="submit">検索</button>
 	</form>
@@ -115,6 +116,7 @@ form button {
 
 <div class="student-info">
 	<form action="TestListStudentExecute.action" method="post">
+	<input type="hidden" name="f" value="st" />
 	<jsp:include page="/common/test_list_student_header.jsp" />
 	<button type="submit">検索</button>
 	</form>
