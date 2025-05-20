@@ -163,7 +163,7 @@ form button {
 
 	</c:when>
 <c:otherwise>
-    <p>成績情報が存在しませんでした。</p>
+    <p>成績情報が存在しませんでした</p>
 </c:otherwise>
 </c:choose>
 

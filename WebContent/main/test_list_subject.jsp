@@ -140,7 +140,7 @@ form button {
 
 <c:choose>
 	<c:when test="${tests.size() > 0 }">
-		<p>科目:${selectedSubject.name}</p>
+		<label>科目:${selectedSubject.name}</label>
 
 
 		<div class="table-wrapper">
@@ -182,7 +182,7 @@ form button {
 
 	</c:when>
 <c:otherwise>
-    <p>学生データが存在しません。</p>
+    <p>学生データが存在しませんでした</p>
 </c:otherwise>
 </c:choose>
 

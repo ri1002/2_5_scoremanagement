@@ -78,7 +78,7 @@
 
 <c:choose>
 	<c:when test="${tests.size() > 0}">
-		<p>科目: ${selectedSubject.name}(${f4}回)</p>
+		<label>科目: ${selectedSubject.name}(${f4}回)</label>
 
 		<!-- TestRegistExecute.actionに入学年度、クラス、氏名、点数を送信 -->
 		<form action="TestRegistExecute.action" method="post">

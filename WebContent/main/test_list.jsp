@@ -107,6 +107,10 @@ form button {
 	<jsp:include page="/common/test_list_subject_header.jsp" />
 	<button type="submit">検索</button>
 	</form>
+
+	<c:if test="${not empty errors}">
+    		<p style="color:orange">${errors}</p>
+		</c:if>
 </div>
 
 <div class="student-info">
