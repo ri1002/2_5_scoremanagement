@@ -24,6 +24,7 @@ public class LoginExecuteAction extends Action {
         } else {
             session.removeAttribute("teacher"); // セッションから不正なデータを削除
             session.setAttribute("error", "IDまたはパスワードが違います");
+            session.setAttribute("error_id", id);
             response.sendRedirect("../login.jsp");
         }
     }
