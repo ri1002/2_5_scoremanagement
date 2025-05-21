@@ -125,7 +125,7 @@
 
 
 
-				<input type="text" placeholder="ID" name="id" required id="id" maxlength="10" pattern="^[a-zA-Z0-9]+$"><br>
+				<input type="text" placeholder="ID" name="id" required id="id" maxlength="10" pattern="^[a-zA-Z0-9]+$" value="<%= session.getAttribute("error_id") != null ? session.getAttribute("error_id") : "" %>"><br>
 				<input type="password" placeholder="パスワード" name="password" required id="password" maxlength="30" pattern="^[a-zA-Z0-9]+$"><br>
 
 
