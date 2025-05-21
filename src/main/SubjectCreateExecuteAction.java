@@ -65,7 +65,7 @@ public class SubjectCreateExecuteAction extends Action {
     Subject exiSubject = subjectdao.get(cd);
 
 	if ( exiSubject != null) {
-		String subject_duplication = "学生番号が重複しています";
+		String subject_duplication = "科目コードが重複しています";
 
 		request.setAttribute("subject_duplication", subject_duplication);
 
