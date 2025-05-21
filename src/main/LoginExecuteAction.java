@@ -20,11 +20,13 @@ public class LoginExecuteAction extends Action {
 
         if (teacher != null) {
             session.setAttribute("teacher", teacher);
-            request.getRequestDispatcher("Menu.action").forward(request, response);
+            response.sendRedirect("Menu.action");
+            //request.getRequestDispatcher("Menu.action").forward(request, response);
         } else {
+        	request.setAttribute("id", id);
+        	request.setAttribute("password", password);
             session.removeAttribute("teacher"); // セッションから不正なデータを削除
-            session.setAttribute("error", "IDまたはパスワードが違います");
-            session.setAttribute("error_id", id);
+            session.setAttribute("error", "IDまたはパスワードが確認できませんでした");
             response.sendRedirect("../login.jsp");
         }
     }
